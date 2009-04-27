@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results xmlns="http://www.w3.org/2004/09/fresnel-tree">
+   <resource class="padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;"
+             lens="http://isweb/FOAF_person"
+             uri="http://xmlns.com/foaf/0.1/Thomas">
+      <title/>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#agent">
+         <label>
+            <title>Agent</title>
+         </label>
+         <values>
+            <value>
+               <title>http://www.x-media-project.com/ex#agent0</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#source">
+         <label>
+            <title>Source</title>
+         </label>
+         <values>
+            <value>
+               <title>http://www.x-media-project.com/ex#source0</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#confidence_degree">
+         <label>
+            <title>Confidence Degree</title>
+         </label>
+         <values>
+            <value output-type="unknown">
+               <title>0.7</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#creation_time">
+         <label>
+            <title>Creation Time</title>
+         </label>
+         <values>
+            <value output-type="unknown">
+               <title>Sat May 02 11:46:46 CEST 2009</title>
+            </value>
+         </values>
+      </metaproperty>
+      <property class="border-top: 1px dotted Gray; padding: 5px 0px;"
+                uri="http://xmlns.com/foaf/0.1/img">
+         <label>
+            <title>Image: </title>
+         </label>
+         <values>
+            <value output-type="http://www.w3.org/2004/09/fresnel#image">
+               <title>http://isweb.uni-koblenz.de/People/Franz/thomas</title>
+            </value>
+         </values>
+      </property>
+      <property class="border-top: 1px dotted Gray; padding: 5px 0px;"
+                uri="http://xmlns.com/foaf/0.1/workplaceHomepage">
+         <label>
+            <title>Workplace: </title>
+         </label>
+         <values>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://isweb.uni-koblenz.de/People/Franz</title>
+            </value>
+         </values>
+      </property>
+      <property class="border-top: 1px dotted Gray; padding: 5px 0px;"
+                uri="http://xmlns.com/foaf/0.1/projectHomepage">
+         <label>
+            <title>Project(s): </title>
+         </label>
+         <values>
+            <content>
+               <before>[</before>
+               <after>]</after>
+            </content>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://www.x-media-project.org</title>
+            </value>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://www.w3.org/2005/Incubator/mmsem</title>
+            </value>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://isweb.uni-koblenz.de/Research/sam</title>
+            </value>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://isweb.uni-koblenz.de/Research/sea</title>
+            </value>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>https://www.uni-koblenz.de/FB4/Institutes/IFI/AGStaab/Research/lena</title>
+            </value>
+         </values>
+      </property>
+   </resource>
+   <resource class="padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;"
+             lens="http://isweb/FOAF_person"
+             uri="http://xmlns.com/foaf/0.1/#Joerg">
+      <title/>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#agent">
+         <label>
+            <title>Agent</title>
+         </label>
+         <values>
+            <value>
+               <title>http://www.x-media-project.com/ex#agent42</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#source">
+         <label>
+            <title>Source</title>
+         </label>
+         <values>
+            <value>
+               <title>http://www.x-media-project.com/ex#source42</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#confidence_degree">
+         <label>
+            <title>Confidence Degree</title>
+         </label>
+         <values>
+            <value output-type="unknown">
+               <title>0.7</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#creation_time">
+         <label>
+            <title>Creation Time</title>
+         </label>
+         <values>
+            <value output-type="unknown">
+               <title>Sat May 02 11:46:46 CEST 2009</title>
+            </value>
+         </values>
+      </metaproperty>
+      <property class="border-top: 1px dotted Gray; padding: 5px 0px;"
+                uri="http://xmlns.com/foaf/0.1/img">
+         <label>
+            <title>Image: </title>
+         </label>
+         <values>
+            <value output-type="http://www.w3.org/2004/09/fresnel#image">
+               <title>http://www.uni-koblenz.de/FB4/Institutes/IFI/AGStaab/Research/lena/jfoaf.png</title>
+            </value>
+         </values>
+      </property>
+      <property class="border-top: 1px dotted Gray; padding: 5px 0px;"
+                uri="http://xmlns.com/foaf/0.1/workplaceHomepage">
+         <label>
+            <title>Workplace: </title>
+         </label>
+         <values>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://isweb.uni-koblenz.de</title>
+            </value>
+         </values>
+      </property>
+      <property class="border-top: 1px dotted Gray; padding: 5px 0px;"
+                uri="http://xmlns.com/foaf/0.1/projectHomepage">
+         <label>
+            <title>Project(s): </title>
+         </label>
+         <values>
+            <content>
+               <before>[</before>
+               <after>]</after>
+            </content>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>https://www.uni-koblenz.de/FB4/Institutes/IFI/AGStaab/Research/lena</title>
+            </value>
+         </values>
+      </property>
+   </resource>
+   <resource class="padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;"
+             uri="_:node141tm474vx1">
+      <title/>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#agent">
+         <label>
+            <title>Agent</title>
+         </label>
+         <values>
+            <value>
+               <title>http://www.x-media-project.com/ex#agent11</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#source">
+         <label>
+            <title>Source</title>
+         </label>
+         <values>
+            <value>
+               <title>http://www.x-media-project.com/ex#source11</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#confidence_degree">
+         <label>
+            <title>Confidence Degree</title>
+         </label>
+         <values>
+            <value output-type="unknown">
+               <title>0.7</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#creation_time">
+         <label>
+            <title>Creation Time</title>
+         </label>
+         <values>
+            <value output-type="unknown">
+               <title>Sat May 02 11:46:46 CEST 2009</title>
+            </value>
+         </values>
+      </metaproperty>
+      <property class="border-top: 1px dotted Gray; padding: 5px 0px;"
+                uri="http://xmlns.com/foaf/0.1/workplaceHomepage">
+         <label>
+            <title>Workplace: </title>
+         </label>
+         <values>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://isweb.uni-koblenz.de</title>
+            </value>
+         </values>
+      </property>
+   </resource>
+   <resource uri="_:node141tm474vx2">
+      <title/>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#agent">
+         <label>
+            <title>Agent</title>
+         </label>
+         <values>
+            <value>
+               <title>http://www.x-media-project.com/ex#agent23</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#source">
+         <label>
+            <title>Source</title>
+         </label>
+         <values>
+            <value>
+               <title>http://www.x-media-project.com/ex#source23</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#confidence_degree">
+         <label>
+            <title>Confidence Degree</title>
+         </label>
+         <values>
+            <value output-type="unknown">
+               <title>0.7</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#creation_time">
+         <label>
+            <title>Creation Time</title>
+         </label>
+         <values>
+            <value output-type="unknown">
+               <title>Sat May 02 11:46:46 CEST 2009</title>
+            </value>
+         </values>
+      </metaproperty>
+   </resource>
+   <resource class="padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;,padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;"
+             lens="http://isweb/FOAF_person"
+             uri="http://xmlns.com/foaf/0.1/#Steffen">
+      <title/>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#agent">
+         <label>
+            <title>Agent</title>
+         </label>
+         <values>
+            <value>
+               <title>http://www.x-media-project.com/ex#agent53</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#source">
+         <label>
+            <title>Source</title>
+         </label>
+         <values>
+            <value>
+               <title>http://www.x-media-project.com/ex#source53</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#confidence_degree">
+         <label>
+            <title>Confidence Degree</title>
+         </label>
+         <values>
+            <value output-type="unknown">
+               <title>0.7</title>
+            </value>
+         </values>
+      </metaproperty>
+      <metaproperty uri="http://www.x-media.org/ontologies/metaknow#creation_time">
+         <label>
+            <title>Creation Time</title>
+         </label>
+         <values>
+            <value output-type="unknown">
+               <title>Sat May 02 11:46:46 CEST 2009</title>
+            </value>
+         </values>
+      </metaproperty>
+      <property class="border-top: 1px dotted Gray; padding: 5px 0px;"
+                uri="http://xmlns.com/foaf/0.1/img">
+         <label>
+            <title>Image: </title>
+         </label>
+         <values>
+            <value output-type="http://www.w3.org/2004/09/fresnel#image">
+               <title>http://www.uni-koblenz.de/FB4/Institutes/IFI/AGStaab/Research/lena/Steffen7.jpg</title>
+            </value>
+         </values>
+      </property>
+      <property class="border-top: 1px dotted Gray; padding: 5px 0px;"
+                uri="http://xmlns.com/foaf/0.1/workplaceHomepage">
+         <label>
+            <title>Workplace: </title>
+         </label>
+         <values>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://isweb.uni-koblenz.de</title>
+            </value>
+         </values>
+      </property>
+      <property class="border-top: 1px dotted Gray; padding: 5px 0px;"
+                uri="http://xmlns.com/foaf/0.1/projectHomepage">
+         <label>
+            <title>Project(s): </title>
+         </label>
+         <values>
+            <content>
+               <before>[</before>
+               <after>]</after>
+            </content>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://www.acemedia.org</title>
+            </value>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://asg-platform.org/cgi-bin/twiki/view/Public/WebHome</title>
+            </value>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://www.projecthalo.com</title>
+            </value>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://swap.semanticweb.org</title>
+            </value>
+            <value output-type="http://www.w3.org/2004/09/fresnel#externalLink">
+               <title>http://bibster.semanticweb.org</title>
+            </value>
+         </values>
+      </property>
+   </resource>
+</results>

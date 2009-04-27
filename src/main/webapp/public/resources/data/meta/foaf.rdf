@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+			xmlns:foaf="http://xmlns.com/foaf/0.1/"
+			xmlns="http://www.uni-koblenz.de/people#"
+			xml:base="http://xmlns.com/foaf/0.1/">
+
+<foaf:Person rdf:about="http://xmlns.com/foaf/0.1/Thomas"
+	foaf:givenname="Thomas"
+  foaf:family_name="Franz"
+  foaf:nick="Tom"
+  foaf:title="Mr."
+  foaf:jabberID="tom@kater.uni-koblenz.de">
+  <foaf:img rdf:resource="http://isweb.uni-koblenz.de/People/Franz/thomas"/>
+  <foaf:publications rdf:resource="http://isweb.uni-koblenz.de/People/Franz/Publications"/>
+  <foaf:knows rdf:resource="#Joerg"/>
+  <foaf:knows rdf:resource="#Steffen"/>
+  <foaf:knows>
+  	<foaf:Person
+    	foaf:title="Mr."
+      foaf:givenname="Carsten"
+      foaf:family_name="Saathoff"
+      foaf:nick="casi">
+      <foaf:name>Carsten Saathoff</foaf:name>
+      <foaf:mbox_sha1sum>0c2b26084d59f344a0812351111e234411484ae2</foaf:mbox_sha1sum>
+      <foaf:homepage rdf:resource="http://blog.kodemaniak.de"/>
+      <foaf:workplaceHomepage rdf:resource="http://isweb.uni-koblenz.de"/>
+      <foaf:workInfoHomepage rdf:resource="http://www.kodemaniak.de"/>
+      <rdfs:seeAlso rdf:resource="http://www.kodemaniak.de/foaf.rdf"/>
+    </foaf:Person>
+  </foaf:knows>
+  <foaf:knows>
+  	<foaf:Person>
+    	<foaf:mbox_sha1sum>02085a0d20a5f574c1ce6cfe42bba6e85cfe07cf</foaf:mbox_sha1sum>
+      <foaf:name>Tom Heath</foaf:name>
+      <rdfs:seeAlso rdf:resource="http://kmi.open.ac.uk/people/tom/foaf.rdf"/>
+    </foaf:Person>
+  </foaf:knows>
+  <foaf:name>Thomas Franz</foaf:name>
+  <foaf:homepage rdf:resource="http://www.thomas-franz.de"/>
+  <foaf:mbox rdf:resource="mailto:franz@uni-koblenz.de"/>
+  <foaf:mbox_sha1sum>4c8c2ba49c3566f72814a605458a4e89063838b5</foaf:mbox_sha1sum>
+  <foaf:projectHomepage rdf:resource="http://www.x-media-project.org"/>
+	<foaf:projectHomepage rdf:resource="http://www.w3.org/2005/Incubator/mmsem"/>
+	<foaf:projectHomepage rdf:resource="http://isweb.uni-koblenz.de/Research/sam"/>
+	<foaf:projectHomepage rdf:resource="http://isweb.uni-koblenz.de/Research/sea"/>
+	<foaf:projectHomepage rdf:resource="https://www.uni-koblenz.de/FB4/Institutes/IFI/AGStaab/Research/lena"/>
+	<foaf:publications rdf:resource="http://isweb.uni-koblenz.de/People/Franz/Publications"/>
+	<foaf:interest rdf:resource="http://www.w3.org/2001/sw"/>
+	<foaf:interest rdf:resource="http://www.semanticdesktop.org"/>
+	<foaf:interest rdf:resource="http://www.interaction-design.org/references/conferences/series/cscw.html"/>	
+	<foaf:interest rdf:resource="http://dsv.su.se/jpalme/DSV-CMC-Home-page.html"/>
+  <foaf:schoolHomepage rdf:resource="http://www.dkg-koeln.de"/>
+  <foaf:workplaceHomepage rdf:resource="http://isweb.uni-koblenz.de/People/Franz"/>
+</foaf:Person>
+
+<foaf:Person rdf:about="http://xmlns.com/foaf/0.1/#Joerg">
+	<foaf:name>Jörg Koch</foaf:name>
+	<foaf:title>Mr.</foaf:title>
+	<foaf:givenname>Jörg</foaf:givenname>
+	<foaf:family_name>Koch</foaf:family_name>
+	<foaf:mbox>mailto:jmkoch@uni-koblenz.de</foaf:mbox>
+	<foaf:nick>mj</foaf:nick>
+	<foaf:img rdf:resource="http://www.uni-koblenz.de/FB4/Institutes/IFI/AGStaab/Research/lena/jfoaf.png"/>
+	<foaf:workplaceHomepage rdf:resource="http://isweb.uni-koblenz.de"/>
+	<foaf:projectHomepage rdf:resource="https://www.uni-koblenz.de/FB4/Institutes/IFI/AGStaab/Research/lena"/>
+	<foaf:knows rdf:resource="#Thomas"/>
+</foaf:Person>
+
+<foaf:Person rdf:about="http://xmlns.com/foaf/0.1/#Steffen">
+	<foaf:name>Steffen Staab</foaf:name>
+	<foaf:title>Prof. Dr.</foaf:title>
+	<foaf:givenname>Steffen</foaf:givenname>
+	<foaf:family_name>Staab</foaf:family_name>
+	<foaf:mbox_sha1sum>ae8f32f31b69df2872d4c5d2e3bf21cf09cadf90</foaf:mbox_sha1sum>
+	<foaf:homepage rdf:resource="http://www.uni-koblenz.de/~staab"/>
+	<foaf:img rdf:resource="http://www.uni-koblenz.de/FB4/Institutes/IFI/AGStaab/Research/lena/Steffen7.jpg"/>
+	<foaf:phone rdf:resource="tel:+49-261-2872761"/>
+	<foaf:workplaceHomepage rdf:resource="http://isweb.uni-koblenz.de"/>
+	<foaf:workInfoHomepage rdf:resource="Semantic%20Web,%20Research%20,%20Teaching"/>
+	<foaf:schoolHomepage rdf:resource="http://www.jsg-karlstadt.de"/>
+	<foaf:projectHomepage rdf:resource="http://www.acemedia.org"/>
+	<foaf:projectHomepage rdf:resource="http://asg-platform.org/cgi-bin/twiki/view/Public/WebHome"/>
+	<foaf:projectHomepage rdf:resource="http://www.projecthalo.com"/>
+	<foaf:projectHomepage rdf:resource="http://swap.semanticweb.org"/>
+	<foaf:projectHomepage rdf:resource="http://bibster.semanticweb.org"/>
+	<foaf:groupHomepage rdf:resource="http://isweb.uni-koblenz.de"/>
+	<foaf:interest rdf:resource="http://www.wissensmanagement-gesellschaft.de"/>
+	<foaf:interest rdf:resource="http://www.fgwm.de"/>
+	</foaf:Person>
+</rdf:RDF>

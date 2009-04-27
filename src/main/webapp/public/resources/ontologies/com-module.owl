@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:dol="http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#"
+    xmlns:dns="http://www.loa-cnr.it/ontologies/ExtendedDnS.owl#"
+    xmlns:p3="http://www.loa-cnr.it/ontologies/SemioticCommunicationTheory.owl#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:daml="http://www.daml.org/2001/03/daml+oil#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns="http://isweb.uni-koblenz.de/ontologies/2006/9/12/communication.owl#"
+  xml:base="http://isweb.uni-koblenz.de/ontologies/2006/9/12/communication.owl">
+  <owl:Ontology rdf:about="">
+    <owl:imports rdf:resource="http://www.loa-cnr.it/ontologies/DLP_397.owl"/>
+  </owl:Ontology>
+  <owl:Class rdf:ID="Contact">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The role of a contact as defined by Jakobson's communication model.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.loa-cnr.it/ontologies/SemioticCommunicationTheory.owl#communication-role"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Communication_Description">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The description of communication defining communication-roles based on the model of communication from Jakobson.</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="Addressee"/>
+        </owl:someValuesFrom>
+        <owl:onProperty rdf:resource="http://www.loa-cnr.it/ontologies/ExtendedDnS.owl#defines"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www.loa-cnr.it/ontologies/ExtendedDnS.owl#description"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="Message"/>
+        </owl:someValuesFrom>
+        <owl:onProperty rdf:resource="http://www.loa-cnr.it/ontologies/ExtendedDnS.owl#defines"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.loa-cnr.it/ontologies/ExtendedDnS.owl#defines"/>
+        <owl:someValuesFrom rdf:resource="#Contact"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="Addresser"/>
+        </owl:someValuesFrom>
+        <owl:onProperty rdf:resource="http://www.loa-cnr.it/ontologies/ExtendedDnS.owl#defines"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="IM_Description">
+    <rdfs:subClassOf rdf:resource="#Communication_Description"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Addressee">
+    <rdfs:subClassOf rdf:resource="http://www.loa-cnr.it/ontologies/SemioticCommunicationTheory.owl#communication-role"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The role of the addressee as defined by Jakobson's communication model.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Email_Description">
+    <rdfs:subClassOf rdf:resource="#Communication_Description"/>
+  </owl:Class>
+  <owl:Class rdf:ID="SMS_Description">
+    <rdfs:subClassOf rdf:resource="#Communication_Description"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Addresser">
+    <rdfs:subClassOf rdf:resource="http://www.loa-cnr.it/ontologies/SemioticCommunicationTheory.owl#communication-role"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The role of the addresser as defined by Jakobson's communication model.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Instant_Message">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Message"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Chat_Description">
+    <rdfs:subClassOf rdf:resource="#Communication_Description"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Communication_Parameter">
+    <rdfs:subClassOf rdf:resource="http://www.loa-cnr.it/ontologies/ExtendedDnS.owl#parameter"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Body">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Message"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Attachment">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Message"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Message">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The message role in the sense of Jakobson's communication model.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.loa-cnr.it/ontologies/SemioticCommunicationTheory.owl#communication-role"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Transferred_File">
+    <rdfs:subClassOf rdf:resource="#Message"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Communication_Event">
+    <rdfs:subClassOf rdf:resource="http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#event"/>
+  </owl:Class>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.2.1, Build 365)  http://protege.stanford.edu -->

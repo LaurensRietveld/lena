@@ -1,0 +1,745 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+@prefix sy: <http://purl.org/rss/1.0/modules/syndication/> .
+
+@prefix content: <http://purl.org/rss/1.0/modules/content/> .
+
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+@prefix admin: <http://webns.net/mvcb/> .
+
+@prefix rss: <http://purl.org/rss/1.0/> .
+
+@prefix facets: <http://simile.mit.edu/2006/01/ontologies/fresnel-facets> .
+
+@prefix com:	<http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#> .
+
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+@prefix fresnel: <http://www.w3.org/2004/09/fresnel#> .
+
+@prefix wot: <http://xmlns.com/wot/0.1/> .
+
+@prefix edns: <http://www.loa-cnr.it/ontologies/ExtendedDnS.owl#> .
+
+@prefix dtype: <http://www.w3.org/2001/XMLSchema#> .
+
+<address:A@kater.uni-koblenz.de> a edns:information-object .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fff> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#RealizationDescription> .
+
+<http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7ffe> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#DigitalRealization> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fff> ;
+	edns:realizes <address:A@kater.uni-koblenz.de> .
+
+<http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7ffd> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#ProtocolRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fff> edns:defines <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7ffd> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#sesame2> edns:plays <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7ffd> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7ffe> .
+
+<http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7ffc> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#FormatRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fff> edns:defines <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7ffc> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#rdfliteral> edns:plays <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7ffc> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7ffe> .
+
+<http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7ffb> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Identifier> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fff> edns:defines <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7ffb> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-8000> edns:plays <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7ffb> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7ffe> .
+
+<http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7ffa> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Realizer> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fff> edns:defines <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7ffa> .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7ff9> edns:plays <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7ffa> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7ffe> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-8000> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7ff9" .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7ff9> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "A@kater.uni-koblenz.de" .
+
+<http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7ff8> a edns:agent .
+
+<address:A@kater.uni-koblenz.de> <http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#generic-dependent> <http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7ff8> .
+
+<address:B@kater.uni-koblenz.de> a edns:information-object .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7ff6> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#RealizationDescription> .
+
+<http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7ff5> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#DigitalRealization> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7ff6> ;
+	edns:realizes <address:B@kater.uni-koblenz.de> .
+
+<http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7ff4> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#ProtocolRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7ff6> edns:defines <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7ff4> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#sesame2> edns:plays <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7ff4> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7ff5> .
+
+<http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7ff3> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#FormatRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7ff6> edns:defines <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7ff3> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#rdfliteral> edns:plays <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7ff3> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7ff5> .
+
+<http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7ff2> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Identifier> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7ff6> edns:defines <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7ff2> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7ff7> edns:plays <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7ff2> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7ff5> .
+
+<http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7ff1> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Realizer> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7ff6> edns:defines <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7ff1> .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7ff0> edns:plays <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7ff1> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7ff5> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7ff7> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7ff0" .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7ff0> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "B@kater.uni-koblenz.de" .
+
+<http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7fef> a edns:agent .
+
+<address:B@kater.uni-koblenz.de> <http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#generic-dependent> <http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7fef> .
+
+<address:C@kater.uni-koblenz.de> a edns:information-object .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fed> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#RealizationDescription> .
+
+<http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fec> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#DigitalRealization> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fed> ;
+	edns:realizes <address:C@kater.uni-koblenz.de> .
+
+<http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7feb> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#ProtocolRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fed> edns:defines <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7feb> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#sesame2> edns:plays <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7feb> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fec> .
+
+<http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fea> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#FormatRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fed> edns:defines <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fea> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#rdfliteral> edns:plays <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fea> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fec> .
+
+<http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fe9> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Identifier> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fed> edns:defines <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fe9> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7fee> edns:plays <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fe9> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fec> .
+
+<http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fe8> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Realizer> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fed> edns:defines <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fe8> .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fe7> edns:plays <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fe8> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fec> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7fee> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fe7" .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fe7> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "C@kater.uni-koblenz.de" .
+
+<http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7fe6> a edns:agent .
+
+<address:C@kater.uni-koblenz.de> <http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#generic-dependent> <http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7fe6> .
+
+<http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> a edns:perdurant .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fe4> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#IM_Description> .
+
+<http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fe3> a <http://www.loa-cnr.it/ontologies/InformationObjects.owl#communication-situation> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fe4> .
+
+<http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fe2> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#CommunicationCourse> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fe4> edns:defines <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fe2> .
+
+<http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> edns:sequenced-by <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fe2> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fe3> .
+
+<http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7fe1> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#InstantMessage> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fe4> edns:defines <http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7fe1> .
+
+<http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7fe1> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fe2> .
+
+<http://localhost:8080/openrdf/default#message-333df459:112c38b854c:-7fe0> a edns:information-object ;
+	edns:plays <http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7fe1> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fe3> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> .
+
+<http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7fdf> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#DispatchTime> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fe4> edns:defines <http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7fdf> .
+
+<http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7fdf> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fe2> .
+
+<http://localhost:8080/openrdf/default#timeIO-333df459:112c38b854c:-7fde> a edns:information-object ;
+	edns:plays <http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7fdf> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fe3> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fdc> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#RealizationDescription> .
+
+<http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fdb> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#DigitalRealization> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fdc> ;
+	edns:realizes <http://localhost:8080/openrdf/default#timeIO-333df459:112c38b854c:-7fde> .
+
+<http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fda> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#ProtocolRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fdc> edns:defines <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fda> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#sesame2> edns:plays <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fda> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fdb> .
+
+<http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fd9> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#FormatRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fdc> edns:defines <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fd9> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#rdfliteral> edns:plays <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fd9> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fdb> .
+
+<http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fd8> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Identifier> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fdc> edns:defines <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fd8> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7fdd> edns:plays <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fd8> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fdb> .
+
+<http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fd7> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Realizer> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fdc> edns:defines <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fd7> .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fd6> edns:plays <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fd7> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fdb> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7fdd> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fd6" .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fd6> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "2007-05-25T16:02:21.049+02:00"^^dtype:dateTime .
+
+<http://localhost:8080/openrdf/default#contactRole-333df459:112c38b854c:-7fd5> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#ContactRole> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fe4> edns:defines <http://localhost:8080/openrdf/default#contactRole-333df459:112c38b854c:-7fd5> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#XMPP> edns:plays <http://localhost:8080/openrdf/default#contactRole-333df459:112c38b854c:-7fd5> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fe3> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> .
+
+<http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7fd4> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#AddresserRole> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fe4> edns:defines <http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7fd4> .
+
+<http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7fd4> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fe2> .
+
+<http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7ff8> edns:plays <http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7fd4> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fe3> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fd3> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#Address> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fe4> edns:defines <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fd3> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fd3> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fe2> .
+
+<address:A@kater.uni-koblenz.de> edns:plays <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fd3> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fe3> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> .
+
+<http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7fd2> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#AddresseeRole> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fe4> edns:defines <http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7fd2> .
+
+<http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7fd2> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fe2> .
+
+<http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7fef> edns:plays <http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7fd2> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fe3> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fd1> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#Address> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fe4> edns:defines <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fd1> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fd1> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fe2> .
+
+<address:B@kater.uni-koblenz.de> edns:plays <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fd1> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fe3> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fcf> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#RealizationDescription> .
+
+<http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fce> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#DigitalRealization> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fcf> ;
+	edns:realizes <http://localhost:8080/openrdf/default#message-333df459:112c38b854c:-7fe0> .
+
+<http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fcd> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#ProtocolRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fcf> edns:defines <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fcd> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#sesame2> edns:plays <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fcd> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fce> .
+
+<http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fcc> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#FormatRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fcf> edns:defines <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fcc> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#rdfliteral> edns:plays <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fcc> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fce> .
+
+<http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fcb> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Identifier> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fcf> edns:defines <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fcb> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7fd0> edns:plays <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fcb> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fce> .
+
+<http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fca> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Realizer> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fcf> edns:defines <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fca> .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fc9> edns:plays <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fca> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fce> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7fd0> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fc9" .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fc9> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "Do you have some pointers for me about recent Semantic Desktop research?" .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fc8> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#IM_Description> .
+
+<http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fc7> a <http://www.loa-cnr.it/ontologies/InformationObjects.owl#communication-situation> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fc8> .
+
+<http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fc6> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#CommunicationCourse> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fc8> edns:defines <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fc6> .
+
+<http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> edns:sequenced-by <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fc6> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fc7> .
+
+<http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7fc5> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#InstantMessage> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fc8> edns:defines <http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7fc5> .
+
+<http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7fc5> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fc6> .
+
+<http://localhost:8080/openrdf/default#message-333df459:112c38b854c:-7fc4> a edns:information-object ;
+	edns:plays <http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7fc5> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fc7> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> .
+
+<http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7fc3> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#DispatchTime> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fc8> edns:defines <http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7fc3> .
+
+<http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7fc3> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fc6> .
+
+<http://localhost:8080/openrdf/default#timeIO-333df459:112c38b854c:-7fc2> a edns:information-object ;
+	edns:plays <http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7fc3> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fc7> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fc0> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#RealizationDescription> .
+
+<http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fbf> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#DigitalRealization> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fc0> ;
+	edns:realizes <http://localhost:8080/openrdf/default#timeIO-333df459:112c38b854c:-7fc2> .
+
+<http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fbe> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#ProtocolRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fc0> edns:defines <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fbe> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#sesame2> edns:plays <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fbe> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fbf> .
+
+<http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fbd> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#FormatRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fc0> edns:defines <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fbd> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#rdfliteral> edns:plays <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fbd> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fbf> .
+
+<http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fbc> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Identifier> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fc0> edns:defines <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fbc> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7fc1> edns:plays <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fbc> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fbf> .
+
+<http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fbb> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Realizer> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fc0> edns:defines <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fbb> .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fba> edns:plays <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fbb> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fbf> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7fc1> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fba" .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fba> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "2007-05-25T16:02:21.800+02:00"^^dtype:dateTime .
+
+<http://localhost:8080/openrdf/default#contactRole-333df459:112c38b854c:-7fb9> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#ContactRole> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fc8> edns:defines <http://localhost:8080/openrdf/default#contactRole-333df459:112c38b854c:-7fb9> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#XMPP> edns:plays <http://localhost:8080/openrdf/default#contactRole-333df459:112c38b854c:-7fb9> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fc7> .
+
+<http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7fb8> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#AddresserRole> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fc8> edns:defines <http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7fb8> .
+
+<http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7fb8> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fc6> .
+
+<http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7fef> edns:plays <http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7fb8> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fc7> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fb7> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#Address> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fc8> edns:defines <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fb7> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fb7> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fc6> .
+
+<address:B@kater.uni-koblenz.de> edns:plays <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fb7> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fc7> .
+
+<http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7fb6> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#AddresseeRole> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fc8> edns:defines <http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7fb6> .
+
+<http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7fb6> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fc6> .
+
+<http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7ff8> edns:plays <http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7fb6> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fc7> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fb5> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#Address> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fc8> edns:defines <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fb5> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fb5> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7fc6> .
+
+<address:A@kater.uni-koblenz.de> edns:plays <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7fb5> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fc7> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fb3> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#RealizationDescription> .
+
+<http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fb2> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#DigitalRealization> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fb3> ;
+	edns:realizes <http://localhost:8080/openrdf/default#message-333df459:112c38b854c:-7fc4> .
+
+<http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fb1> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#ProtocolRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fb3> edns:defines <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fb1> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#sesame2> edns:plays <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fb1> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fb2> .
+
+<http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fb0> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#FormatRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fb3> edns:defines <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fb0> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#rdfliteral> edns:plays <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fb0> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fb2> .
+
+<http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7faf> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Identifier> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fb3> edns:defines <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7faf> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7fb4> edns:plays <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7faf> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fb2> .
+
+<http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fae> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Realizer> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fb3> edns:defines <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fae> .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fad> edns:plays <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7fae> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fb2> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7fb4> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fad" .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7fad> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "Here is an interesting paper ..." .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fac> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#IM_Description> .
+
+<http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fab> a <http://www.loa-cnr.it/ontologies/InformationObjects.owl#communication-situation> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fac> .
+
+<http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7faa> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#CommunicationCourse> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fac> edns:defines <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7faa> .
+
+<http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> edns:sequenced-by <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7faa> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fab> .
+
+<http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7fa9> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#TransferredFile> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fac> edns:defines <http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7fa9> .
+
+<http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7fa9> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7faa> .
+
+<http://localhost:8080/openrdf/default#message-333df459:112c38b854c:-7fa8> a edns:information-object ;
+	edns:plays <http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7fa9> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fab> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> .
+
+<http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7fa7> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#DispatchTime> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fac> edns:defines <http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7fa7> .
+
+<http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7fa7> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7faa> .
+
+<http://localhost:8080/openrdf/default#timeIO-333df459:112c38b854c:-7fa6> a edns:information-object ;
+	edns:plays <http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7fa7> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fab> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7fe5> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fa4> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#RealizationDescription> .
+
+<http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fa3> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#DigitalRealization> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fa4> ;
+	edns:realizes <http://localhost:8080/openrdf/default#timeIO-333df459:112c38b854c:-7fa6> .
+
+<http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fa2> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#ProtocolRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fa4> edns:defines <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fa2> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#sesame2> edns:plays <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7fa2> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fa3> .
+
+<http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fa1> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#FormatRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fa4> edns:defines <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fa1> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#rdfliteral> edns:plays <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7fa1> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fa3> .
+
+<http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fa0> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Identifier> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fa4> edns:defines <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fa0> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7fa5> edns:plays <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7fa0> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fa3> .
+
+<http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7f9f> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Realizer> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7fa4> edns:defines <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7f9f> .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7f9e> edns:plays <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7f9f> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7fa3> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7fa5> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7f9e" .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7f9e> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "2007-05-25T16:02:22.517+02:00"^^dtype:dateTime .
+
+<http://localhost:8080/openrdf/default#contactRole-333df459:112c38b854c:-7f9d> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#ContactRole> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fac> edns:defines <http://localhost:8080/openrdf/default#contactRole-333df459:112c38b854c:-7f9d> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#XMPP> edns:plays <http://localhost:8080/openrdf/default#contactRole-333df459:112c38b854c:-7f9d> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fab> .
+
+<http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7f9c> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#AddresserRole> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fac> edns:defines <http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7f9c> .
+
+<http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7f9c> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7faa> .
+
+<http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7fef> edns:plays <http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7f9c> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fab> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f9b> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#Address> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fac> edns:defines <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f9b> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f9b> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7faa> .
+
+<address:B@kater.uni-koblenz.de> edns:plays <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f9b> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fab> .
+
+<http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7f9a> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#AddresseeRole> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fac> edns:defines <http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7f9a> .
+
+<http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7f9a> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7faa> .
+
+<http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7ff8> edns:plays <http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7f9a> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fab> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f99> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#Address> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7fac> edns:defines <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f99> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f99> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7faa> .
+
+<address:A@kater.uni-koblenz.de> edns:plays <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f99> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7fab> .
+
+<http://localhost:8080/openrdf/default#fileIdPlayer-333df459:112c38b854c:-7f98> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "file:/home/franz/tmp/x-cosim.pdf" .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7f97> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#RealizationDescription> .
+
+<http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7f96> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#DigitalRealization> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7f97> ;
+	edns:realizes <http://localhost:8080/openrdf/default#message-333df459:112c38b854c:-7fa8> .
+
+<http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7f95> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#ProtocolRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7f97> edns:defines <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7f95> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#posix> edns:plays <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7f95> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7f96> .
+
+<http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7f94> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#FormatRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7f97> edns:defines <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7f94> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#pdf> edns:plays <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7f94> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7f96> .
+
+<http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7f93> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Identifier> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7f97> edns:defines <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7f93> .
+
+<http://localhost:8080/openrdf/default#fileIdPlayer-333df459:112c38b854c:-7f98> edns:plays <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7f93> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7f96> .
+
+<http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7f92> a edns:perdurant .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7f91> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#Email_Description> .
+
+<http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7f90> a <http://www.loa-cnr.it/ontologies/InformationObjects.owl#communication-situation> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7f91> .
+
+<http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7f8f> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#CommunicationCourse> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7f91> edns:defines <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7f8f> .
+
+<http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7f92> edns:sequenced-by <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7f8f> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7f90> .
+
+<http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7f8e> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#Attachment> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7f91> edns:defines <http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7f8e> .
+
+<http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7f8e> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7f8f> .
+
+<http://localhost:8080/openrdf/default#message-333df459:112c38b854c:-7f8d> a edns:information-object ;
+	edns:plays <http://localhost:8080/openrdf/default#messageRole-333df459:112c38b854c:-7f8e> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7f90> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7f92> .
+
+<http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7f8c> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#DispatchTime> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7f91> edns:defines <http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7f8c> .
+
+<http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7f8c> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7f8f> .
+
+<http://localhost:8080/openrdf/default#timeIO-333df459:112c38b854c:-7f8b> a edns:information-object ;
+	edns:plays <http://localhost:8080/openrdf/default#dispatchTime-333df459:112c38b854c:-7f8c> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7f90> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7f92> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7f89> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#RealizationDescription> .
+
+<http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7f88> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#DigitalRealization> ;
+	edns:satisfies <http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7f89> ;
+	edns:realizes <http://localhost:8080/openrdf/default#timeIO-333df459:112c38b854c:-7f8b> .
+
+<http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7f87> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#ProtocolRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7f89> edns:defines <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7f87> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#sesame2> edns:plays <http://localhost:8080/openrdf/default#protRole-333df459:112c38b854c:-7f87> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7f88> .
+
+<http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7f86> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#FormatRole> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7f89> edns:defines <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7f86> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#rdfliteral> edns:plays <http://localhost:8080/openrdf/default#formRole-333df459:112c38b854c:-7f86> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7f88> .
+
+<http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7f85> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Identifier> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7f89> edns:defines <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7f85> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7f8a> edns:plays <http://localhost:8080/openrdf/default#idRole-333df459:112c38b854c:-7f85> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7f88> .
+
+<http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7f84> a <http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#Realizer> .
+
+<http://localhost:8080/openrdf/default#realDesc-333df459:112c38b854c:-7f89> edns:defines <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7f84> .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7f83> edns:plays <http://localhost:8080/openrdf/default#realizerRole-333df459:112c38b854c:-7f84> ;
+	edns:setting <http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7f88> .
+
+<http://localhost:8080/openrdf/default#identifier-333df459:112c38b854c:-7f8a> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7f83" .
+
+<http://localhost:8080/openrdf/default#realizer-333df459:112c38b854c:-7f83> <http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#literalData> "2007-05-25T16:02:23.137+02:00"^^dtype:dateTime .
+
+<http://localhost:8080/openrdf/default#contactRole-333df459:112c38b854c:-7f82> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#ContactRole> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7f91> edns:defines <http://localhost:8080/openrdf/default#contactRole-333df459:112c38b854c:-7f82> .
+
+<http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#SMTP> edns:plays <http://localhost:8080/openrdf/default#contactRole-333df459:112c38b854c:-7f82> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7f90> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7f92> .
+
+<http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7f81> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#AddresserRole> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7f91> edns:defines <http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7f81> .
+
+<http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7f81> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7f8f> .
+
+<http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7ff8> edns:plays <http://localhost:8080/openrdf/default#addresserRole-333df459:112c38b854c:-7f81> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7f90> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7f92> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f80> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#Address> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7f91> edns:defines <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f80> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f80> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7f8f> .
+
+<address:A@kater.uni-koblenz.de> edns:plays <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f80> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7f90> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7f92> .
+
+<http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7f7f> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#AddresseeRole> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7f91> edns:defines <http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7f7f> .
+
+<http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7f7f> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7f8f> .
+
+<http://localhost:8080/openrdf/default#agent-333df459:112c38b854c:-7fe6> edns:plays <http://localhost:8080/openrdf/default#addresseeRole1_-333df459:112c38b854c:-7f7f> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7f90> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7f92> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f7e> a <http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#Address> .
+
+<http://localhost:8080/openrdf/default#comDesc-333df459:112c38b854c:-7f91> edns:defines <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f7e> .
+
+<http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f7e> edns:modal-target <http://localhost:8080/openrdf/default#comCourse-333df459:112c38b854c:-7f8f> .
+
+<address:C@kater.uni-koblenz.de> edns:plays <http://localhost:8080/openrdf/default#addressRole-333df459:112c38b854c:-7f7e> ;
+	edns:setting <http://localhost:8080/openrdf/default#comSit-333df459:112c38b854c:-7f90> ;
+	<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#participant-in> <http://localhost:8080/openrdf/default#conversation-333df459:112c38b854c:-7f92> .
+
+<http://localhost:8080/openrdf/default#realSit-333df459:112c38b854c:-7f96> edns:realizes <http://localhost:8080/openrdf/default#message-333df459:112c38b854c:-7f8d> .
+
