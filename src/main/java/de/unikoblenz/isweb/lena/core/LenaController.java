@@ -501,9 +501,6 @@ public class LenaController {
 				xhtml=out.outputString(LenaTransformer.transform(selection,resourceURIString, 
 						classURIString, locationString, metaString));
 			
-				BufferedWriter bout = new BufferedWriter(new FileWriter("src/main/webapp/public/target.html"));
-			    bout.write(xhtml);
-			    bout.close();
 				/*
 				selection.normalizeDocument();
 				selection.normalize();
