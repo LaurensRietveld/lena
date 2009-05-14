@@ -15,8 +15,9 @@
 @prefix dolite:			<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#> .
 
 @prefix ex:					<http://example.org/> .
-
+@prefix fiat:  			<http://www.x-media-project.org/fiat#>.
 @prefix :       <http://isweb/> .
+
 
 
 ##########			                      
@@ -26,47 +27,21 @@
 :foafGroup a fresnel:Group ;
 	fresnel:resourceStyle "padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #ffe;"^^fresnel:stylingInstructions ;
 	fresnel:propertyStyle "border-top: 1px dotted Gray; padding: 5px 0px;"^^fresnel:stylingInstructions .
-	
-:rssGroup a fresnel:Group .
 
-:messageGroup a fresnel:Group .	
-
-:fileGroup a fresnel:Group .
-
-:agentGroup a fresnel:Group .
 
 	
 ################														 
 # LENSES - RSS #
 ################
 	
-:RSS_planetRDFLabel a fresnel:Lens;
-	fresnel:purpose fresnel:labelLens ;
-	fresnel:classLensDomain rss:item ;
-	fresnel:showProperties rss:title ;
-  fresnel:group :rssGroup .
 
-:RSS_planetRDF a fresnel:Lens;
-	fresnel:purpose fresnel:defaultLens ;
-	fresnel:classLensDomain rss:item ;
-	fresnel:showProperties ( 	dc:creator
-								dc:date
-								content:encoded ) ;
-  fresnel:group :rssGroup .
-  
-:FOAF_personLabel a fresnel:Lens ;
-	fresnel:purpose fresnel:labelLens ;
-	fresnel:classLensDomain foaf:Person ;	
-	fresnel:showProperties (	foaf:title
-														foaf:name ) ;
-	fresnel:group :foafGroup .
 	
-:FOAF_person a fresnel:Lens;
+:FIAT_OneComponentTaped a fresnel:Lens;
 	fresnel:purpose fresnel:defaultLens ;
-	fresnel:classLensDomain foaf:Person ;
-	fresnel:showProperties (	foaf:img
-								foaf:workplaceHomepage
-								foaf:projectHomepage
+	fresnel:classLensDomain fiat:OneComponentTaped ;
+	fresnel:showProperties (	fiat:loudness
+								fiat:aerodinamicTestDescription
+								fiat:tapedComponent
 						 ) ;
 	fresnel:group :foafGroup .
 	
@@ -75,207 +50,19 @@
 # Formats - FOAF #
 ##################
 	
-#:personResourceFormat a fresnel:Format ;
-#	fresnel:classFormatDomain foaf:Person;	
-#	fresnel:resourceStyle "padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;"^^fresnel:stylingInstructions ;
-#	fresnel:group :foafGroup .
 	
 :nameFormat a fresnel:Format ;
-	fresnel:propertyFormatDomain foaf:name ;
-	fresnel:label "Name: "^^xsd:string ;
+	fresnel:propertyFormatDomain fiat:loudness ;
+	fresnel:label "Loudness: "^^xsd:string ;
 	fresnel:group :foafGroup .
 	
 :titleFormat a fresnel:Format ;
-	fresnel:propertyFormatDomain foaf:title ;
-	fresnel:label "Title: "^^xsd:string ;
+	fresnel:propertyFormatDomain fiat:aerodinamicTestDescription ;
+	fresnel:label "Aerodinamic Test Description: "^^xsd:string ;
 	fresnel:group :foafGroup .
 	
 :imgFormat a fresnel:Format ;
-	fresnel:propertyFormatDomain foaf:img ;
-	fresnel:label "Image: "^^xsd:string ;
-	fresnel:value fresnel:image ;
+	fresnel:propertyFormatDomain fiat:tapedComponent ;
+	fresnel:label "Taped Component: "^^xsd:string ;	
 	fresnel:group :foafGroup .
 	
-:workplaceHPFormat a fresnel:Format ;
-	fresnel:propertyFormatDomain foaf:workplaceHomepage ;
-	fresnel:label "Workplace: "^^xsd:string ;
-	fresnel:value fresnel:externalLink ;
-	fresnel:group :foafGroup .
-	
-:projectHPFormat a fresnel:Format ;
-	fresnel:propertyFormatDomain foaf:projectHomepage ;
-	fresnel:label "Project(s): "^^xsd:string ;
-	fresnel:value fresnel:externalLink ;
-	fresnel:valueFormat [ fresnel:contentBefore "["^^xsd:string ;
-												fresnel:contentAfter "]"^^xsd:string ] ;	
-	fresnel:group :foafGroup .
-	
-:knowsFormat a fresnel:Format ;
-	fresnel:propertyFormatDomain foaf:knows ;
-	fresnel:label "People I know: "^^xsd:string ;
-	fresnel:value fresnel:uri ;
-	fresnel:group :foafGroup .
-	
-:mboxFormat a fresnel:Format ;
-	fresnel:propertyFormatDomain foaf:mbox ;
-	fresnel:label "Mailbox: "^^xsd:string ;
-	fresnel:value fresnel:externalLink ;
-	fresnel:group :foafGroup .
-	
-#################
-# Formats - RSS #
-#################
-
-:rssResource a fresnel:ResourceFormat ;
-	fresnel:classFormatDomain rss:item ;
-	fresnel:resourceStyle "padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #fff; color: #333;"^^fresnel:stylingInstructions ;
-	fresnel:group :rssGroup .
-	
-:rssTitle a fresnel:Format ;
-	fresnel:propertyFormatDomain rss:title ;
-	fresnel:label "Title: "^^xsd:string ;
-	fresnel:valueStyle "font-size: 25px;"^^fresnel:stylingInstructions ;
-	fresnel:group :rssGroup .
-	
-:dcCreator a fresnel:Format ;
-	fresnel:propertyFormatDomain dc:creator ;
-	fresnel:propertyStyle "font-size: 10px; border-top: 1px solid #aaa;"^^fresnel:stylingInstructions ;
-	fresnel:valueFormat [ fresnel:contentBefore "Written by: "^^xsd:string ] ;	
-	fresnel:label fresnel:none ;
-	fresnel:group :rssGroup .
-	
-:dcDate a fresnel:Format ;
-	fresnel:propertyFormatDomain dc:date ;
-	fresnel:propertyStyle "font-size: 10px; padding-bottom: 10px;"^^fresnel:stylingInstructions ;
-	fresnel:valueFormat [ fresnel:contentBefore "Date: "^^xsd:string ] ;	
-	fresnel:label fresnel:none ;
-	fresnel:group :rssGroup .
-	
-:contentEncoded a fresnel:Format ;
-	fresnel:propertyFormatDomain content:encoded ;
-	fresnel:propertyStyle "background-color: #aaa; padding: 5px; border: 1px solid #aaa; color: #eee;"^^fresnel:stylingInstructions ;
-	fresnel:label fresnel:none ;
-	fresnel:group :rssGroup .
-
-#####################
-# Formats - X-COSIM #
-#####################
-
-################   
-# DnS Formats  #
-################
-	
-:plays rdf:type fresnel:Format ;
-	fresnel:propertyFormatDomain edns:plays ;
-	fresnel:propertyStyle "border-top: 1px dashed Gray; margin-top: 5px; padding-top: 5px;"^^fresnel:stylingInstructions ;
-	fresnel:label "Plays Role(s): "^^xsd:string ;
-	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
-	fresnel:group :fileGroup .		
-	
-:participant rdf:type fresnel:Format ;
-	fresnel:propertyFormatDomain dolite:participant-in ;
-	fresnel:propertyStyle "border-top: 1px dashed Gray; margin-top: 5px; padding-top: 5px;"^^fresnel:stylingInstructions ;
-	fresnel:label "Participant in Event(s): "^^xsd:string ;
-	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
-	fresnel:group :fileGroup .		
-	
-:setting rdf:type fresnel:Format ;
-	fresnel:propertyFormatDomain edns:setting ;
-	fresnel:propertyStyle "border-top: 1px dashed Gray; margin-top: 5px; padding-top: 5px;"^^fresnel:stylingInstructions ;
-	fresnel:label "Situation: "^^xsd:string ;
-	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
-	fresnel:group :fileGroup .	
-	
-:dependent rdf:type fresnel:Format ;
-	fresnel:propertyFormatDomain dolite:generically-dependent-on ;
-	fresnel:propertyStyle "border-top: 1px dashed Gray; margin-top: 5px; padding-top: 5px;"^^fresnel:stylingInstructions ;
-	fresnel:label "Has Dependent(s): "^^xsd:string ;
-	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
-	fresnel:group :fileGroup .	
-
-	
-	###################   
-	# Message Formats #
-	###################
-	
-
-
-:messageSender rdf:type fresnel:Format ;
-	fresnel:propertyFormatDomain ex:sender ;
-	fresnel:propertyStyle "padding: 3px;"^^fresnel:stylingInstructions ;
-	fresnel:label "Sender: "^^xsd:string ;
-	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
-	fresnel:value fresnel:uri ;
-	fresnel:group :messageGroup, :fileGroup .
-	
-:messageRecipient rdf:type fresnel:Format ;
-	fresnel:propertyFormatDomain ex:recipient ;
-	fresnel:propertyStyle "padding: 3px;"^^fresnel:stylingInstructions ;
-	fresnel:label "Recipient: "^^xsd:string ;
-	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
-	fresnel:value fresnel:uri ;
-	fresnel:group :messageGroup, :fileGroup .
-	
-:fileFormat rdf:type fresnel:Format ;
-	fresnel:propertyFormatDomain ex:filepath ;
-	fresnel:propertyStyle "padding: 3px;"^^fresnel:stylingInstructions ;
-	fresnel:label "Transferred File: "^^xsd:string ;
-	fresnel:value fresnel:link ;
-	fresnel:group :fileGroup, :messageGroup .
-	
-:messageText a fresnel:Format ;
-	fresnel:propertyFormatDomain ex:textdata ;
-	fresnel:propertyStyle "border-top: 1px solid #fff; color: orange; padding: 3px;"^^fresnel:stylingInstructions ;
-	fresnel:label "Text: "^^xsd:string ;
-	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
-	fresnel:valueStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
-	fresnel:group :messageGroup, :fileGroup .
-	
-:conversation rdf:type fresnel:Format ;
-	fresnel:propertyFormatDomain ex:conv ;
-	fresnel:propertyStyle "border-top: 1px dashed white; padding: 3px;"^^fresnel:stylingInstructions ;
-	fresnel:label "Conversation: "^^xsd:string ;
-	fresnel:labelStyle ""^^fresnel:stylingInstructions ;
-	fresnel:group :fileGroup, :messageGroup .
-	
-:fileSentAtFormat rdf:type fresnel:Format ;
-	fresnel:propertyFormatDomain ex:at ;
-	fresnel:propertyStyle "padding: 3px;"^^fresnel:stylingInstructions ;
-	fresnel:label "Sent at: "^^xsd:string ;
-	fresnel:group :fileGroup, :messageGroup .
-	
-	####################
-	# File Formats ;-) #
-	####################
-
-
-:fileSentAsFormat rdf:type fresnel:Format ;
-	fresnel:propertyFormatDomain ex:as ;
-	fresnel:propertyStyle "padding: 3px"^^fresnel:stylingInstructions ;
-	fresnel:label "Transferred as: "^^xsd:string ;
-	#fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
-	fresnel:group :fileGroup .
-	
-	#################   
-	# Agent Formats #
-	#################
-
-:agent rdf:type fresnel:ResourceFormat ;
-	fresnel:classFormatDomain edns:agent ;
-	fresnel:resourceStyle "padding: 5px; margin-bottom: 5px; border: 0px solid Gray; background-color: LightBlue;"^^fresnel:stylingInstructions ;
-	fresnel:resourceFormat [ fresnel:contentBefore "Agent: "^^xsd:string ] ;	
-	fresnel:group :agentGroup, :fileGroup , :messageGroup .
-
-:relatedAgent rdf:type fresnel:Format ;
-	fresnel:propertyFormatDomain ex:relatedAgents ;
-	fresnel:propertyStyle "border-top: 1px dashed Gray; margin-top: 5px; padding-top: 5px;"^^fresnel:stylingInstructions ;
-	fresnel:label "Related Agents: "^^xsd:string ;
-	#fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
-	fresnel:group :agentGroup, :fileGroup, :messageGroup .	
-	
-:address rdf:type fresnel:Format ;
-	fresnel:propertyFormatDomain ex:address ;
-	fresnel:propertyStyle "border-top: 1px dashed Gray; margin-top: 5px; padding-top: 5px;"^^fresnel:stylingInstructions ;
-	fresnel:label "Address: "^^xsd:string ;
-	#fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
-	fresnel:group :agentGroup, :fileGroup, :messageGroup .

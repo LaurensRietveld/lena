@@ -765,7 +765,7 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 		while (rsi.hasNext())
 		{
 			Statement rs = (Statement)rsi.next();
-			if(rs.getContext()==null)
+			if(!rs.getContext().toString().contains("provenance"))//hard coded - context with provenace!!
 			{	
 				String rsSID = rs.getSubject().toString();
 				String rID = r.toString();
@@ -1019,57 +1019,70 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 		String oName;
 		Element lastValues;
 		
+		Element eP;
+		Iterator<URI> iterator;
 		if(metadata!=null){
 			pName = MetaVocabulary.AGENT;
 			oName = "Agent";
-			Element eP = createMetaPropertyElement(dataRepo, doc, sl, rf, pName, oName, sfc );
-			eR.appendChild(eP);
 			Set<URI> agents = metadata.getComplexAgent();	
-			Iterator<URI> iterator = agents.iterator();
-			while(iterator.hasNext()){			
-				oName = (iterator.next()).toString();
-				Element eV = createValueElement(doc, oName, null, new Vector());
-				//eP.appendChild(eV);
-				lastValues = getValuesElement(eP);
-				lastValues.appendChild(eV);		
+			iterator = agents.iterator();
+			if(iterator.hasNext()){
+				eP = createMetaPropertyElement(dataRepo, doc, sl, rf, pName, oName, sfc );
+				eR.appendChild(eP);				
+				while(iterator.hasNext()){			
+					oName = (iterator.next()).toString();
+					Element eV = createValueElement(doc, oName, null, new Vector());
+					//eP.appendChild(eV);
+					lastValues = getValuesElement(eP);
+					lastValues.appendChild(eV);		
+				}
 			}
 			pName = MetaVocabulary.SOURCE;
 			oName = "Source";
-			eP = createMetaPropertyElement(dataRepo, doc, sl, rf, pName, oName, sfc );
-			eR.appendChild(eP);
+			
 			Set<URI> sources = metadata.getComplexSource();
 			iterator = sources.iterator();
-			while(iterator.hasNext()){			
-				oName = (iterator.next()).toString();
-				Element eV = createValueElement(doc, oName, null, new Vector()); 				
-				lastValues = getValuesElement(eP);
-				lastValues.appendChild(eV);	
+			if(iterator.hasNext()){
+				eP = createMetaPropertyElement(dataRepo, doc, sl, rf, pName, oName, sfc );
+				eR.appendChild(eP);
+				while(iterator.hasNext()){			
+					oName = (iterator.next()).toString();
+					Element eV = createValueElement(doc, oName, null, new Vector()); 				
+					lastValues = getValuesElement(eP);
+					lastValues.appendChild(eV);	
+				}
 			}
 			
 			pName = MetaVocabulary.CONFIDENCE_DEGREE;
 			oName = "Confidence Degree";
-			eP = createMetaPropertyElement(dataRepo, doc, sl, rf, pName, oName, sfc );
-			eR.appendChild(eP);
+			
 			Collection<Double> confidence = metadata.getComplexConfidenceDegree();
 			Iterator<Double> iteratorc = confidence.iterator();
-			while(iteratorc.hasNext()){			
-				oName = (iteratorc.next()).toString();
-				Element eV = createValueElement(doc, oName, "unknown", new Vector());  
-				lastValues = getValuesElement(eP);
-				lastValues.appendChild(eV);			
+			if(iteratorc.hasNext()){
+				eP = createMetaPropertyElement(dataRepo, doc, sl, rf, pName, oName, sfc );
+				eR.appendChild(eP);
+				while(iteratorc.hasNext()){			
+					oName = (iteratorc.next()).toString();
+					Element eV = createValueElement(doc, oName, "unknown", new Vector());  
+					lastValues = getValuesElement(eP);
+					lastValues.appendChild(eV);			
+				}
 			}
 			
 			pName = MetaVocabulary.CREATION_TIME;
 			oName = "Creation Time";
-			eP = createMetaPropertyElement(dataRepo, doc, sl, rf, pName, oName, sfc );
-			eR.appendChild(eP);
+			
 			Collection<Date> date = metadata.getComplexCreationDate();
 			Iterator<Date> iteratord = date.iterator();
-			while(iteratord.hasNext()){			
-				oName = (iteratord.next()).toString();
-				Element eV = createValueElement(doc, oName, "unknown", new Vector());  
-				lastValues = getValuesElement(eP);
-				lastValues.appendChild(eV);			
+			if(iteratord.hasNext()){
+				eP = createMetaPropertyElement(dataRepo, doc, sl, rf, pName, oName, sfc );
+				eR.appendChild(eP);
+				while(iteratord.hasNext()){			
+					oName = (iteratord.next()).toString();
+					Element eV = createValueElement(doc, oName, "unknown", new Vector());  
+					lastValues = getValuesElement(eP);
+					lastValues.appendChild(eV);			
+				}
 			}
 		}
 	}

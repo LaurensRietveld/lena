@@ -32,6 +32,7 @@ import java.net.URLEncoder;
 
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.openrdf.model.Namespace;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.Value;
@@ -43,6 +44,10 @@ import org.openrdf.query.TupleQueryResult;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
+import org.openrdf.repository.RepositoryResult;
+import org.openrdf.repository.sail.SailRepository;
+import org.openrdf.rio.RDFFormat;
+import org.openrdf.sail.memory.MemoryStore;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -53,6 +58,7 @@ import fr.inria.jfresnel.Constants;
 import fr.inria.jfresnel.FresnelDocument;
 import fr.inria.jfresnel.Group;
 import fr.inria.jfresnel.Lens;
+import fr.inria.jfresnel.fsl.FSLNSResolver;
 import fr.inria.jfresnel.fsl.sesame.FSLSesameEvaluator;
 import fr.inria.jfresnel.sesame.FresnelSesameParser;
 
@@ -114,12 +120,48 @@ public class LenaController {
 		
 		// instantiate a Fresnel parser that will create lenses and formats to be applied on a Sesame model 
 		//FresnelSesameParser fp = new FresnelSesameParser(nsr, fhs); 
+		
 		FresnelSesameParser fp = new FresnelSesameParser();
-
+		fd = new FresnelDocument();
+		defaultLenses = new FresnelDocument();
+		
 		// actually parse a Fresnel document, written in Notation 3 
-		File lensFile=lenaConfig.getLensFile();
-		fd = fp.parse(lensFile, Constants.N3_READER);		
 
+		File lensFile=lenaConfig.getLensFile();
+		System.out.println(lensFile.getPath());
+		System.out.println(lensFile.exists());
+		
+		/*loading the RDF data from f file in the Sesame store*/
+		/*System.out.println("here!!");
+		Repository fresnelRepository = new SailRepository(new MemoryStore());
+		System.out.println("here**!");
+		try {
+		    fresnelRepository.initialize();
+		    System.out.println("here1*!!");
+		    RepositoryConnection connection = fresnelRepository.getConnection();
+		    System.out.println("here1**!!");
+		    connection.add(lensFile, lensFile.toURL().toString(), RDFFormat.N3);
+		    System.out.println("here1***!!");
+		    FSLNSResolver nsr = null;
+			if (nsr == null) {
+				RepositoryResult<Namespace> nsi = connection.getNamespaces();
+				Namespace ns;
+				nsr = new FSLNSResolver();
+				while (nsi.hasNext()){
+					ns = nsi.next();
+					nsr.addPrefixBinding(ns.getPrefix(), ns.getName());
+				}
+			}
+			System.out.println("here2!!");
+		}
+		catch (Exception ex){
+		    System.out.println("Fresnel: Error: Failed to load RDF data from " + lensFile.toString());
+		    ex.printStackTrace();
+		}	*/
+		
+		fd = fp.parse(lensFile, Constants.N3_READER);	
+
+		
 		//The lenses, formats and groups can then be obtained as follows:
 		/*
 		Lens[] lenses = fd.getLenses();
@@ -141,8 +183,8 @@ public class LenaController {
 		//renderer=new SesameRenderer();
 		//renderer=new LenaRenderer();
 		rendererSetFresnelRepository(fp.getFresnelRepository());
-		
 		init();
+		
 		System.out.println("Initialization of JFresnelEngine successfully finished!");		
 	}
 
@@ -167,6 +209,8 @@ public class LenaController {
 		}
 	}
 	
+	/*File lensFile=lenaConfig.getLensFile();
+	fd = fp.parse(lensFile, Constants.N3_READER);*/	
 	public FresnelDocument getFresnelDocument(){ 
 		return fd;
 	}
@@ -181,6 +225,8 @@ public class LenaController {
 	 * @throws QueryEvaluationException
 	 */
 	public String getClasses(String location, String meta) throws UnsupportedEncodingException {
+		System.out.println("Get Classes");
+		
 		String out = "";
 		String dataLocation = "";
 		String dataMeta = "";
@@ -190,7 +236,7 @@ public class LenaController {
 			if (location == "local") {
 				out = "<div id='lensesAndClasses'><h3>Local Classes: </h3><hr><menu id='lclasses'>";				
 				con=lenaConfig.getLocalRepository().getConnection();
-				dataLocation = "&location=local";
+				dataLocation = "&location=local";				
 			} else if (location=="remote"){
 				out = "<div id='lensesAndClasses'><h3>Remote Classes: </h3><hr><menu id='rclasses'>";
 				con=lenaConfig.getRemoteRepository().getConnection();
@@ -261,6 +307,7 @@ public class LenaController {
 				}
 		}
 		out = out.concat("</menu></div>");
+		System.out.println(out);
 		return out;
 	}	
 	
@@ -295,7 +342,7 @@ public class LenaController {
 		if (location == "remote") {
 			repository =lenaConfig.getRemoteRepository();
 			con = repository.getConnection();
-		} else {
+		} else if (location == "local") {
 			repository = lenaConfig.getLocalRepository();
 			con = repository.getConnection();
 		}
@@ -310,12 +357,13 @@ public class LenaController {
 
 				String firstBindingName = result.getBindingNames().get(0);
 				while (result.hasNext()) {
+					
 					Value instance = result.next().getBinding(firstBindingName).getValue();
-					if (instance instanceof Resource) {						
+					//if (instance instanceof Resource) {						
 						//if (isLensForResourceAvailable(((Resource) instance).stringValue(),location)) {
 							//isLensAvailable = true;
 						//}						
-					}
+					//}
 					i++;
 				}
 			} finally {
@@ -326,12 +374,12 @@ public class LenaController {
 		}
 		int numberOfResources = 0;
 		//NEW: Metaknowledge counts as instance. Take them out
-		if(lenaConfig.getMetaknowledge())
+		/*if(lenaConfig.getMetaknowledge())
 			numberOfResources = i/2;
 		else
-			numberOfResources = i;
+			numberOfResources = i;*/
 		
-		out = out.concat("(" + numberOfResources + ")");
+		out = out.concat("(" + i + ")");
 		if (isLensAvailable) {
 			out = out
 					.concat("</a><img src='public/images/lens_icon.png' style='border: 0px; margin-left: 5px; vertical-align: bottom;' class='tooltip' title='Lens(es) available!' alt='Icon.' />");
@@ -350,6 +398,7 @@ public class LenaController {
 	 * @throws UnsupportedEncodingException
 	 */
 	public String getLenses(String meta) throws UnsupportedEncodingException  {
+		System.out.println("Get Lenses");
 		String labelLenses = "<div id='lensesAndClasses'><h3>Label Lenses: </h3><hr><menu id='lenses'>";
 		String defaultLenses = "<div id='lensesAndClasses'><h3>Lenses: </h3><hr><menu id='lenses'>";
 
@@ -360,7 +409,7 @@ public class LenaController {
 		else
 			dataMeta = "&meta=false";
 		
-		Lens[] lenses=fd.getLenses();
+		Lens[] lenses= fd.getLenses();
 		
 		for (Lens lens:lenses) {
 			String lensID = lens.getURI();//lensObj.getIdentifier().toString();
@@ -387,6 +436,7 @@ public class LenaController {
 		}		
 		labelLenses = labelLenses.concat("</menu></div>");
 		defaultLenses = defaultLenses.concat("</menu></div>");
+		System.out.println(defaultLenses);
 		return defaultLenses;
 	}
 
@@ -398,12 +448,22 @@ public class LenaController {
 	 */
 	
 	public String getPages() throws UnsupportedEncodingException {
-		int numberOfPages = getNumberOfResources() / 100;
+		int numberOfPages = 1;
+		StringBuffer pages = new StringBuffer();
+		
+		pages.append("<b>Pages: </b>");
+		pages.append(numberOfPages);
+		pages.append(" | " + getNumberOfResources() + " Instances");
+		pages.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		
+		
+		
+		/*int numberOfPages = getNumberOfResources() / 100;
 		if (getNumberOfResources() % 100 != 0) {
 			numberOfPages += 1;
 		}
 		StringBuffer pages = new StringBuffer();
-
+		
 		pages.append("<b>Pages: </b>");
 		pages.append(numberOfPages);
 		pages.append(" | " + getNumberOfResources() + " Instances");
@@ -457,7 +517,7 @@ public class LenaController {
 					+ "&page=" + numberOfPages + "'><b> >></b></a>");
 		} else {
 			pages.append("&nbsp;>>");
-		}
+		}*/
 		return pages.toString();
 	}	
 	
@@ -474,6 +534,7 @@ public class LenaController {
 	public String selectAsXHTML(String resourceURIString, String classURIString, String fresnelLensString, 
 			String pageString, String locationString, String metaString) {
 		
+		
 		this.resource = resourceURIString;
 		this.lens = fresnelLensString;	
 		this.page = Integer.valueOf(pageString).intValue();
@@ -482,6 +543,7 @@ public class LenaController {
 		String xhtml = "";
 		try {
 
+			
 			Document selection=makeSelection(
 					resourceURIString,
 					classURIString,
@@ -489,18 +551,19 @@ public class LenaController {
 					pageString,
 					locationString);
 			
+		
 			//System.out.println("Class:" + classURIString);
 			//getClasses(locationString);
 			printDoc(selection,System.out);
-			
-			
+					
 
 			if (selection.hasChildNodes()) {
 				XMLOutputter out=new XMLOutputter(Format.getPrettyFormat());
 				
 				xhtml=out.outputString(LenaTransformer.transform(selection,resourceURIString, 
 						classURIString, locationString, metaString));
-			
+				
+				
 				/*
 				selection.normalizeDocument();
 				selection.normalize();
@@ -547,11 +610,11 @@ public class LenaController {
 
 				xhtml = stringWriter.toString();
 				*/
-			} else {
+			} else {				
 				errorMessage.append("Could not perform any selection.");
 				xhtml = errorMessage.toString();
 			}
-		} catch (Exception e) {
+		} catch (Exception e) {			
 			// TODO Auto-generated catch block
 			errorMessage.append(e.toString() + "<br/>");
 			e.printStackTrace();
@@ -573,28 +636,26 @@ public class LenaController {
 	private Document makeSelection(String resourceURIString, String classURIString, String fresnelLensString, 
 			String pageNumber, String locationString) {
 		
-		boolean remoteRepo;
+		boolean remoteRepo = false;
 		boolean lensGiven;
 		boolean resourceGiven;
 		boolean classGiven;
 		int page=0;
-		
+	
 		FresnelSesameParser fp = new FresnelSesameParser();
 
-		File lensFile=lenaConfig.getLensFile();
-		fd = fp.parse(lensFile, Constants.N3_READER);		
-
-		
+				
 		try {
 			page=Integer.valueOf(pageNumber);
 		} catch (Exception e){
 			System.out.println("Page number conversion throws exception. No valid page information.");
 		}
 		
-		if (locationString!=null && locationString.equalsIgnoreCase("remote")) {
-			remoteRepo=true;
-		} else {
+		
+		if (locationString!=null && locationString.equalsIgnoreCase("local")) {
 			remoteRepo=false;
+		} else {
+			remoteRepo=true;
 		}
 		
 		if (fresnelLensString != null && fresnelLensString.trim() != ""){
@@ -615,38 +676,38 @@ public class LenaController {
 			classGiven=false;
 		}
 		
-		Repository repository;
+	
+		Repository repository = null;
 		Document document=null;
 		try {
-			if (remoteRepo) {
-				repository = lenaConfig.getRemoteRepository();
+			if (!remoteRepo) {
+				repository = lenaConfig.getLocalRepository();
 				//System.out.println("SET REMOTE");
 			} else {
-				repository = lenaConfig.getLocalRepository();
+				repository = lenaConfig.getRemoteRepository();
 				//System.out.println("SET LOCAL");
 			}
 			if (lensGiven && resourceGiven) {
 				System.out.println("*** LENA: lens and resource given");
-				// get lens and set instancedomain to resourceGiven
 				Lens lens = fd.getLens(fresnelLensString);
 				lens.setInstanceDomain(resourceURIString);
-				return rendererRender(repository, lens);	
+				document = rendererRender(repository, lens);	
 			} else if (resourceGiven){
 				System.out.println(String.format("*** LENA: no lens, but resource %s",resourceURIString));							
 				Lens defaultLens=defaultLenses.getLens(defaultResourceLens);				
 				defaultLens.setInstanceDomain(resourceURIString);
 				System.out.println("Print Resource Lens:" + defaultLenses.getLens(defaultResourceLens));	
-				return rendererRender(repository, defaultLens);				
+				document =  rendererRender(repository, defaultLens);				
 			} else if (classGiven) {
 				System.out.println(String.format("*** LENA: no lens, no resource, but class %s",classURIString));
 				Lens defaultLens=defaultLenses.getLens(defaultClassLens);				
 				defaultLens.setClassDomain(classURIString);
 				System.out.println("Print Classes Lens:" + defaultLenses.getLens(defaultClassLens));				
-				return rendererRender(repository, defaultLens);				
+				document =  rendererRender(repository, defaultLens);				
 			} else if (lensGiven) {				 
 				System.out.println(String.format("*** LENA: lens %s, no resource given", fresnelLensString));
 				Lens lens = fd.getLens(fresnelLensString);
-				return rendererRender(repository, lens);
+				document =  rendererRender(repository, lens);				
 			} else { //if (!lensGiven && !resourceGiven && !classGiven) {							
 				System.out.println("No lens and/or resource and class parameter set!");
 				errorMessage.append("No lens and/or resource and class parameter set!");			
@@ -656,7 +717,7 @@ public class LenaController {
 			// TODO Auto-generated catch block
 			errorMessage.append(e.toString() + "<br/>");
 			e.printStackTrace();
-		}
+		}		
 		return document;
 	}	
 	
@@ -700,9 +761,13 @@ public class LenaController {
 	}*/
 	/**
 	 * @param args
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnsupportedEncodingException {
 		LenaController jfe=new LenaController(new LenaConfig(null));
+		
+		String classes = jfe.getClasses("local", "false");
+		
 		String classString="http://www.loa-cnr.it/ontologies/ExtendedDnS.owl#agent";
 		String resource="http://xmlns.com/foaf/0.1/Thomas";
 		String fresnelLensString="http://isweb/RSS_planetRDF";		
@@ -712,11 +777,16 @@ public class LenaController {
 		//String xhtml=jfe.selectAsXHTML(null, "http://xmlns.com/foaf/0.1/Person", fresnelLensString, "1","local");
 		//String xhtml=jfe.selectAsXHTML(null, null, fresnelLensString, "1","local");
 		//String xhtml=jfe.selectAsXHTML(resource, null, null, "1","local");
-		String xhtml=jfe.selectAsXHTML(null, null, fresnelLensString, "1","local","false");
-		xhtml=jfe.selectAsXHTML(resource, null, fresnelLensString, "1","local","false");
-		xhtml=jfe.selectAsXHTML(null, null, fresnelLensString, "1","local","false");
+		//String xhtml=jfe.selectAsXHTML(null, null, fresnelLensString, "1","local","true");
+		//xhtml=jfe.selectAsXHTML(resource, null, fresnelLensString, "1","local","true");
+		//xhtml=jfe.selectAsXHTML(null, null, fresnelLensString, "1","local","true");
 		//String xhtml=jfe.selectAsXHTML(null, classString, null, null,null);
 
+		//String xhtml=jfe.selectAsXHTML(null, "http://www.lehigh.edu/%7Ezhp2/2004/0401/univ-bench.owl#Department", null, "1","local","true");
+		
+		String xhtml=jfe.selectAsXHTML(null, "http://www.x-media-project.org/fiat#PerformanceInfluenceMeasurement", null, "1","local","true");
+		//String xhtml=jfe.selectAsXHTML(null, "http://www.x-media-project.org/fiat#NoiseCurve", null, "1","local","true");
+		
 		System.out.println(xhtml);
 		
 					

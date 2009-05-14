@@ -43,9 +43,9 @@ import javax.servlet.http.HttpSession;
 public final class LenaServlet extends HttpServlet {
 	
 	
-	private LenaController jfe;
+	private LenaController jfe = null;
 
-	private LenaController getLenaController(){
+	private LenaController getLenaController(){	
 		if(jfe==null)
 			jfe = new LenaController(new LenaConfig(getServletContext()));
 		return jfe;
@@ -184,14 +184,17 @@ public final class LenaServlet extends HttpServlet {
 	
 			
 			if (session.isNew()) {
+				System.out.println("new session");
 				/*rdfBrowser = new RDFBrowser();
 				rdfBrowser.initRepositories(getServletContext());
 				rdfBrowser.initConfiguration();*/
 				//jfe=new LenaController(new LenaConfig(getServletContext()));
+				System.out.println("++++++++++++++++++++++++++");				
 				menuLenses = getLenaController().getLenses(paramMeta);
 				menuRemote = getLenaController().getClasses("remote",paramMeta);
 				menuLocal = getLenaController().getClasses("local",paramMeta);
-				session.setAttribute("rdfBrowser", getLenaController());
+				System.out.println("---------------------------");
+				//session.setAttribute("rdfBrowser", getLenaController());
 				session.setAttribute("menuLenses", menuLenses);
 				session.setAttribute("menuRemote", menuRemote);
 				session.setAttribute("menuLocal", menuLocal);				
@@ -249,9 +252,12 @@ public final class LenaServlet extends HttpServlet {
 				//jfe.initRepositories(getServletContext());
 				//jfe.initConfiguration();
 				//jfe=new LenaController(new LenaConfig(getServletContext()));
+				System.out.println("++++++++++++++++++++++++++");				
 				menuLenses = getLenaController().getLenses(paramMeta);
 				menuRemote = getLenaController().getClasses("remote",paramMeta);
 				menuLocal = getLenaController().getClasses("local",paramMeta);
+				System.out.println("---------------------------");
+				//session.setAttribute("rdfBrowser", getLenaController());
 				session.setAttribute("menuLenses", menuLenses);
 				session.setAttribute("menuRemote", menuRemote);
 				session.setAttribute("menuLocal", menuLocal);

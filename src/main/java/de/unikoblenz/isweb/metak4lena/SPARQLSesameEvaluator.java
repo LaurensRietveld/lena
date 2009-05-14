@@ -27,25 +27,27 @@ import java.util.Map;
 import java.util.Set;
 
 import org.openrdf.model.Value;
+import org.openrdf.repository.Repository;
 import org.xmedia.metak.eval.SesameSparqlEvaluator;
 import org.xmedia.metak.prov.ComplexProvenance;
 
-import fr.inria.jfresnel.sparql.SPARQLNSResolver;
-import fr.inria.jfresnel.sparql.SPARQLQuery;
 
 
-
-public class SPARQLSesameEvaluator extends fr.inria.jfresnel.sparql.sesame.SPARQLSesameEvaluator {
+public class SPARQLSesameEvaluator{ 
+//extends fr.inria.jfresnel.sparql.sesame.SPARQLSesameEvaluator {
 
 	
+	Repository dataRepository;
 	public SPARQLSesameEvaluator(){
-		super();
-	}
-	public SPARQLSesameEvaluator(SPARQLNSResolver nsr){
-		super(nsr);
-    }
-	public Map<Value, ComplexProvenance> metaEvaluateQuery(String sparqlQuery){		
-		Map<Set<Value>, ComplexProvenance> metadata = (new SesameSparqlEvaluator(super.getDataRepository())).evaluate(sparqlQuery);
+		
+	}	
+	 public void setDataRepository(Repository dataRepo){
+		dataRepository = dataRepo;
+	 }
+				    
+	public Map<Value, ComplexProvenance> metaEvaluateQuery(String sparqlQuery){
+		SesameSparqlEvaluator eval = new SesameSparqlEvaluator(dataRepository);
+		Map<Set<Value>, ComplexProvenance> metadata = eval.evaluate(sparqlQuery);
 				
 		Map<Value, ComplexProvenance> provenance = new HashMap<Value, ComplexProvenance>();
 		java.util.Iterator<Value> it;

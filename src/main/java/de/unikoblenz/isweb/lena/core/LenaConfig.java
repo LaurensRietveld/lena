@@ -49,7 +49,7 @@ import de.unikoblenz.isweb.metak4lena.SesameRenderer;
 public class LenaConfig {
 
 	//private static LenaConfig lc =new LenaConfig();
-	File configurationFile=new File("src/main/resources/lena.properties");
+	File configurationFile=new File("src/main/webapp/public/resources/lena.properties");
 	File lensFile=new File("src/main/webapp/public/resources/configuration/fresnel.n3");
 	File defaultLensFile=new File("src/main/webapp/public/resources/configuration/default-lens.n3");
 	File dataDir=new File("src/main/webapp/public/resources/data");	
@@ -66,12 +66,13 @@ public class LenaConfig {
 	//Changes: 02/04/2009
 	//new parameter: metaknowledge (serve as flag to load the dataset with metaknoweldge)	
 	public LenaConfig(ServletContext servletContext) {
-		// Properties loading.
-				
+		// Properties loading.			
 		props = new Properties();
 		try {
 			if (!configurationFile.exists()) {
-				configurationFile=new File(this.getClass().getResource("lena.properties").toURI());
+				configurationFile = new File(servletContext.getRealPath("/public/resources/lena.properties"));
+				
+						//this.getClass().getResource("lena.properties").toURI());
 			}
 			InputStream is=new FileInputStream(configurationFile);
 			props.load(is);
@@ -100,7 +101,7 @@ public class LenaConfig {
 			try {
 				defaultLensFile = new File(servletContext.getRealPath("/public/resources/configuration/default-lens.n3"));
 				if (defaultLensFile.exists())
-					System.out.println("found defaultLensFile at "+lensFile.toString());
+					System.out.println("found defaultLensFile at "+defaultLensFile.toString());
 			} catch (Exception e){
 				//configurationFile=new File(this.getClass().getResource("fresnel.n3").toString());
 				e.printStackTrace();
@@ -120,7 +121,7 @@ public class LenaConfig {
 	 * @throws UnresolvableException
 	 * @throws ParsingException
 	 */
-	public void initRepositories(ServletContext servletContext) {	
+	public void initRepositories(ServletContext servletContext) {
 		try {
 			String repositoryType;
 			if (props.get("repository.type") != null) {
@@ -129,12 +130,14 @@ public class LenaConfig {
 				repositoryType = "memory";
 			}
 			if (repositoryType.equals("http")) {
+				System.out.println("http");
 				String dataServer = (String) props.get("server.url");
 				String dataRepositoryID = (String) props.get("data.repository.id");
 				localRepository = new HTTPRepository(dataServer, dataRepositoryID);
 				localRepository.shutDown();
 				localRepository.initialize();
 			} else {
+				System.out.println("memory");
 				if (!dataDir.exists()) {
 					dataDir=new File(servletContext.getRealPath("/public/resources/data/"));
 				}
@@ -172,8 +175,9 @@ public class LenaConfig {
 			
 				String baseURI = "http://example.org/example/local";
 				for (int i = 0; i < files.length; i++) {
+					System.out.println("File Name: "+ files[i].getPath() + " File Index:"+i);
 					try {
-						con.add(files[i].toURI().toURL(), baseURI, RDFFormat.TURTLE);
+						con.add(files[i].toURI().toURL(), baseURI, RDFFormat.TRIX);
 						con.commit();
 						} catch (Exception e) {							
 							try{
@@ -181,7 +185,7 @@ public class LenaConfig {
 								con.commit();
 							}catch (Exception e1) {
 								try{
-									con.add(files[i].toURI().toURL(), baseURI, RDFFormat.TRIX);
+									con.add(files[i].toURI().toURL(), baseURI, RDFFormat.TURTLE);
 									con.commit();
 								}catch (Exception e2) {
 									try{
