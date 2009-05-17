@@ -368,11 +368,13 @@ public final class LenaServlet extends HttpServlet {
 					writer.println("<tr>");
 					writer.println("<td style=width:85%; vertical-align: top>");
 					writer.println(getLenaController().getPages());
-					writer.println("</td>");					
-					if (paramMeta.equalsIgnoreCase("true"))
+					writer.println("</td>");
+					System.out.println("Meta= "+paramMeta);
+					if (paramMeta.equalsIgnoreCase("true"))						
 						writer.println("<td class='smallfont' nowrap='nowrap'><input type='checkbox' name='meta' id='show_metaknowledge' onClick='checkboxChanged()' checked/><acronym style='border-bottom: 1px dotted #000000; cursor: help;' title='Show meta knowledge.'>Show meta knowledge values?</acronym></td>");					
 					else if (paramMeta.equalsIgnoreCase("false"))
-						writer.println("<td class='smallfont' nowrap='nowrap'><input type='checkbox' name='meta' id='show_metaknowledge' onClick='checkboxChanged()'/><acronym style='border-bottom: 1px dotted #000000; cursor: help;' title='Show meta knowledge.'>Show meta knowledge values?</acronym></td>");					
+						writer.println("<td class='smallfont' nowrap='nowrap'><input type='checkbox' name='meta' id='show_metaknowledge' onClick='checkboxChanged()'/><acronym style='border-bottom: 1px dotted #000000; cursor: help;' title='Show meta knowledge.'>Show meta knowledge values?</acronym></td>");
+					
 					writer.println("</td>");
 					writer.println("</tr>");
 					writer.println("</table>");

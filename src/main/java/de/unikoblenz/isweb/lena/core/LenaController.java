@@ -787,7 +787,8 @@ public class LenaController {
 		String xhtml=jfe.selectAsXHTML(null, "http://www.x-media-project.org/fiat#PerformanceInfluenceMeasurement", null, "1","local","true");
 		//String xhtml=jfe.selectAsXHTML(null, "http://www.x-media-project.org/fiat#NoiseCurve", null, "1","local","true");
 		
-		System.out.println(xhtml);
+		//String xhtml=jfe.selectAsXHTML(null, "http://www.x-media-project.org/fiat#News", null, "1","local","true");
+		System.out.println(xhtml);		
 		
 					
 	}

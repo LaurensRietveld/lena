@@ -82,9 +82,9 @@ function reload(){
 	call.request();
 	call.addEvent('onComplete', function(){
 		if(checked == true)
-			window.location.href = '?reload=true&meta=true';
+			window.location.href = '?reload=true';
 		else
-			window.location.href = '?reload=true&meta=false';
+			window.location.href = '?reload=true';
 		//'?resource=' + URLencode(resource) + '&lens=' + URLencode(lens) + '&location=' + location + '&reload=true';
 	});
 }
@@ -116,11 +116,7 @@ function checkboxChanged()
 		if(checked == false){
 			checked = true;
 			var pref; 
-			$('selection').getElements('a').each(function(item, index){
-				pref = item.getProperty('href');
-				pref = pref.substring(0,pref.length - 11) + "&meta=true";
-				item.setProperty('href', pref);
-			});
+			
 			$('lenses').getElements('a').each(function(item, index){
 				pref = item.getProperty('href');
 				pref = pref.substring(0,pref.length - 11) + "&meta=true";
@@ -150,11 +146,7 @@ function checkboxChanged()
 		if(checked==true){
 			checked = false;
 			var pref; 
-			$('selection').getElements('a').each(function(item, index){
-				pref = item.getProperty('href');
-				pref = pref.substring(0,pref.length - 10) + "&meta=false";
-				item.setProperty('href', pref);
-			});
+			
 			$('lenses').getElements('a').each(function(item, index){
 				pref = item.getProperty('href');
 				pref = pref.substring(0,pref.length - 10) + "&meta=false";

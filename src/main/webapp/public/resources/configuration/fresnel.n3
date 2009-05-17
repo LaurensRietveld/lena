@@ -45,6 +45,53 @@
 						 ) ;
 	fresnel:group :foafGroup .
 	
+		
+:FIAT_News a fresnel:Lens;
+	fresnel:purpose fresnel:defaultLens ;
+	fresnel:classLensDomain fiat:OneComponentTaped ;
+	fresnel:showProperties (	fiat:loudness
+								fiat:aerodinamicTestDescription
+								fiat:tapedComponent
+						 ) ;
+	fresnel:group :foafGroup .
+	
+	
+:FIAT_MotorShow a fresnel:Lens;
+	fresnel:purpose fresnel:defaultLens ;
+	fresnel:classLensDomain fiat:OneComponentTaped ;
+	fresnel:showProperties (	fiat:loudness
+								fiat:aerodinamicTestDescription
+								fiat:tapedComponent
+						 ) ;
+	fresnel:group :foafGroup .
+	
+:FIAT_NoiseCurve a fresnel:Lens;
+	fresnel:purpose fresnel:defaultLens ;
+	fresnel:classLensDomain fiat:OneComponentTaped ;
+	fresnel:showProperties (	fiat:loudness
+								fiat:aerodinamicTestDescription
+								fiat:tapedComponent
+						 ) ;
+	fresnel:group :foafGroup .
+	
+:FIAT_OverallPerformance a fresnel:Lens;
+	fresnel:purpose fresnel:defaultLens ;
+	fresnel:classLensDomain fiat:OneComponentTaped ;
+	fresnel:showProperties (	fiat:loudness
+								fiat:aerodinamicTestDescription
+								fiat:tapedComponent
+						 ) ;
+	fresnel:group :foafGroup .
+	
+		
+:EMAIL a fresnel:Lens;
+	fresnel:purpose fresnel:defaultLens ;
+	fresnel:classLensDomain fiat:OneComponentTaped ;
+	fresnel:showProperties (	fiat:loudness
+								fiat:aerodinamicTestDescription
+								fiat:tapedComponent
+						 ) ;
+	fresnel:group :foafGroup .	
 	
 ##################
 # Formats - FOAF #

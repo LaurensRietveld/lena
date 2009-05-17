@@ -178,26 +178,32 @@ public class LenaConfig {
 					System.out.println("File Name: "+ files[i].getPath() + " File Index:"+i);
 					try {
 						con.add(files[i].toURI().toURL(), baseURI, RDFFormat.TRIX);
+						System.out.println("Read File: "+ files[i].getPath());
 						con.commit();
 						} catch (Exception e) {							
 							try{
 								con.add(files[i].toURI().toURL(), baseURI, RDFFormat.RDFXML);
+								System.out.println("Read File: "+ files[i].getPath());
 								con.commit();
 							}catch (Exception e1) {
 								try{
 									con.add(files[i].toURI().toURL(), baseURI, RDFFormat.TURTLE);
+									System.out.println("Read File: "+ files[i].getPath());
 									con.commit();
 								}catch (Exception e2) {
 									try{
 										con.add(files[i].toURI().toURL(), baseURI, RDFFormat.N3);
+										System.out.println("Read File: "+ files[i].getPath());
 										con.commit();
 									}catch (Exception e3) {
 										try{
 											con.add(files[i].toURI().toURL(), baseURI, RDFFormat.NTRIPLES);
+											System.out.println("Read File: "+ files[i].getPath());
 											con.commit();
 										}catch (Exception e4) {
 											try{
 												con.add(files[i].toURI().toURL(), baseURI, RDFFormat.TRIG);
+												System.out.println("Read File: "+ files[i].getPath());
 												con.commit();
 											}catch (Exception e5) {
 												e5.printStackTrace();
