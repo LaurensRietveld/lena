@@ -76,7 +76,14 @@ public final class LenaServlet extends HttpServlet {
 	 * @exception ServletException
 	 *              if a servlet error occurs
 	 */
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		handleRequest(request,response);
+	}
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		handleRequest(request,response);
+	}
+	
+	private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("----------------------------------------------------------");
 		System.out.println("----------------------------------------------------------");
 		System.out.println("Query String: " + request.getQueryString());
@@ -266,8 +273,7 @@ public final class LenaServlet extends HttpServlet {
 	
 			
 			// Check if sidebar status changed.
-			if (sidebarStatus == sidebar) {
-				sidebarChanged = false;
+			if (sidebarStatus == sidebar) {				sidebarChanged = false;
 			} else {
 				sidebarChanged = true;
 			}
@@ -302,7 +308,7 @@ public final class LenaServlet extends HttpServlet {
 				writer.println("<div id='sidebar'>");
 	
 				writer.println("<div id='lensesAndClasses'>");
-				writer.println("<a class='tooltip' title='::Home' href='.'><h2 style='font-variant: small-caps;'>LENA <span style='font-size: 8pt'>2.0.1a</span></h2></a><hr>");
+				writer.println("<a class='tooltip' title='::Home' href='.'><h2 style='font-variant: small-caps;'>LENA <span style='font-size: 8pt'>2.0.4a</span></h2></a><hr>");
 	
 				writer.println("<menu>");
 				writer.println("<li><a id='home' onClick='setHrefs()' class='tooltip' title='::Home' href='.'>HOME</a></li>");
@@ -369,7 +375,7 @@ public final class LenaServlet extends HttpServlet {
 					writer.println("<td style=width:85%; vertical-align: top>");
 					writer.println(getLenaController().getPages());
 					writer.println("</td>");
-					System.out.println("Meta= "+paramMeta);
+					//System.out.println("Meta= "+paramMeta);
 					if (paramMeta.equalsIgnoreCase("true"))						
 						writer.println("<td class='smallfont' nowrap='nowrap'><input type='checkbox' name='meta' id='show_metaknowledge' onClick='checkboxChanged()' checked/><acronym style='border-bottom: 1px dotted #000000; cursor: help;' title='Show meta knowledge.'>Show meta knowledge values?</acronym></td>");					
 					else if (paramMeta.equalsIgnoreCase("false"))

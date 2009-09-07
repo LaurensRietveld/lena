@@ -48,14 +48,18 @@ public class LenaTransformer {
 	private static String classURIString = "";
 	private static String locationString ="";
 	private static String metaString = "";
+	private static String pageString = "";
 	
 	public static Element transform(org.w3c.dom.Document w3cdoc, String _resourceURIString, String _classURIString, 
-			String _locationString, String _metaString){
+			String _locationString, String _metaString, String _pageString){
 		//controller = _controller;
 		resourceURIString = _resourceURIString;
 		classURIString = _classURIString;
 		locationString = _locationString;
 		metaString = _metaString;
+		pageString = _pageString;
+		
+		
 		
 		DOMBuilder builder=new DOMBuilder();
 		Document doc=builder.build(w3cdoc);
@@ -63,6 +67,7 @@ public class LenaTransformer {
 		Element selection = new Element("div")
 							.setAttribute("id", "selection");
 		List<Element> resources=doc.getRootElement().getChildren("resource",fresnelNS);
+		
 		for (Element e:resources) {
 			selection.addContent(handleResourceElement(e));
 		}

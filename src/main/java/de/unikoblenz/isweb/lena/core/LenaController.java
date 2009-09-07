@@ -22,9 +22,7 @@
 */ 
 package de.unikoblenz.isweb.lena.core;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
@@ -32,8 +30,6 @@ import java.net.URLEncoder;
 
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-import org.openrdf.model.Namespace;
-import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.query.MalformedQueryException;
@@ -44,23 +40,17 @@ import org.openrdf.query.TupleQueryResult;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
-import org.openrdf.repository.RepositoryResult;
-import org.openrdf.repository.sail.SailRepository;
-import org.openrdf.rio.RDFFormat;
-import org.openrdf.sail.memory.MemoryStore;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.unikoblenz.isweb.metak4lena.SesameRenderer;
-
 import fr.inria.jfresnel.Constants;
 import fr.inria.jfresnel.FresnelDocument;
-import fr.inria.jfresnel.Group;
 import fr.inria.jfresnel.Lens;
-import fr.inria.jfresnel.fsl.FSLNSResolver;
 import fr.inria.jfresnel.fsl.sesame.FSLSesameEvaluator;
 import fr.inria.jfresnel.sesame.FresnelSesameParser;
+
 
 /**
  * @author Thomas Franz, http://isweb.uni-koblenz.de
@@ -68,9 +58,12 @@ import fr.inria.jfresnel.sesame.FresnelSesameParser;
  */
 public class LenaController {
 	
-	private int page;
 	private String resource;
 	private String lens;
+	private String clazz;
+	private String location;
+	private String meta;
+	private String page;
 	
 	private File xslFile;
 	private File xslFileRemote;
@@ -86,10 +79,8 @@ public class LenaController {
 	private SesameRenderer sesameRenderer;	
 	private LenaRenderer lenaRenderer;
 	
-	
-	//private int numberOfResources;
-	
 	private StringBuffer errorMessage=new StringBuffer();
+	private int totalResources  = 0;
 	
 	public LenaController(LenaConfig lenaConfig) {
 		System.out.println("Initialising JFresnelEngine");
@@ -127,10 +118,7 @@ public class LenaController {
 		
 		// actually parse a Fresnel document, written in Notation 3 
 
-		File lensFile=lenaConfig.getLensFile();
-		System.out.println(lensFile.getPath());
-		System.out.println(lensFile.exists());
-		
+	
 		/*loading the RDF data from f file in the Sesame store*/
 		/*System.out.println("here!!");
 		Repository fresnelRepository = new SailRepository(new MemoryStore());
@@ -159,7 +147,7 @@ public class LenaController {
 		    ex.printStackTrace();
 		}	*/
 		
-		fd = fp.parse(lensFile, Constants.N3_READER);	
+		fd = fp.parse(lenaConfig.getLensFile(), Constants.N3_READER);	
 
 		
 		//The lenses, formats and groups can then be obtained as follows:
@@ -225,8 +213,7 @@ public class LenaController {
 	 * @throws QueryEvaluationException
 	 */
 	public String getClasses(String location, String meta) throws UnsupportedEncodingException {
-		System.out.println("Get Classes");
-		
+		System.out.println("Loading Classes...");
 		String out = "";
 		String dataLocation = "";
 		String dataMeta = "";
@@ -398,7 +385,7 @@ public class LenaController {
 	 * @throws UnsupportedEncodingException
 	 */
 	public String getLenses(String meta) throws UnsupportedEncodingException  {
-		System.out.println("Get Lenses");
+		System.out.println("Loading Lenses...");
 		String labelLenses = "<div id='lensesAndClasses'><h3>Label Lenses: </h3><hr><menu id='lenses'>";
 		String defaultLenses = "<div id='lensesAndClasses'><h3>Lenses: </h3><hr><menu id='lenses'>";
 
@@ -448,78 +435,74 @@ public class LenaController {
 	 */
 	
 	public String getPages() throws UnsupportedEncodingException {
-		int numberOfPages = 1;
-		StringBuffer pages = new StringBuffer();
-		
-		pages.append("<b>Pages: </b>");
-		pages.append(numberOfPages);
-		pages.append(" | " + getNumberOfResources() + " Instances");
-		pages.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-		
-		
-		
-		/*int numberOfPages = getNumberOfResources() / 100;
-		if (getNumberOfResources() % 100 != 0) {
-			numberOfPages += 1;
+		//if(getNumberOfResources() >0){
+			
+			int pageInt = Integer.valueOf(page).intValue();
+			StringBuffer pages = new StringBuffer();
+			
+			pages.append("<b>Page: </b>");
+			pages.append(pageInt);
+			//pages.append(" | " + getNumberOfResources() + " Instances");
+			pages.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+			
+			
+			
+			if(pageInt >= 1){
+				if ((this.lens !=null) && (this.resource != null)&& (this.lens.trim() != "") && (this.resource.trim() != "")) {			
+					pages.append("<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(this.lens, "UTF-8") + "&resource=" + URLEncoder.encode(this.resource, "UTF-8")
+							+ "&location=" + this.location +"&meta=" + this.meta+"&page=1'><b><< </b></a>");
+					int i = 1;
+					while(i<=pageInt){
+						pages.append("<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(this.lens, "UTF-8") + "&resource=" + URLEncoder.encode(this.resource, "UTF-8")
+								+ "&location=" + this.location +"&meta=" + this.meta+"&page="+i+"'><b> "+ i +" </b></a>");
+						i++;
+					}					
+					pages.append("<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(this.lens, "UTF-8") + "&resource=" + URLEncoder.encode(this.resource, "UTF-8")
+							+ "&location=" + this.location +"&meta=" + this.meta+"&page=" + (pageInt+1) + "'><b> next page...</b></a>");
+				} else if ((this.resource != null) && (this.resource.trim() != "")){
+					pages.append("<a onClick='setHrefs()' href='?resource=" + URLEncoder.encode(this.resource, "UTF-8")
+							+ "&location=" + this.location +"&meta=" + this.meta+"&page=1'><b><< </b></a>");
+					int i = 1;
+					while(i <=pageInt){
+						pages.append("<a onClick='setHrefs()' href='?resource=" + URLEncoder.encode(this.resource, "UTF-8")
+							+ "&location=" + this.location +"&meta=" + this.meta+"&page="+i+"'><b> "+i+" </b></a>");
+						i++;
+					}
+					pages.append("<a onClick='setHrefs()' href='?resource=" + URLEncoder.encode(this.resource, "UTF-8")
+							+ "&location=" + this.location +"&meta=" + this.meta+"&page=" + (pageInt+1) + "'><b> next page...</b></a>");									
+				} else if ((this.clazz != null)&&(this.clazz.trim() != "")) {
+					pages.append("<a onClick='setHrefs()' href='?class=" + URLEncoder.encode(this.clazz, "UTF-8") 
+							+ "&location=" + this.location +"&meta=" + this.meta+"&page=1'><b><< </b></a>");					
+					int i = 1;
+					while(i <=pageInt){
+						pages.append("<a onClick='setHrefs()' href='?class=" + URLEncoder.encode(this.clazz, "UTF-8") 
+							+ "&location=" + this.location +"&meta=" + this.meta+"&page="+i+"'><b> "+i+" </b></a>");
+						i++;
+					}
+					pages.append("<a onClick='setHrefs()' href='?class=" + URLEncoder.encode(this.clazz, "UTF-8") 
+							+ "&location=" + this.location +"&meta=" + this.meta+"&page=" + (pageInt+1) + "'><b> next page...</b></a>");							
+				} else if ((this.lens !=null)&&(this.lens.trim() !="")) {	
+					pages.append("<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(this.lens, "UTF-8") 
+							+ "&location=" + this.location +"&meta=" + this.meta+"&page=1'><b><< </b></a>");					
+					int i =1;
+					while(i <=pageInt){
+						pages.append("<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(this.lens, "UTF-8") 
+							+ "&location=" + this.location +"&meta=" + this.meta+"&page="+i+"'><b> "+i+" </b></a>");
+						i++;
+					}
+					pages.append("<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(this.lens, "UTF-8") 
+							+ "&location=" + this.location +"&meta=" + this.meta+"&page=" + (pageInt+1) + "'><b> next page...</b></a>");					
+				} else { //if (!lensGiven && !resourceGiven && !classGiven) {							
+					System.out.println("No lens and/or resource and class parameter set!");				
+				}
+			}
+			return pages.toString();
 		}
-		StringBuffer pages = new StringBuffer();
-		
-		pages.append("<b>Pages: </b>");
-		pages.append(numberOfPages);
-		pages.append(" | " + getNumberOfResources() + " Instances");
-		pages.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-
-		if (numberOfPages != 1) {
-			pages.append("<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(lens, "UTF-8") + "&resource=" + URLEncoder.encode(resource, "UTF-8")
-					+ "&page=1'><b><< </b></a>");
-		} else {
-			pages.append("<<&nbsp;");
-		}
-		if ((page - 1) > 0) {
-			pages.append("<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(lens, "UTF-8") + "&resource=" + URLEncoder.encode(resource, "UTF-8")
-					+ "&page=" + (page - 1) + "'><b><</b></a>&nbsp;");
-		} else {
-			pages.append("<&nbsp;");
-		}
-		if ((page - 2) > 0) {
-			pages.append("<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(lens, "UTF-8") + "&resource=" + URLEncoder.encode(resource, "UTF-8")
-					+ "&page=" + (page - 2) + "'>" + (page - 2) + "</a>&nbsp;");
-		}
-		if ((page - 1) > 0) {
-			pages.append("<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(lens, "UTF-8") + "&resource=" + URLEncoder.encode(resource, "UTF-8")
-					+ "&page=" + (page - 1) + "'>" + (page - 1) + "</a>&nbsp;");
-		}
-		pages.append("<b>" + page + "</b>");
-		if ((page + 1) <= numberOfPages) {
-			pages.append("&nbsp;<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(lens, "UTF-8") + "&resource="
-					+ URLEncoder.encode(resource, "UTF-8") + "&page=" + (page + 1) + "'>" + (page + 1) + "</a>");
-		}
-		if ((page + 2) <= numberOfPages) {
-			pages.append("&nbsp;<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(lens, "UTF-8") + "&resource="
-					+ URLEncoder.encode(resource, "UTF-8") + "&page=" + (page + 2) + "'>" + (page + 2) + "</a>");
-		}
-		if ((page + 3) <= numberOfPages && (page - 2) <= 0) {
-			pages.append("&nbsp;<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(lens, "UTF-8") + "&resource="
-					+ URLEncoder.encode(resource, "UTF-8") + "&page=" + (page + 3) + "'>" + (page + 3) + "</a>");
-		}
-		if ((page + 4) <= numberOfPages && (page - 1) <= 0) {
-			pages.append("&nbsp;<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(lens, "UTF-8") + "&resource="
-					+ URLEncoder.encode(resource, "UTF-8") + "&page=" + (page + 4) + "'>" + (page + 4) + "</a>");
-		}
-		if ((page + 1) <= numberOfPages) {
-			pages.append("&nbsp;<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(lens, "UTF-8") + "&resource="
-					+ URLEncoder.encode(resource, "UTF-8") + "&page=" + (page + 1) + "'><b>></b></a>");
-		} else {
-			pages.append("&nbsp;>");
-		}
-		if (numberOfPages != 1) {
-			pages.append("<a onClick='setHrefs()' href='?lens=" + URLEncoder.encode(lens, "UTF-8") + "&resource=" + URLEncoder.encode(resource, "UTF-8")
-					+ "&page=" + numberOfPages + "'><b> >></b></a>");
-		} else {
-			pages.append("&nbsp;>>");
+		/*else{
+			System.out.println("Error getting pages");
+			return null;
 		}*/
-		return pages.toString();
-	}	
+	//}	
 	
 	/**
 	 * Transforms selection to XHTML
@@ -535,90 +518,47 @@ public class LenaController {
 			String pageString, String locationString, String metaString) {
 		
 		
+		
 		this.resource = resourceURIString;
 		this.lens = fresnelLensString;	
-		this.page = Integer.valueOf(pageString).intValue();
-				
+		this.clazz =  classURIString;
+		this.location = locationString;
+		this.meta = metaString;
+		this.page = pageString;
 		
 		String xhtml = "";
+		
 		try {
-
-			
+				
 			Document selection=makeSelection(
-					resourceURIString,
-					classURIString,
-					fresnelLensString,
-					pageString,
-					locationString);
+						resourceURIString,
+						classURIString,
+						fresnelLensString,
+						pageString,
+						locationString);
+				
+			
+				//System.out.println("Class:" + classURIString);
+				//getClasses(locationString);
+		    //printDoc(selection,System.out);
 			
 		
-			//System.out.println("Class:" + classURIString);
-			//getClasses(locationString);
-			printDoc(selection,System.out);
-					
-
 			if (selection.hasChildNodes()) {
 				XMLOutputter out=new XMLOutputter(Format.getPrettyFormat());
 				
 				xhtml=out.outputString(LenaTransformer.transform(selection,resourceURIString, 
-						classURIString, locationString, metaString));
+						classURIString, locationString, metaString, pageString));				
 				
-				
-				/*
-				selection.normalizeDocument();
-				selection.normalize();
-
-				// Create the transformer
-				TransformerFactory tFactory = TransformerFactory.newInstance();
-				Transformer transformer = tFactory.newTransformer();
-				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-				transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-
-				// Document to XML (as StreamResult)
-				StringWriter stringWriter = new StringWriter();
-				StreamResult result = new StreamResult(new BufferedWriter(stringWriter));
-				transformer.transform(new DOMSource(selection), result);
-
-				// XML to Document
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder builder = factory.newDocumentBuilder();
-				Document newSrc = builder.parse(new InputSource(new StringReader(stringWriter.toString())));
-
-				StreamSource xslSource;
-
-				// Load xsl file
-				System.out.println("Location: " + locationString);
-				if (locationString!=null && locationString.equalsIgnoreCase("remote")) {
-					xslSource = new StreamSource(xslFileRemote);
-					//System.out.println("xslRemote");
-				} else {
-					xslSource = new StreamSource(xslFile);
-					//System.out.println("xsl");
-				}
-				System.out.println("");
-
-				// Document to XHTML
-				transformer = tFactory.newTransformer(xslSource);
-				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-				transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-				transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-
-				stringWriter = new StringWriter();
-				result = new StreamResult(new BufferedWriter(stringWriter));
-				transformer.transform(new DOMSource(newSrc), result);
-
-				xhtml = stringWriter.toString();
-				*/
 			} else {				
 				errorMessage.append("Could not perform any selection.");
 				xhtml = errorMessage.toString();
 			}
+		
 		} catch (Exception e) {			
 			// TODO Auto-generated catch block
 			errorMessage.append(e.toString() + "<br/>");
 			e.printStackTrace();
-		} 		
+		} 	
 		return xhtml;
 	}	
 	
@@ -640,17 +580,16 @@ public class LenaController {
 		boolean lensGiven;
 		boolean resourceGiven;
 		boolean classGiven;
-		int page=0;
-	
-		FresnelSesameParser fp = new FresnelSesameParser();
-
-				
-		try {
-			page=Integer.valueOf(pageNumber);
-		} catch (Exception e){
-			System.out.println("Page number conversion throws exception. No valid page information.");
-		}
 		
+		FresnelSesameParser fp = new FresnelSesameParser();
+		fd = fp.parse(lenaConfig.getLensFile(), Constants.N3_READER);	
+		defaultLenses=fp.parse(lenaConfig.getDefaultLensFile(), Constants.N3_READER);
+		
+		
+
+		
+		int offset = ((Integer.parseInt(pageNumber))* lenaConfig.getMaxResourcesPage()) - lenaConfig.getMaxResourcesPage();
+		int limit = lenaConfig.getMaxResourcesPage();
 		
 		if (locationString!=null && locationString.equalsIgnoreCase("local")) {
 			remoteRepo=false;
@@ -691,23 +630,23 @@ public class LenaController {
 				System.out.println("*** LENA: lens and resource given");
 				Lens lens = fd.getLens(fresnelLensString);
 				lens.setInstanceDomain(resourceURIString);
-				document = rendererRender(repository, lens);	
+				document = rendererRender(repository, lens, offset, limit);	
 			} else if (resourceGiven){
 				System.out.println(String.format("*** LENA: no lens, but resource %s",resourceURIString));							
 				Lens defaultLens=defaultLenses.getLens(defaultResourceLens);				
 				defaultLens.setInstanceDomain(resourceURIString);
 				System.out.println("Print Resource Lens:" + defaultLenses.getLens(defaultResourceLens));	
-				document =  rendererRender(repository, defaultLens);				
+				document =  rendererRender(repository, defaultLens, offset, limit);				
 			} else if (classGiven) {
 				System.out.println(String.format("*** LENA: no lens, no resource, but class %s",classURIString));
 				Lens defaultLens=defaultLenses.getLens(defaultClassLens);				
 				defaultLens.setClassDomain(classURIString);
 				System.out.println("Print Classes Lens:" + defaultLenses.getLens(defaultClassLens));				
-				document =  rendererRender(repository, defaultLens);				
+				document =  rendererRender(repository, defaultLens, offset, limit);				
 			} else if (lensGiven) {				 
 				System.out.println(String.format("*** LENA: lens %s, no resource given", fresnelLensString));
 				Lens lens = fd.getLens(fresnelLensString);
-				document =  rendererRender(repository, lens);				
+				document =  rendererRender(repository, lens, offset, limit);				
 			} else { //if (!lensGiven && !resourceGiven && !classGiven) {							
 				System.out.println("No lens and/or resource and class parameter set!");
 				errorMessage.append("No lens and/or resource and class parameter set!");			
@@ -728,10 +667,10 @@ public class LenaController {
 			lenaRenderer.setFresnelRepository(repository);
 	}
 	
-	private Document rendererRender(Repository repository, Lens defaultLens){
+	private Document rendererRender(Repository repository, Lens defaultLens, int offset, int limit){
 		try {
 			if(lenaConfig.getMetaknowledge())			
-				return sesameRenderer.render(fd, repository, defaultLens);			
+				return sesameRenderer.render(fd, repository, defaultLens, offset, limit);			
 			else
 				return lenaRenderer.render(fd, repository, defaultLens);
 		} catch (Exception e) {
@@ -740,12 +679,14 @@ public class LenaController {
 		}
 		return null;
 	}
-	private int getNumberOfResources(){
+	/*private int getNumberOfResources(){
 		if(lenaConfig.getMetaknowledge())			
 			return sesameRenderer.getNumberOfResources();		
-		else
+		else{
+			//TODO:: add getNumberOfResources() in LenaRenderer
 			return 2;
-	}
+		}
+	}*/
 	
 	/*private Document rendererRender(Repository repository, String lensString){
 		try {
@@ -774,18 +715,19 @@ public class LenaController {
 		fresnelLensString="http://isweb/FOAF_person";
 		//fresnelLensString="http://isweb/default";
 		
-		//String xhtml=jfe.selectAsXHTML(null, "http://xmlns.com/foaf/0.1/Person", fresnelLensString, "1","local");
+		//String xhtml=jfe.selectAsXHTML(null, "http://xmlns.com/foaf/0.1/Person", fresnelLensString, "1","local", "true");
 		//String xhtml=jfe.selectAsXHTML(null, null, fresnelLensString, "1","local");
 		//String xhtml=jfe.selectAsXHTML(resource, null, null, "1","local");
 		//String xhtml=jfe.selectAsXHTML(null, null, fresnelLensString, "1","local","true");
-		//xhtml=jfe.selectAsXHTML(resource, null, fresnelLensString, "1","local","true");
-		//xhtml=jfe.selectAsXHTML(null, null, fresnelLensString, "1","local","true");
-		//String xhtml=jfe.selectAsXHTML(null, classString, null, null,null);
+		//String xhtml=jfe.selectAsXHTML(resource, null, null, "1","local","true");
+		//String xhtml=jfe.selectAsXHTML(null, null, fresnelLensString, "1","local","true");
+		//String xhtml=jfe.selectAsXHTML(null, classString, null, "1","local","true");
 
 		//String xhtml=jfe.selectAsXHTML(null, "http://www.lehigh.edu/%7Ezhp2/2004/0401/univ-bench.owl#Department", null, "1","local","true");
 		
-		String xhtml=jfe.selectAsXHTML(null, "http://www.x-media-project.org/fiat#PerformanceInfluenceMeasurement", null, "1","local","true");
-		//String xhtml=jfe.selectAsXHTML(null, "http://www.x-media-project.org/fiat#NoiseCurve", null, "1","local","true");
+		//String xhtml=jfe.selectAsXHTML(null, "http://www.x-media-project.org/fiat#PerformanceInfluenceMeasurement", null, "1","local","true");
+		//String xhtml=jfe.selectAsXHTML(null, "http://www.x-media-project.org/fiat#Component", null, "1","local","true");
+		String xhtml=jfe.selectAsXHTML(null, null, "http://www.x-media-project.org/fiat#FIAT_TrimForecasted", "1","local","true");
 		
 		//String xhtml=jfe.selectAsXHTML(null, "http://www.x-media-project.org/fiat#News", null, "1","local","true");
 		System.out.println(xhtml);		

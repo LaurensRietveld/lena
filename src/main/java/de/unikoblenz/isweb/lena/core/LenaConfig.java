@@ -56,6 +56,7 @@ public class LenaConfig {
 	File remoteRepositoryDir=new File("src/main/webapp/public/resources");
 	//ServletContext servletContext;
 	Properties props;
+	int numberOfResourcesPage = 15;
 	
 	private Repository localRepository;
 	private Repository remoteRepository;
@@ -130,14 +131,16 @@ public class LenaConfig {
 				repositoryType = "memory";
 			}
 			if (repositoryType.equals("http")) {
-				System.out.println("http");
+				System.out.println("HTTP Connection");
 				String dataServer = (String) props.get("server.url");
 				String dataRepositoryID = (String) props.get("data.repository.id");
+				System.out.println("Server: "+dataServer);
+				System.out.println("Repository: "+dataRepositoryID);
 				localRepository = new HTTPRepository(dataServer, dataRepositoryID);
 				localRepository.shutDown();
 				localRepository.initialize();
 			} else {
-				System.out.println("memory");
+				System.out.println("Memory Connection");
 				if (!dataDir.exists()) {
 					dataDir=new File(servletContext.getRealPath("/public/resources/data/"));
 				}
@@ -252,5 +255,8 @@ public class LenaConfig {
 	
 	public File[] getDataFiles() {
 		return dataDir.listFiles();		
+	}
+	public int getMaxResourcesPage(){
+		return this.numberOfResourcesPage;
 	}
 }
