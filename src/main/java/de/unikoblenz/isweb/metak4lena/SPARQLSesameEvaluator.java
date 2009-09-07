@@ -17,37 +17,77 @@
 * You should have received a copy of the GNU Lesser General Public License
 * along with LENA. If not, see <http://www.gnu.org/licenses/>.
 *
-* LENA uses libraries from the Sesame Project for license details
-* see http://www.openrdf.org/license.jsp
+* LENA uses blicense.jsp
 */ 
 package de.unikoblenz.isweb.metak4lena;
 
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.openrdf.model.Namespace;
 import org.openrdf.model.Value;
 import org.openrdf.repository.Repository;
+import org.openrdf.repository.RepositoryException;
+import org.openrdf.repository.RepositoryResult;
 import org.xmedia.metak.eval.SesameSparqlEvaluator;
 import org.xmedia.metak.prov.ComplexProvenance;
 
+import fr.inria.jfresnel.sparql.SPARQLNSResolver;
 
 
-public class SPARQLSesameEvaluator{ 
-//extends fr.inria.jfresnel.sparql.sesame.SPARQLSesameEvaluator {
 
+public class SPARQLSesameEvaluator extends fr.inria.jfresnel.sparql.sesame.SPARQLSesameEvaluator {
+
+	public static final String _PREFIX = "PREFIX";
+	public static final String _SELECT = "SELECT";
+	public static final String _PREFIX_END = ":";
 	
-	Repository dataRepository;
+	Repository dataRepository = null;
+	SPARQLNSResolver nsr = null;
+	static public final String NL = System.getProperty("line.separator");
 	public SPARQLSesameEvaluator(){
 		
 	}	
 	 public void setDataRepository(Repository dataRepo){
 		dataRepository = dataRepo;
 	 }
+	 public Repository getDataRepository(){
+		 return dataRepository;
+	 }
 				    
-	public Map<Value, ComplexProvenance> metaEvaluateQuery(String sparqlQuery){
+	public Map<Value, ComplexProvenance> metaEvaluateQuery(String queryString) throws RepositoryException{
 		SesameSparqlEvaluator eval = new SesameSparqlEvaluator(dataRepository);
-		Map<Set<Value>, ComplexProvenance> metadata = eval.evaluate(sparqlQuery);
+		
+		if (this.nsr == null) {
+			RepositoryResult<Namespace> nsi = dataRepository.getConnection().getNamespaces();
+			Namespace ns;
+			this.nsr = new SPARQLNSResolver();
+			while (nsi.hasNext()){
+				ns = nsi.next();
+				this.nsr.addPrefixBinding(ns.getPrefix(), ns.getName());
+			}
+		}
+		
+		Hashtable prologPrefixTable = new Hashtable();		
+		if (queryString.contains(_PREFIX)){
+			int i = queryString.indexOf(_SELECT);
+			if (i != -1){
+				parsePrologPrefixDeclarations(queryString.substring(0, i), prologPrefixTable);				
+			}
+		}
+		Hashtable defaultPrefixTable = nsr.getPrefixTable();
+		Iterator iter = defaultPrefixTable.keySet().iterator();
+		while (iter.hasNext()) {
+			String prefix =  (String)iter.next();
+			if (!prologPrefixTable.containsKey(prefix)){
+				queryString = "PREFIX " + prefix + ": <" + (String)defaultPrefixTable.get(prefix) + ">" + NL + queryString;				
+			}
+		}
+		
+		Map<Set<Value>, ComplexProvenance> metadata = eval.evaluate(queryString);
 				
 		Map<Value, ComplexProvenance> provenance = new HashMap<Value, ComplexProvenance>();
 		java.util.Iterator<Value> it;
@@ -56,5 +96,20 @@ public class SPARQLSesameEvaluator{
 			provenance.put(it.next(), metadata.get(values));
 		}
 		return provenance; 
+	}
+	public static void parsePrologPrefixDeclarations(String prolog, Hashtable res){
+		String[] bindings = prolog.split(_PREFIX);
+		for (int i=0;i<bindings.length;i++){
+			bindings[i] = bindings[i].trim();
+			if (bindings[i].length() > 0){
+				int j = bindings[i].indexOf(_PREFIX_END);
+				if (j != -1){
+					String prefix = bindings[i].substring(0, j);
+					String namespace = bindings[i].substring(j+1).trim();
+					namespace = namespace.substring(1, namespace.length()-1);
+					res.put(prefix, namespace);
+				}
+			}
+		}
 	}
 }

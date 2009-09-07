@@ -25,27 +25,22 @@ package de.unikoblenz.isweb.metak4lena;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
-import java.util.Iterator;
-import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xmedia.metak.prov.ComplexProvenance;
-import org.xmedia.metak.prov.MetaVocabulary;
 
-import org.openrdf.model.Statement;
-import org.openrdf.model.Resource;
 import org.openrdf.model.BNode;
-import org.openrdf.model.URI;
 import org.openrdf.model.Literal;
+import org.openrdf.model.Resource;
+import org.openrdf.model.Statement;
+import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.query.BindingSet;
@@ -56,47 +51,49 @@ import org.openrdf.query.TupleQuery;
 import org.openrdf.query.TupleQueryResult;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryConnection;
-import org.openrdf.repository.RepositoryResult;
 import org.openrdf.repository.RepositoryException;
-import org.openrdf.model.vocabulary.RDF;
+import org.openrdf.repository.RepositoryResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xmedia.metak.prov.ComplexProvenance;
+import org.xmedia.metak.prov.MetaVocabulary;
 
+import fr.inria.jfresnel.Constants;
+import fr.inria.jfresnel.ContentFormat;
+import fr.inria.jfresnel.Format;
+import fr.inria.jfresnel.FresnelDocument;
+import fr.inria.jfresnel.Lens;
+import fr.inria.jfresnel.StyleFormatContainer;
 import fr.inria.jfresnel.fsl.FSLPath;
 import fr.inria.jfresnel.fsl.sesame.FSLSesameEvaluator;
-import fr.inria.jfresnel.sparql.SPARQLQuery;
-import fr.inria.jfresnel.ContentFormat;
-import fr.inria.jfresnel.FresnelParser;
-import fr.inria.jfresnel.FresnelDocument;
-import fr.inria.jfresnel.Constants;
-import fr.inria.jfresnel.Lens;
-import fr.inria.jfresnel.Format;
-import fr.inria.jfresnel.Group;
-import fr.inria.jfresnel.StyleFormatContainer;
 import fr.inria.jfresnel.sesame.SesameLens;
-import fr.inria.jfresnel.sesame.SesameFormat;
-import fr.inria.jfresnel.sesame.SesameLens.PropertyDescriptionProperties;
+
+
+import fr.inria.jfresnel.sparql.SPARQLQuery;
 
 
 public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 	
 	Repository fresnelRepository;
-	private int resources;
+	//private int resources = 0;
 	
 	public SesameRenderer(){
 		super();
 	}
-	public int getNumberOfResources(){
+	/*public int getNumberOfResources(){
 		return resources;
-	}
-	public Document render(FresnelDocument fd, Repository dataRepo, Lens lens)
-	 throws Exception {
-		resources = 0;
+	}*/
+	public Document render(FresnelDocument fd, Repository dataRepo, Lens lens, int offset, int limit)	 
+	throws Exception {
+		//resources = 0;
 		try {			
 			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document out = db.newDocument();
 			Element root = out.createElementNS(Constants.FRESNEL_OUTPUT_SCHEMA_NAMESPACE_URI, "results");
 			out.appendChild(root);
 		
-			render(fd, dataRepo, out, root, new Lens[]{lens});				
+			render(fd, dataRepo, out, root, new Lens[]{lens}, offset, limit);				
 
 			return out;
 		}
@@ -110,8 +107,8 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
      *@param fd parsed Fresnel Display program
 	 *@return org.w3c.dom.Document description of rendered results;
 	 */
-	public Document render(FresnelDocument fd, Repository dataRepo) throws ParserConfigurationException {
-		resources = 0;
+	public Document render(FresnelDocument fd, Repository dataRepo, int offset, int limit) throws ParserConfigurationException {
+		//resources = 0;
 		try {			
 			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document out = db.newDocument();
@@ -119,7 +116,7 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 			out.appendChild(root);
 		
 			Lens[] lenses = fd.getLenses(); 
-			this.render(fd, dataRepo, out, root, lenses);
+			this.render(fd, dataRepo, out, root, lenses, offset, limit);
 
 			return out;
 		}
@@ -134,12 +131,12 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
      *@param lensURI URI of lens to be rendered
 	 *@return org.w3c.dom.Document description of rendered results;
 	 */
-	public Document render(FresnelDocument fd, Repository dataRepo, String lensURI) throws ParserConfigurationException {
-		resources = 0;
+	public Document render(FresnelDocument fd, Repository dataRepo, String lensURI, int offset, int limit) throws ParserConfigurationException {
+		//resources = 0;
 		try {
 			String[] lURIA = new String[1];
 			lURIA[0] = lensURI;
-			return this.render(fd, dataRepo, lURIA);
+			return this.render(fd, dataRepo, lURIA, offset, limit);
 		}
 		catch (Exception e) {
 			throw new ParserConfigurationException("Rendering only supported for Sesame");
@@ -152,8 +149,8 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
      *@param lensURI set of URI's of lenses to be rendered
 	 *@return org.w3c.dom.Document description of rendered results;
 	 */
-	public Document render(FresnelDocument fd, Repository dataRepo, String[] lensURI) throws ParserConfigurationException {
-		resources = 0;
+	public Document render(FresnelDocument fd, Repository dataRepo, String[] lensURI, int offset, int limit) throws ParserConfigurationException {
+		//resources = 0;
 		try {
 			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document out = db.newDocument();
@@ -162,7 +159,7 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 		
 			Lens[] lenses = fd.getLenses(lensURI);
 			if (lenses.length > 0) {
-				this.render(fd, dataRepo, out, root, lenses);
+				this.render(fd, dataRepo, out, root, lenses, offset, limit);
 			}
 
 			return out;
@@ -181,14 +178,15 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
      *@param org.w3c.dom.Document for output
      *@param DOM document element to which all elements are appended
      *@param set of URI's of lenses to be rendered
+	 * @throws RepositoryException 
 	 */
-	void render(FresnelDocument fd, Repository dataRepo, Document doc, Element parent, Lens[] lens) throws ParserConfigurationException {
+	void render(FresnelDocument fd, Repository dataRepo, Document doc, Element parent, Lens[] lens, int offset, int limit) throws ParserConfigurationException, RepositoryException {
 		Lens renderLens = SesameLens.selectRenderLens(lens);
 		MResutls mres = new MResutls();
 		if (renderLens == null)
 			return;
 		if (renderLens.getSPARQLInstanceDomains() != null) {
-			System.out.println("getSPARQLInstanceDomains() != null");
+			System.out.println("Rendering getSPARQLInstanceDomains()...");
 			SPARQLQuery[] sid = renderLens.getSPARQLInstanceDomains();
 			SesameLens sl = (SesameLens)renderLens;
 			//call extended version of SPARQLSesameEvaluator (to get metadata)
@@ -196,12 +194,14 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 			msse.setDataRepository(dataRepo);
 			for (int i = 0; i < sid.length; i++)
 			{
+				String query = sid[i].toString() + "LIMIT "+limit+" OFFSET "+offset;
+				
 				//return values with metadata
-				Map<Value, ComplexProvenance> mqueryResults = msse.metaEvaluateQuery(sid[i].toString());
+				Map<Value, ComplexProvenance> mqueryResults = msse.metaEvaluateQuery(query);
 				if(!mqueryResults.isEmpty()){
 					for (Value value: mqueryResults.keySet()) {
 					Object end = value; 
-					resources++;
+					//resources++;
 						if (end instanceof Resource)
 						{
 							Resource r = (Resource)end;
@@ -229,14 +229,14 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 							throw new ParserConfigurationException(error);
 						}
 					}					
-				}else{					
+				}else{				
 					//return values without metadata
 					fr.inria.jfresnel.sparql.sesame.SPARQLSesameEvaluator fsse = new fr.inria.jfresnel.sparql.sesame.SPARQLSesameEvaluator();			
 					fsse.setDataRepository(dataRepo);
-					Vector queryResults = fsse.evaluateQuery(sid[i]);
+					Vector queryResults = fsse.evaluateQuery(new SPARQLQuery(query));
 					for (int k=0; k<queryResults.size(); k++) {
 						Object end = queryResults.get(k);
-						resources++;
+						//resources++;
 						if (end instanceof Resource)
 						{
 							Resource r = (Resource)end;
@@ -265,14 +265,14 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 		//still not extended to return results with metadata!
 		else if (renderLens.getFSLInstanceDomains() != null)
 		{
-			System.out.println("getFSLInstanceDomains() != null");
+			System.out.println("Rendering getFSLInstanceDomains()...");
 			FSLPath[] fid = renderLens.getFSLInstanceDomains();
 			SesameLens sl = (SesameLens)renderLens;			
 			FSLSesameEvaluator fse = new FSLSesameEvaluator();
 			fse.setDataRepository(dataRepo);
 			for (int i = 0; i < fid.length; i++)
 			{
-				resources ++;
+				//resources ++;
 				Vector pathInstances = fse.evaluatePath(fid[i]);
 				for (int k=0; k<pathInstances.size(); k++) { 
 				Object end = ((Vector)pathInstances.get(k)).get(0);
@@ -305,14 +305,14 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 		// I don't know if here it should be return metadata here !!!
 		else if (renderLens.getBasicInstanceDomains() != null)
 		{
-			System.out.println("getBasicInstanceDomains() != null");
+			System.out.println("Rendering getBasicInstanceDomains()...");
 			java.lang.String[] bid = renderLens.getBasicInstanceDomains();
 			SesameLens sl = (SesameLens)renderLens;
 			HashMap resSet = new HashMap();
 
 			for (int j = 0; j < bid.length; j++)
 			{
-				resources ++;
+				
 				ValueFactory f = dataRepo.getValueFactory();
 				URI r = f.createURI(bid[j]);
 				if (r == null)
@@ -328,7 +328,8 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 				try {					
 					String query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "+
 					"SELECT DISTINCT *" + 
-					"WHERE {{ <"+r+"> rdf:type ?t}}";												
+					"WHERE {{ <"+r+"> rdf:type ?t}}"+
+					"LIMIT "+limit+" OFFSET "+offset;															
 					//return values with metadata
 					Map<Value, ComplexProvenance> queryResults = sse.metaEvaluateQuery(query);
 					//with metadata
@@ -336,22 +337,24 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 						for (Value value: queryResults.keySet()) {			
 							Element eR;
 							//serialize meta knowledge or not
+							//resources ++;
 							eR = createResourceElement(fd, dataRepo, doc, sl, null, r, queryResults.get(value), Constants.DEFAULT_MAX_DEPTH, mres);
 							parent.appendChild(eR);
 						}							
 					//without metadata
 					}else{				
+						//resources ++;
 						Element eR = createResourceElement(fd, dataRepo, doc, sl, null, r, Constants.DEFAULT_MAX_DEPTH);
 						parent.appendChild(eR);
 					}
 				}catch (Exception ex){
-					System.err.println("Error while getting statements from repository:");
+					System.out.println("Error while getting statements from repository:");
 				}
 			}
 		}
 		else if (renderLens.getBasicClassDomains() != null)
 		{
-			System.out.println("getBasicClassDomains() != null");
+			System.out.println("Rendering getBasicClassDomains() ...");
 			java.lang.String[] cd = renderLens.getBasicClassDomains();
 			SesameLens sl = (SesameLens)renderLens;
 			HashMap resSet = new HashMap();
@@ -362,12 +365,13 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 				try {					
 					String query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "+
 					"SELECT DISTINCT *" + 
-					"WHERE {{ ?s rdf:type  <" + cd[j] + ">}}";												
+					"WHERE {{ ?s rdf:type  <" + cd[j] + ">}}" +
+					"LIMIT "+limit+" OFFSET "+offset;											
 					//return values with metadata
 					Map<Value, ComplexProvenance> queryResults = sse.metaEvaluateQuery(query);
 					if(!queryResults.isEmpty()){
 						for (Value value: queryResults.keySet()) {
-							resources ++;
+							//resources ++;
 							if (value instanceof Resource)
 							{
 								Resource r = (Resource)value;
@@ -390,7 +394,7 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 						Resource r;
 						String variable = results.getBindingNames().get(0);
 						while (results.hasNext()){
-							resources ++;
+							//resources ++;
 							set = results.next();
 							r = (Resource) set.getValue(variable);
 							// Don't render resource twice
@@ -404,7 +408,7 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 					}
 				}
 				catch (Exception ex){
-					System.err.println("Error while getting statements from repository:");
+					System.out.println("Error while getting statements from repository:");
 				}
 			}
 		}		
@@ -443,6 +447,16 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 		//else
 			//eR.setAttribute("uri", ((BNode)r).toString());
 		
+		List<Lens> list = null;
+		if (!(r instanceof BNode))
+			list = isLensForResourceAvailable(fd,dataRepo,r.toString());
+		//else
+			//list = isLensForResourceAvailable(fd,dataRepo,((BNode)r).stringValue());
+		if(list!=null){
+			Iterator<Lens> it = list.iterator();
+			while(it.hasNext())
+				eR.setAttribute("lens", it.next().getURI());
+		}
 		
 		// TODO: SIMILE adds link element for css link
 		// TODO: add optional content element
@@ -514,8 +528,9 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 	 * @param dataRepo Resporitory	
 	 * @param s  Statement
 	 * @return  complexprovenance
+	 * @throws RepositoryException 
 	 */
-	private ComplexProvenance getMetadata(Repository dataRepo, Statement s){
+	private ComplexProvenance getMetadata(Repository dataRepo, Statement s) throws RepositoryException{
 		String query = "SELECT DISTINCT * " + 
 		"WHERE {{ <"+s.getSubject()+"> <"+ s.getPredicate()+"> ?o}}";
 		SPARQLSesameEvaluator msse = new SPARQLSesameEvaluator();
@@ -765,159 +780,166 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 		while (rsi.hasNext())
 		{
 			Statement rs = (Statement)rsi.next();
-			if(!rs.getContext().toString().contains("provenance"))//hard coded - context with provenace!!
-			{	
-				String rsSID = rs.getSubject().toString();
-				String rID = r.toString();
-				URI rp = rs.getPredicate();
-				
-				// keep track of previous predicate to re-use "values" element in doc
-				if ((lastPredicate == null) || !(lastPredicate.toString().equals(rp.toString())))
-				{
-					lastPredicate = null;
-					lastValues = null;
-				}
-			
-				if (rsSID.equals(rID))
-				{
-					// "normal" property specification
-					Format rf = sl.getBestFormatForProperty(fd, dataRepo, rs, useURI);
-	
-					String pName = rp.toString();
-					Value o = rs.getObject();
-					String oName = null;
-					if (o instanceof Literal)
-						oName = ((Literal)o).getLabel();
-					else
-						oName = o.toString();
+			if(rs.getContext()!=null){
+				if(!rs.getContext().toString().contains("provenance"))//hard coded - context with provenace!!
+				{	
+					String rsSID = rs.getSubject().toString();
+					String rID = r.toString();
+					URI rp = rs.getPredicate();
 					
-					StyleFormatContainer sfc = new StyleFormatContainer(sl, rf, vResourceStyle, null);
-					if (lastValues == null)
+					// keep track of previous predicate to re-use "values" element in doc
+					if ((lastPredicate == null) || !(lastPredicate.toString().equals(rp.toString())))
 					{
+						lastPredicate = null;
+						lastValues = null;
+					}
+				
+					if (rsSID.equals(rID))
+					{
+						// "normal" property specification
+						Format rf = sl.getBestFormatForProperty(fd, dataRepo, rs, useURI);
+		
+						String pName = rp.toString();
+						Value o = rs.getObject();
+						String oName = null;
+						if (o instanceof Literal)
+							oName = ((Literal)o).getLabel();
+						else
+							oName = o.toString();
+						
+						StyleFormatContainer sfc = new StyleFormatContainer(sl, rf, vResourceStyle, null);
+						if (lastValues == null)
+						{
+							// re-use values node where possible
+							Element eP = createPropertyElement(dataRepo, doc, sl, rf, pName, oName, sfc );
+							eR.appendChild(eP);
+							lastValues = getValuesElement(eP);
+							lastPredicate = rp;
+						}
+						String valueType = (rf == null) ? null : rf.getValueTypeName();
+				        Element eV = createValueElement(doc, oName, valueType, sfc.vValueStyle);  
+				        //write Metadata of statement in XML Doc		        
+				        
+				        try {
+							setMetaProperties(dataRepo, doc, sl, eV, getMetadata(dataRepo, rs), mres, mr,  new MStatement(rs,getMetadata(dataRepo, rs)));
+						} catch (RepositoryException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				        
+				        
+				        lastValues.appendChild(eV);
+					}
+					else
+					{
+						// if subject of statement not current lens, 
+						// then a PropertyDescription resource 
+						//		:PropertyDescription a owl:Class ;
+						//	    rdfs:subClassOf rdfs:Resource ;
+						//	    rdfs:label "Property Description"@en ;
+						//	    rdfs:comment "More detailed description of the property, e.g. for specifing sublenses or merging properties."@en ;
+						//	    rdfs:subClassOf [
+						//	        a owl:Restriction ;
+						//	        owl:onProperty :property ;
+						//	        owl:allValuesFrom rdf:Property
+						//	    ] ;
+						// minCardinality = 0, maxCardinality = 1
+						//	    rdfs:subClassOf [
+						//	        a owl:Restriction ;
+						//	        owl:onProperty :sublens ;
+						//	        owl:minCardinality "0"^^dtype:nonNegativeInteger
+						//	    ] ;
+						// minCardinality = 0
+						//	    rdfs:subClassOf [
+						//	        a owl:Restriction ;
+						//	        owl:onProperty :depth ;
+						//	        owl:allValuesFrom dtype:nonNegativeInteger
+						//	    ] ;
+						// minCardinality = 0, maxCardinality = 1
+						//		rdfs:subClassOf [
+						//		    a owl:Restriction ;
+						//		    owl:onProperty :use ;
+						//		    owl:allValuesFrom [ a owl:Class ;
+						//		           owl:unionOf ( :Group :Format ) ]
+						//		]
+						// minCardinality = 0, maxCardinality = 1
+						//		.
+						
+					    SesameLens.PropertyDescriptionProperties pdp = sl.getPropertyDescriptionProperties(rs.getSubject(), fresnelRepository);
+					    if (pdp.property == null)
+					    	continue;
 						// re-use values node where possible
-						Element eP = createPropertyElement(dataRepo, doc, sl, rf, pName, oName, sfc );
-						eR.appendChild(eP);
-						lastValues = getValuesElement(eP);
-						lastPredicate = rp;
-					}
-					String valueType = (rf == null) ? null : rf.getValueTypeName();
-			        Element eV = createValueElement(doc, oName, valueType, sfc.vValueStyle);  
-			        //write Metadata of statement in XML Doc		        
-			        
-			        setMetaProperties(dataRepo, doc, sl, eV, getMetadata(dataRepo, rs), mres, mr,  new MStatement(rs,getMetadata(dataRepo, rs)));
-			        
-			        
-			        lastValues.appendChild(eV);
-				}
-				else
-				{
-					// if subject of statement not current lens, 
-					// then a PropertyDescription resource 
-					//		:PropertyDescription a owl:Class ;
-					//	    rdfs:subClassOf rdfs:Resource ;
-					//	    rdfs:label "Property Description"@en ;
-					//	    rdfs:comment "More detailed description of the property, e.g. for specifing sublenses or merging properties."@en ;
-					//	    rdfs:subClassOf [
-					//	        a owl:Restriction ;
-					//	        owl:onProperty :property ;
-					//	        owl:allValuesFrom rdf:Property
-					//	    ] ;
-					// minCardinality = 0, maxCardinality = 1
-					//	    rdfs:subClassOf [
-					//	        a owl:Restriction ;
-					//	        owl:onProperty :sublens ;
-					//	        owl:minCardinality "0"^^dtype:nonNegativeInteger
-					//	    ] ;
-					// minCardinality = 0
-					//	    rdfs:subClassOf [
-					//	        a owl:Restriction ;
-					//	        owl:onProperty :depth ;
-					//	        owl:allValuesFrom dtype:nonNegativeInteger
-					//	    ] ;
-					// minCardinality = 0, maxCardinality = 1
-					//		rdfs:subClassOf [
-					//		    a owl:Restriction ;
-					//		    owl:onProperty :use ;
-					//		    owl:allValuesFrom [ a owl:Class ;
-					//		           owl:unionOf ( :Group :Format ) ]
-					//		]
-					// minCardinality = 0, maxCardinality = 1
-					//		.
-					
-				    SesameLens.PropertyDescriptionProperties pdp = sl.getPropertyDescriptionProperties(rs.getSubject(), fresnelRepository);
-				    if (pdp.property == null)
-				    	continue;
-					// re-use values node where possible
-					Element eP = null;					
-			    	Lens[] sublens = fd.getLenses(pdp.sublens);
-	
-			    	// Target resource is object from original 
-			    	// resource : fresnel:property : object statements
-					try {
-						RepositoryConnection connection = dataRepo.getConnection();
-						RepositoryResult<Statement> msl = connection.getStatements(r, null, null, true);
-						Statement sr;
-						while (msl.hasNext()){
-							sr = msl.next();
-							URI pr = sr.getPredicate();
-							if (pr.toString().equals(pdp.property)) {
-								Value no = sr.getObject();
-								String valueType = null;
-								StyleFormatContainer sfc = null;
-			
-								if (eP == null){
-									// TODO: Is this right for getting styles?????
-									// TODO: Fresnel:use - should this be "used" here?
-									Format rf = sl.getBestFormatForProperty(fd, dataRepo, sr, pdp.use);
-									sfc = new StyleFormatContainer(sl, rf, vResourceStyle, null);
-									if (rf != null) valueType = rf.getValueTypeName();
-									eP = createPropertyElement(dataRepo, doc, sl, rf, pdp.property, null, sfc);
-									eR.appendChild(eP);
-									lastValues = getValuesElement(eP);
-									lastPredicate = rp;
-								}
-								
-								if (no instanceof Resource){
-									// recurse!
-									// TODO: Is this right for getting styles?????
-									Resource rr = (Resource)no;
-									SesameLens jlr = (SesameLens)sl.selectRenderLens(dataRepo, sublens, rr);
-									Format rf = sl.getBestFormatForProperty(fd, dataRepo, sr, pdp.use);
-									sfc = new StyleFormatContainer(sl, rf, vResourceStyle, null);
-									Element eV = createValueElement(doc, null, valueType, sfc.vValueStyle);
-									//write Metadata of Statement in XML Doc
-									setMetaProperties(dataRepo, doc, sl, eV, getMetadata(dataRepo, sr), mres, mr, new MStatement(sr, getMetadata(dataRepo, sr)));
-									
-									lastValues.appendChild(eV);
-									if (jlr != null)
-									{
-										// TODO: fix depth stuff??? (or is this right???)
-										int dr = depth;
-										if (pdp.depth >= 0 && pdp.depth < depth) 
-											dr = pdp.depth;
-										Element nre = createResourceElement(fd, dataRepo, doc, jlr, pdp.use, rr, dr);
-										if (nre != null)
-											eV.appendChild(nre);
+						Element eP = null;					
+				    	Lens[] sublens = fd.getLenses(pdp.sublens);
+		
+				    	// Target resource is object from original 
+				    	// resource : fresnel:property : object statements
+						try {
+							RepositoryConnection connection = dataRepo.getConnection();
+							RepositoryResult<Statement> msl = connection.getStatements(r, null, null, true);
+							Statement sr;
+							while (msl.hasNext()){
+								sr = msl.next();
+								URI pr = sr.getPredicate();
+								if (pr.toString().equals(pdp.property)) {
+									Value no = sr.getObject();
+									String valueType = null;
+									StyleFormatContainer sfc = null;
+				
+									if (eP == null){
+										// TODO: Is this right for getting styles?????
+										// TODO: Fresnel:use - should this be "used" here?
+										Format rf = sl.getBestFormatForProperty(fd, dataRepo, sr, pdp.use);
+										sfc = new StyleFormatContainer(sl, rf, vResourceStyle, null);
+										if (rf != null) valueType = rf.getValueTypeName();
+										eP = createPropertyElement(dataRepo, doc, sl, rf, pdp.property, null, sfc);
+										eR.appendChild(eP);
+										lastValues = getValuesElement(eP);
+										lastPredicate = rp;
 									}
+									
+									if (no instanceof Resource){
+										// recurse!
+										// TODO: Is this right for getting styles?????
+										Resource rr = (Resource)no;
+										SesameLens jlr = (SesameLens)sl.selectRenderLens(dataRepo, sublens, rr);
+										Format rf = sl.getBestFormatForProperty(fd, dataRepo, sr, pdp.use);
+										sfc = new StyleFormatContainer(sl, rf, vResourceStyle, null);
+										Element eV = createValueElement(doc, null, valueType, sfc.vValueStyle);
+										//write Metadata of Statement in XML Doc
+										setMetaProperties(dataRepo, doc, sl, eV, getMetadata(dataRepo, sr), mres, mr, new MStatement(sr, getMetadata(dataRepo, sr)));
+										
+										lastValues.appendChild(eV);
+										if (jlr != null)
+										{
+											// TODO: fix depth stuff??? (or is this right???)
+											int dr = depth;
+											if (pdp.depth >= 0 && pdp.depth < depth) 
+												dr = pdp.depth;
+											Element nre = createResourceElement(fd, dataRepo, doc, jlr, pdp.use, rr, dr);
+											if (nre != null)
+												eV.appendChild(nre);
+										}
+									}
+									else {
+										String oName = null;
+										if (no instanceof Literal)
+											oName = ((Literal)no).getLabel();
+										else
+											oName = no.toString();
+										Element eV = createValueElement(doc, oName, valueType, sfc.vValueStyle);  
+										//write Metadata of Statement in XML Doc								
+										setMetaProperties(dataRepo, doc, sl, eV, getMetadata(dataRepo, sr), mres, mr, new MStatement(sr, getMetadata(dataRepo, sr)));								
+										lastValues.appendChild(eV);
+									}
+									
 								}
-								else {
-									String oName = null;
-									if (no instanceof Literal)
-										oName = ((Literal)no).getLabel();
-									else
-										oName = no.toString();
-									Element eV = createValueElement(doc, oName, valueType, sfc.vValueStyle);  
-									//write Metadata of Statement in XML Doc								
-									setMetaProperties(dataRepo, doc, sl, eV, getMetadata(dataRepo, sr), mres, mr, new MStatement(sr, getMetadata(dataRepo, sr)));								
-									lastValues.appendChild(eV);
-								}
-								
-							}
-					    }
-					    msl.close();
-					}
-					catch (RepositoryException ex){
-					    System.err.println("Error while getting statements from repository:");
+						    }
+						    msl.close();
+						}
+						catch (RepositoryException ex){
+						    System.err.println("Error while getting statements from repository:");
+						}
 					}
 				}
 			}
@@ -1254,8 +1276,8 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 		return null;
 	}	
 	
-	private String getResourceType(Repository repository, String r){ 
-		String classURI = "";
+	private List<String> getResourceType(Repository repository, String r){ 
+		List<String> list = new ArrayList<String>();
 		RepositoryConnection con = null;
 		try {
 			con = repository.getConnection();
@@ -1273,7 +1295,7 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 						while (result.hasNext()) {
 							Value uri = result.next().getBinding(firstBindingName).getValue();
 							if (uri instanceof URI) {
-								return uri.toString();
+								list.add(uri.toString());
 							}
 						}
 					} finally {
@@ -1299,8 +1321,7 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 					e.printStackTrace();
 				}
 		}
-		
-		return classURI;
+		return list;		
 	}
 	/**
 	 * Checks if a lens is available for one specific resource.
@@ -1310,7 +1331,7 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 	 * @return boolean True or false whether a lens is available or not.
 	 */
 	public List<Lens> isLensForResourceAvailable(FresnelDocument fd, Repository repository, String r) {
-		String resourceType = getResourceType(repository, r);
+		List<String> listType = getResourceType(repository, r);
 		List<Lens> list = new ArrayList<Lens>();	
 		Lens[] ls=fd.getLenses();
 	    for (int j=0;ls != null && j<ls.length;j++) {
@@ -1325,9 +1346,12 @@ public class SesameRenderer extends fr.inria.jfresnel.sesame.SesameRenderer{
 			}
 			String[] classes = lens.getBasicClassDomains();
 			for(int l=0; classes!=null && l < classes.length; l++){				
-				if (classes[l].equals(resourceType)) {
-					list.add(lens);
-				}					
+				for (int f=0; listType !=null && f <listType.size(); f++){
+					String resourceType = listType.get(f);
+					if (classes[l].equals(resourceType)) {
+						list.add(lens);
+					}
+				}
 			}
 		}
 		return list;
