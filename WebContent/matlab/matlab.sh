@@ -1,0 +1,2 @@
+cd /home/jmkoch/workspace/svn/src/main/webapp/matlab/
+[ktensor newspt newpstat newrstat resultmix evaldata]=myParafac('http://dbpedia.org/resource/The_Beatles','the_beatles',true,false,15,'/home/jmkoch/workspace/svn/src/main/webapp/public/resources/');

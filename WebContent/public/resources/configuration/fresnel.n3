@@ -1,0 +1,223 @@
+@prefix fresnel:		<http://www.w3.org/2004/09/fresnel#> .
+@prefix fslns:		<http://simile.mit.edu/2006/01/ontologies/fsl-ns#> .
+
+@prefix rdf:    		<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:    		<http://www.w3.org/2001/XMLSchema#> .
+
+@prefix foaf:   		<http://xmlns.com/foaf/0.1/> .
+@prefix ex:			<hhtp://www.example.org/> .
+
+@prefix rss:	    	<http://purl.org/rss/1.0/> .
+@prefix content:   	<http://purl.org/rss/1.0/modules/content/> .
+@prefix dc:    		<http://purl.org/dc/elements/1.1/> .
+
+@prefix edns:		<http://www.loa-cnr.it/ontologies/ExtendedDnS.owl#> .
+@prefix dolite:		<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#> .
+
+@prefix ex:			<http://example.org/> .
+@prefix fiat:  		<http://www.x-media-project.org/fiat#>.
+@prefix skos:		<http://www.w3.org/2004/02/skos/core#>.
+@prefix ev:		      <http://kmi.open.ac.uk/RR/modules/vib.owl#>.
+@prefix :       		<http://isweb/> .
+
+
+
+##########			                      
+# GROUPS #
+##########
+	
+:foafGroup a fresnel:Group ;
+	fresnel:resourceStyle "padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #ffe;"^^fresnel:stylingInstructions ;
+	fresnel:propertyStyle "border-top: 1px dotted Gray; padding: 5px 0px;"^^fresnel:stylingInstructions .
+
+
+:evGroup a fresnel:Group ;
+	fresnel:resourceStyle "padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #ffe;"^^fresnel:stylingInstructions ;
+	fresnel:propertyStyle "border-top: 1px dotted Gray; padding: 5px 0px;"^^fresnel:stylingInstructions .
+
+:evSubGroup a fresnel:Group ;
+	fresnel:resourceStyle "padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #fee;"^^fresnel:stylingInstructions ;
+	fresnel:propertyStyle "border-top: 1px dotted Gray; padding: 5px 0px;"^^fresnel:stylingInstructions .
+
+	
+################														 
+# LENSES - RSS #
+################
+	
+
+#:knowsLens rdf:type fresnel:Lens ;
+#		   fresnel:instanceLensDomain "SELECT ?var WHERE {?var rdf:type foaf:Person ; foaf:name ?x . FILTER (str(?x) = 'Emmanuel Pietriga')}"^^fresnel:sparqlSelector;
+#          fresnel:group :foafGroup ;
+#           fresnel:showProperties ( foaf:name 
+#                                    foaf:depiction 
+#									foaf:homepage
+#                                   foaf:mbox 
+#                                    [ rdf:type fresnel:PropertyDescription ;
+#                                     fresnel:property foaf:knows ;
+#                                      fresnel:use :foafAlternateGroup ;
+#                                      fresnel:sublens :foafPersonDefaultLens ] ) .
+#
+
+
+ev:Zmod a fresnel:Lens;
+	fresnel:purpose fresnel:defaultLens;
+	fresnel:classLensDomain ev:Zmod;
+	fresnel:showProperties (ev:application_of
+				 	ev:has_rendering
+					ev:was_measured_in) ;
+	fresnel:group :evGroup.
+
+
+  	
+ev:ZmodResolution a fresnel:Lens;
+	fresnel:purpose fresnel:defaultLens;
+	fresnel:classLensDomain ev:ZmodResolution;
+	fresnel:showProperties (ev:has_end_frequency
+					ev:has_start_frequency
+					ev:has_frequency_range
+					ev:has_sample_rate
+					ev:has_speed_range_end
+					ev:has_speed_range_start
+					ev:link) ;
+fresnel:group :evGroup. 
+
+
+#ev:ZModSub a fresnel:Lens
+#	fresnel:purpose fresnel:defaultLens ;
+#	fresnel:instanceLensDomain "SELECT ?x WHERE { ?x rdf:type ev:Zmod }"^^fresnel:sparqlSelector ;	
+#	fresnel:showProperties ( ev:application_of
+#					 ev:was_measured_in); 
+#	fresnel:group :evGroup .
+
+
+ev:ZmodS a fresnel:Lens;
+	fresnel:purpose fresnel:defaultLens ;
+	fresnel:instanceLensDomain "SELECT ?trim WHERE { ?trim rdf:type <http://kmi.open.ac.uk/RR/modules/vib.owl#Zmod> }"^^fresnel:sparqlSelector ;
+	fresnel:showProperties (ev:application_of
+					ev:was_measured_in						
+					[fresnel:property ev:has_rendering ;
+                               fresnel:sublens ev:ZmodResolution]
+
+	) ;
+	fresnel:group :evGroup .
+
+	
+
+
+################														 
+# FIAT LENSES  #
+################
+
+	
+#fiat:FIAT_News a fresnel:Lens;
+#	fresnel:purpose fresnel:defaultLens ;
+#	fresnel:classLensDomain fiat:News;
+#	fresnel:showProperties (	fiat:isAboutTrim
+#								fiat:isAboutModel
+#								fiat:newsDate
+#						 ) ;
+#	fresnel:group :foafGroup .
+	
+	
+#fiat:FIAT_TrimForecasted a fresnel:Lens;
+#	fresnel:purpose fresnel:defaultLens ;
+#	fresnel:instanceLensDomain "SELECT ?trim WHERE { ?trim rdf:type fiat:TrimForecasted }"^^fresnel:sparqlSelector ;
+#	fresnel:showProperties (	skos:prefLabel
+#								fresnel:property "CONSTRUCT {?instance fiat:trimForecastedModel ?model} WHERE {?instance fiat:trimForecastedModel ?model}"^^fresnel:sparqlSelector
+#	) ;
+#	fresnel:group :foafGroup .
+
+#fiat:FIAT_OneComponentTaped a fresnel:Lens;
+#	fresnel:purpose fresnel:defaultLens ;
+#	fresnel:classLensDomain fiat:OneComponentTaped ;
+#	fresnel:showProperties (	fiat:loudness
+#								fiat:aerodinamicTestDescription
+#								fiat:tapedComponent
+#						 ) ;
+#	fresnel:group :foafGroup .
+	
+	
+#fiat:FIAT_MotorShow a fresnel:Lens;
+#	fresnel:purpose fresnel:defaultLens ;
+#	fresnel:classLensDomain fiat:OneComponentTaped ;
+#	fresnel:showProperties (	fiat:loudness
+#								fiat:aerodinamicTestDescription
+#								fiat:tapedComponent
+#						 ) ;
+#	fresnel:group :foafGroup .
+	
+#fiat:FIAT_NoiseCurve a fresnel:Lens;
+#	fresnel:purpose fresnel:defaultLens ;
+#	fresnel:classLensDomain fiat:OneComponentTaped ;
+#	fresnel:showProperties (	fiat:loudness
+#								fiat:aerodinamicTestDescription
+#								fiat:tapedComponent
+#						 ) ;
+#	fresnel:group :foafGroup .
+	
+#fiat:FIAT_OverallPerformance a fresnel:Lens;
+#	fresnel:purpose fresnel:defaultLens ;
+#	fresnel:classLensDomain fiat:OneComponentTaped ;
+#	fresnel:showProperties (	fiat:loudness
+#								fiat:aerodinamicTestDescription
+#								fiat:tapedComponent
+#						 ) ;
+#	fresnel:group :foafGroup .
+	
+
+#:EMAIL a fresnel:Lens;
+#	fresnel:purpose fresnel:defaultLens ;
+#	fresnel:classLensDomain fiat:OneComponentTaped ;
+#	fresnel:showProperties (	fiat:loudness
+#								fiat:aerodinamicTestDescription
+#								fiat:tapedComponent
+#						 ) ;
+#	fresnel:group :foafGroup .	
+	
+##################
+# Formats - FIAT#
+##################
+	
+	
+#:nameFormat a fresnel:Format ;
+#	fresnel:propertyFormatDomain fiat:loudness ;
+#	fresnel:label "Loudness: "^^xsd:string ;
+#	fresnel:group :foafGroup .
+	
+#:titleFormat a fresnel:Format ;
+#	fresnel:propertyFormatDomain fiat:aerodinamicTestDescription ;
+#	fresnel:label "Aerodinamic Test Description: "^^xsd:string ;
+#	fresnel:group :foafGroup .
+	
+#:imgFormat a fresnel:Format ;
+#	fresnel:propertyFormatDomain fiat:tapedComponent ;
+#	fresnel:label "Taped Component: "^^xsd:string ;	
+#	fresnel:group :foafGroup .
+	
+#:trimFormat a fresnel:Format ;
+#	fresnel:propertyFormatDomain fiat:isAboutTrim ;
+#	fresnel:label "Trim: "^^xsd:string ;
+#	fresnel:group :foafGroup .
+	
+#:modelFormat a fresnel:Format ;
+#	fresnel:propertyFormatDomain fiat:isAboutModel ;
+#	fresnel:label "Model: "^^xsd:string ;
+#	fresnel:group :foafGroup .
+	
+#:newsDateFormat a fresnel:Format ;
+#	fresnel:propertyFormatDomain fiat:newsDate ;
+#	fresnel:label "Date: "^^xsd:string ;
+#	fresnel:group :foafGroup .
+	
+#:prefLabelFormat a fresnel:Format ;
+#	fresnel:propertyFormatDomain fiat:prefLabel ;
+#	fresnel:label "Label: "^^xsd:string ;
+#	fresnel:group :foafGroup .
+	
+#:trimForecastedModelFormat a fresnel:Format ;
+#	fresnel:propertyFormatDomain fiat:trimForecastedModel ;
+#	fresnel:label "Forecasted Model: "^^xsd:string ;
+#	fresnel:group :foafGroup .
+		
+								
+	

@@ -1,0 +1,542 @@
+@prefix fresnel:		<http://www.w3.org/2004/09/fresnel#> .
+@prefix fslns:			<http://simile.mit.edu/2006/01/ontologies/fsl-ns#> .
+
+@prefix rdf:    		<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:    		<http://www.w3.org/2001/XMLSchema#> .
+
+@prefix foaf:   		<http://xmlns.com/foaf/0.1/> .
+@prefix ex:					<hhtp://www.example.org/> .
+
+@prefix rss:	    	<http://purl.org/rss/1.0/> .
+@prefix content:   	<http://purl.org/rss/1.0/modules/content/> .
+@prefix dc:    			<http://purl.org/dc/elements/1.1/> .
+
+@prefix com:				<http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#> .
+@prefix real:				<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#> .
+@prefix edns:				<http://www.loa-cnr.it/ontologies/ExtendedDnS.owl#> .
+@prefix dolite:			<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#> .
+@prefix io:					<http://www.loa-cnr.it/ontologies/InformationObjects.owl#> .
+@prefix xc:					<http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#> .
+@prefix ex:					<http://example.org/> .
+
+@prefix :       <#> .
+
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#> a fslns:Namespace ;
+	fslns:abbreviated "rdf" .
+
+<http://xmlns.com/foaf/0.1/> a fslns:Namespace ;
+	fslns:abbreviated "foaf" .
+	
+<http://example.org/> a fslns:Namespace ;
+	fslns:abbreviated "ex" .
+	
+<http://purl.org/rss/1.0/> a fslns:Namespace ;
+	fslns:abbreviated "rss" .
+	
+<http://purl.org/rss/1.0/modules/content/> a fslns:Namespace ;
+	fslns:abbreviated "content" .
+	
+<http://isweb.uni-koblenz.de/Research/x-cosim/com-module.owl#> a fslns:Namespace ;
+	fslns:abbreviated "com" .
+	
+<http://isweb.uni-koblenz.de/Research/x-cosim/realization-module.owl#> a fslns:Namespace ;
+	fslns:abbreviated "real" .
+	
+<http://www.loa-cnr.it/ontologies/ExtendedDnS.owl#> a fslns:Namespace ;
+	fslns:abbreviated "edns" .
+	
+<http://www.loa-cnr.it/ontologies/DOLCE-Lite.owl#> a fslns:Namespace ;
+	fslns:abbreviated "dolite" .
+	
+<http://www.loa-cnr.it/ontologies/InformationObjects.owl#> a fslns:Namespace ;
+	fslns:abbreviated "io" .
+	
+<http://isweb.uni-koblenz.de/Research/x-cosim/x-cosimo.owl#> a fslns:Namespace ;
+	fslns:abbreviated "xc" .
+
+##########			                      
+# GROUPS #
+##########
+	
+:foafGroup a fresnel:Group ;
+	fresnel:propertyStyle "border-top: 1px dotted Gray; padding: 5px 0px;"^^fresnel:stylingInstructions .
+	
+:rssGroup a fresnel:Group .
+
+:messageGroup a fresnel:Group .	
+
+:fileGroup a fresnel:Group .
+
+:agentGroup a fresnel:Group .
+
+#################															 
+# LENSES - FOAF #
+#################
+
+:FOAF_personLabel a fresnel:Lens ;
+	fresnel:purpose fresnel:labelLens ;
+	fresnel:instanceLensDomain "SELECT ?person WHERE { ?person rdf:type foaf:Person }"^^fresnel:sparqlSelector ;	
+	fresnel:showProperties (	foaf:title
+														foaf:name ) ;
+	fresnel:group :foafGroup .
+	
+:FOAF_person a fresnel:Lens;
+	fresnel:purpose fresnel:defaultLens ;
+	fresnel:instanceLensDomain "SELECT ?person WHERE { ?person rdf:type foaf:Person }"^^fresnel:sparqlSelector ;
+	fresnel:showProperties (	foaf:img
+														foaf:workplaceHomepage
+														foaf:projectHomepage
+														fresnel:property "CONSTRUCT {?instance foaf:mbox ?friend} WHERE {?instance foaf:mbox ?friend}"^^fresnel:sparqlSelector
+														[	rdf:type fresnel:PropertyDescription ; 
+															fresnel:property "CONSTRUCT {?instance foaf:knows ?mbox} WHERE {?instance foaf:knows ?mbox}"^^fresnel:sparqlSelector ;
+															fresnel:sublens :FOAF_knows ;
+															fresnel:depth "1"^^xsd:nonNegativeInteger ] ) ;
+	fresnel:group :foafGroup .
+	
+:FOAF_knows a fresnel:Lens;
+	fresnel:purpose fresnel:defaultLens ;
+	fresnel:instanceLensDomain "SELECT ?person WHERE { ?person rdf:type foaf:Person }"^^fresnel:sparqlSelector ;
+	fresnel:showProperties (	foaf:workplaceHomepage
+														fresnel:property "CONSTRUCT {?instance foaf:mbox ?friend} WHERE {?instance foaf:mbox ?friend}"^^fresnel:sparqlSelector
+														fresnel:property "CONSTRUCT {?instance foaf:knows ?mbox} WHERE {?instance foaf:knows ?mbox}"^^fresnel:sparqlSelector
+													) ;
+	fresnel:group :foafGroup .
+	
+################														 
+# LENSES - RSS #
+################
+	
+:RSS_planetRDFLabel a fresnel:Lens;
+	fresnel:purpose fresnel:labelLens ;
+	fresnel:classLensDomain rss:item ;
+	fresnel:showProperties rss:title ;
+  fresnel:group :rssGroup .
+
+:RSS_planetRDF a fresnel:Lens;
+	fresnel:purpose fresnel:defaultLens ;
+	fresnel:classLensDomain rss:item ;
+	fresnel:showProperties ( 	dc:creator
+														dc:date
+														content:encoded ) ;
+  fresnel:group :rssGroup .
+  
+####################														 
+# LENSES - X-COSIM #
+####################
+  
+:X-COSIM_messageLabel a fresnel:Lens ;
+	fresnel:purpose fresnel:labelLens ;
+	fresnel:instanceLensDomain "
+		SELECT ?message 
+		WHERE { 	?message		edns:plays	?messageRole .
+							?messageRole	rdf:type	?messageRoleType .
+		Filter (?messageRoleType = com:InstantMessage || ?messageRoleType=com:EmailBody || ?messageRoleType=com:Attachment)}
+		"^^fresnel:sparqlSelector ;
+	fresnel:showProperties
+		"CONSTRUCT {	?instance 	ex:at 	?time }
+		WHERE {		?instance 		edns:setting		?sit.
+							?timeIO			edns:setting		?sit ;
+													edns:plays			?timeRole .
+							?timeRole		rdf:type			com:DispatchTime .
+							?timeRealizer	edns:setting		?timeRealization ;
+ 														edns:plays			?timeRealizerRole;
+ 														xc:literalData 		?time . 	 		
+ 	 						?timeRealizerRole rdf:type			real:Realizer .						
+ 	 						?timeRealization edns:realizes		?timeIO 		 }"^^fresnel:sparqlSelector ;
+	fresnel:group :messageGroup .
+													
+:X-COSIM_message a fresnel:Lens ;
+	fresnel:purpose fresnel:defaultLens ;
+	fresnel:instanceLensDomain "
+		SELECT ?message 
+		WHERE {	?message			edns:plays	?messageRole .
+						?messageRole	rdf:type		?messageRoleType .
+		Filter (?messageRoleType = com:InstantMessage || ?messageRoleType=com:EmailBody || ?messageRoleType=com:Attachment)}"^^fresnel:sparqlSelector ;
+	fresnel:showProperties ( "
+		CONSTRUCT {	?instance		ex:conv		?conv }
+		WHERE {			?instance	dolite:participant-in 	?conv;
+													edns:setting						?sit .
+								?conv			edns:setting						?sit }"^^fresnel:sparqlSelector 		
+
+			"CONSTRUCT {	?instance 	ex:sender	 	?sender }
+			WHERE {		?sender		edns:setting	?sit ;
+								edns:plays		?role .
+								?role		rdf:type		com:AddresserRole .
+								?instance	edns:setting	?sit .
+								?sit		edns:satisfies	?desc .
+								?desc		edns:defines	?role}"^^fresnel:sparqlSelector 
+
+			"CONSTRUCT {	?instance 	ex:recipient 	?sender }
+			WHERE {		?sender		edns:setting	?sit ;
+													edns:plays		?role .
+							?role		rdf:type		com:AddresseeRole .
+							?instance	edns:setting	?sit .
+							?sit		edns:satisfies	?desc .
+							?desc		edns:defines	?role}"^^fresnel:sparqlSelector 			
+
+		"CONSTRUCT {	?instance 	ex:at 	?time }
+		WHERE {		?instance 		edns:setting		?sit.
+							?timeIO			edns:setting		?sit ;
+													edns:plays			?timeRole .
+							?timeRole		rdf:type			com:DispatchTime .
+							?timeRealizer	edns:setting		?timeRealization ;
+ 														edns:plays			?timeRealizerRole;
+ 														xc:literalData 		?time . 	 		
+ 	 						?timeRealizerRole rdf:type			real:Realizer .						
+ 	 						?timeRealization edns:realizes		?timeIO 		 }"^^fresnel:sparqlSelector
+ 	 						 	
+		"CONSTRUCT {	?instance 	ex:textdata 	?data }
+			WHERE {		?real 		edns:realizes 	?instance . 
+						?realizer	edns:setting	?real;
+									edns:plays		?realizerRole;
+									xc:literalData	?data .
+						?realizerRole	rdf:type	real:Realizer 										
+			}"^^fresnel:sparqlSelector
+			
+		"CONSTRUCT {	?instance 	ex:filepath			?data }
+			WHERE  {	?real 		edns:realizes 	?instance . 
+						?id			edns:setting	?real;
+									edns:plays		?identifierRole;
+									xc:literalData	?data .
+						real:posix  edns:setting	?real .
+						?identifierRole	rdf:type	real:Identifier
+					}"^^fresnel:sparqlSelector				 
+ 	 );
+	fresnel:group :messageGroup .
+	
+:X-COSIM_fileComLabel a fresnel:Lens ;
+	fresnel:purpose fresnel:labelLens ;
+	fresnel:instanceLensDomain "
+		SELECT ?io 
+		WHERE { 
+		{	?io			edns:plays		?commRole .
+			?commRole	rdf:type		com:Attachment }
+		UNION {
+			?io			edns:plays		?commRole .
+			?commRole	rdf:type		com:TransferredFile	}
+		}"^^fresnel:sparqlSelector ;
+	fresnel:showProperties
+		"CONSTRUCT {	?instance 	ex:filepath			?data }
+			WHERE  {	?real 		edns:realizes 	?instance . 
+						?id			edns:setting	?real;
+									edns:plays		?identifierRole;
+									xc:literalData	?data .
+						real:posix  edns:setting	?real .
+						?identifierRole	rdf:type	real:Identifier
+					}"^^fresnel:sparqlSelector;		
+	fresnel:group :fileGroup .
+
+:X-COSIM_fileCom a fresnel:Lens ;
+	fresnel:purpose fresnel:defaultLens ;
+	fresnel:instanceLensDomain "
+		SELECT ?io 
+		WHERE { 
+		{	?io			edns:plays		?commRole .
+			?commRole	rdf:type		com:Attachment }
+		UNION {
+			?io			edns:plays		?commRole .
+			?commRole	rdf:type		com:TransferredFile	}
+		}"^^fresnel:sparqlSelector ;
+	fresnel:showProperties (
+			"CONSTRUCT {	
+				?instance 		ex:sender	?sender 				    		
+		  	} WHERE {							
+				?desc 			edns:defines ?mrole , ?addresserRole .
+				?instance 		edns:plays ?mrole .								
+				?addresserRole 	rdf:type com:AddresserRole .							
+				?sender 		edns:plays ?addresserRole				  								 
+			}"^^fresnel:sparqlSelector
+
+			"CONSTRUCT {	
+				?instance 		ex:recipient	?agent 				    		
+		  	} WHERE {							
+				?desc 			edns:defines 	?mrole , ?addresseeRole .
+				?instance 		edns:plays 		?mrole .								
+				?addresseeRole 	rdf:type 		com:AddresseeRole .							
+				?agent 			edns:plays 		?addresseeRole				  								 
+			}"^^fresnel:sparqlSelector
+				
+			"CONSTRUCT {	
+				?instance 	ex:at       ?time ;
+				    		ex:as		?mroleType ;
+				    		ex:conv		?conversation 
+		  	} WHERE {			
+				?desc 			edns:defines ?timeRole, ?mrole .
+				?instance 		edns:plays ?mrole . 								
+				?timeRole 		rdf:type com:DispatchTime .				
+				?timeIO 		edns:plays ?timeRole .
+				?timeRealization edns:realizes ?timeIO .
+				?timeRealizer 	edns:setting ?timeRealization ;
+				              	edns:plays ?realizerRole ;
+				              	xc:literalData ?time .
+				?realizerRole 	rdf:type real:Realizer 				 
+			}"^^fresnel:sparqlSelector
+										
+			"CONSTRUCT {					  				
+				?instance 		ex:as			'Email Attachment'
+			} WHERE {			
+				?desc 			edns:defines 	?mrole .
+				?instance 		edns:plays 		?mrole . 								
+				?mrole			rdf:type		com:Attachment 				
+			}"^^fresnel:sparqlSelector
+						
+			"CONSTRUCT {					
+				?instance 		ex:as			'Instant Message File Transfer'  
+			} WHERE {			
+				?desc 			edns:defines 	?mrole .
+				?instance 		edns:plays 		?mrole . 								
+				?mrole			rdf:type		com:TransferredFile 				
+			}"^^fresnel:sparqlSelector									
+				
+		) ;
+	fresnel:group :fileGroup .
+	
+	:X-COSIM_agentLabel a fresnel:Lens ;
+	fresnel:purpose fresnel:labelLens ;
+	fresnel:classLensDomain edns:agent ;
+	fresnel:showProperties
+	"CONSTRUCT { ?instance	ex:address	?address  }			
+		WHERE { ?addressIO 		dolite:generic-dependent 	?instance .
+				?realization	edns:realizes				?addressIO .
+				?textRealizer	edns:setting				?realization ;
+  								edns:plays					?textRealizerRole;
+                				xc:literalData 				?address .
+         		?textRealizerRole	rdf:type		real:Realizer 				
+		}"^^fresnel:sparqlSelector ;
+	fresnel:group :agentGroup .
+	
+##################
+# Formats - FOAF #
+##################
+	
+:personResourceFormat a fresnel:ResourceFormat ;
+	fresnel:instanceFormatDomain "SELECT ?person WHERE { ?person rdf:type foaf:Person }"^^fresnel:sparqlSelector ;	
+	fresnel:resourceStyle "padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #eee;"^^fresnel:stylingInstructions ;
+	fresnel:group :foafGroup .
+	
+:nameFormat a fresnel:Format ;
+	fresnel:propertyFormatDomain foaf:name ;
+	fresnel:label "Name: "^^xsd:string ;
+	fresnel:group :foafGroup .
+	
+:titleFormat a fresnel:Format ;
+	fresnel:propertyFormatDomain foaf:title ;
+	fresnel:label "Title: "^^xsd:string ;
+	fresnel:group :foafGroup .
+	
+:imgFormat a fresnel:Format ;
+	fresnel:propertyFormatDomain foaf:img ;
+	fresnel:label "Image: "^^xsd:string ;
+	fresnel:value fresnel:image ;
+	fresnel:group :foafGroup .
+	
+:workplaceHPFormat a fresnel:Format ;
+	fresnel:propertyFormatDomain foaf:workplaceHomepage ;
+	fresnel:label "Workplace: "^^xsd:string ;
+	fresnel:value fresnel:externalLink ;
+	fresnel:group :foafGroup .
+	
+:projectHPFormat a fresnel:Format ;
+	fresnel:propertyFormatDomain foaf:projectHomepage ;
+	fresnel:label "Project(s): "^^xsd:string ;
+	fresnel:value fresnel:externalLink ;
+	fresnel:valueFormat [ fresnel:contentBefore "["^^xsd:string ;
+												fresnel:contentAfter "]"^^xsd:string ] ;	
+	fresnel:group :foafGroup .
+	
+:knowsFormat a fresnel:Format ;
+	fresnel:propertyFormatDomain foaf:knows ;
+	fresnel:label "People I know: "^^xsd:string ;
+	fresnel:value fresnel:uri ;
+	fresnel:group :foafGroup .
+	
+:mboxFormat a fresnel:Format ;
+	fresnel:propertyFormatDomain foaf:mbox ;
+	fresnel:label "Mailbox: "^^xsd:string ;
+	fresnel:value fresnel:externalLink ;
+	fresnel:group :foafGroup .
+	
+#################
+# Formats - RSS #
+#################
+
+:rssResource a fresnel:ResourceFormat ;
+	fresnel:classFormatDomain rss:item ;
+	fresnel:resourceStyle "padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #fff; color: #333;"^^fresnel:stylingInstructions ;
+	fresnel:group :rssGroup .
+	
+:rssTitle a fresnel:Format ;
+	fresnel:propertyFormatDomain rss:title ;
+	fresnel:label "Title: "^^xsd:string ;
+	fresnel:valueStyle "font-size: 25px;"^^fresnel:stylingInstructions ;
+	fresnel:group :rssGroup .
+	
+:dcCreator a fresnel:Format ;
+	fresnel:propertyFormatDomain dc:creator ;
+	fresnel:propertyStyle "font-size: 10px; border-top: 1px solid #aaa;"^^fresnel:stylingInstructions ;
+	fresnel:valueFormat [ fresnel:contentBefore "Written by: "^^xsd:string ] ;	
+	fresnel:label fresnel:none ;
+	fresnel:group :rssGroup .
+	
+:dcDate a fresnel:Format ;
+	fresnel:propertyFormatDomain dc:date ;
+	fresnel:propertyStyle "font-size: 10px; padding-bottom: 10px;"^^fresnel:stylingInstructions ;
+	fresnel:valueFormat [ fresnel:contentBefore "Date: "^^xsd:string ] ;	
+	fresnel:label fresnel:none ;
+	fresnel:group :rssGroup .
+	
+:contentEncoded a fresnel:Format ;
+	fresnel:propertyFormatDomain content:encoded ;
+	fresnel:propertyStyle "background-color: #aaa; padding: 5px; border: 1px solid #aaa; color: #eee;"^^fresnel:stylingInstructions ;
+	fresnel:label fresnel:none ;
+	fresnel:group :rssGroup .
+
+#####################
+# Formats - X-COSIM #
+#####################
+
+################   
+# DnS Formats  #
+################
+	
+:plays rdf:type fresnel:Format ;
+	fresnel:propertyFormatDomain edns:plays ;
+	fresnel:propertyStyle "border-top: 1px dashed Gray; margin-top: 5px; padding-top: 5px;"^^fresnel:stylingInstructions ;
+	fresnel:label "Plays Role(s): "^^xsd:string ;
+	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
+	fresnel:group :fileGroup .		
+	
+:participant rdf:type fresnel:Format ;
+	fresnel:propertyFormatDomain dolite:participant-in ;
+	fresnel:propertyStyle "border-top: 1px dashed Gray; margin-top: 5px; padding-top: 5px;"^^fresnel:stylingInstructions ;
+	fresnel:label "Participant in Event(s): "^^xsd:string ;
+	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
+	fresnel:group :fileGroup .		
+	
+:setting rdf:type fresnel:Format ;
+	fresnel:propertyFormatDomain edns:setting ;
+	fresnel:propertyStyle "border-top: 1px dashed Gray; margin-top: 5px; padding-top: 5px;"^^fresnel:stylingInstructions ;
+	fresnel:label "Situation: "^^xsd:string ;
+	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
+	fresnel:group :fileGroup .	
+	
+:dependent rdf:type fresnel:Format ;
+	fresnel:propertyFormatDomain dolite:generically-dependent-on ;
+	fresnel:propertyStyle "border-top: 1px dashed Gray; margin-top: 5px; padding-top: 5px;"^^fresnel:stylingInstructions ;
+	fresnel:label "Has Dependent(s): "^^xsd:string ;
+	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
+	fresnel:group :fileGroup .	
+
+:situationFormat rdf:type fresnel:ResourceFormat ;
+	fresnel:classFormatDomain com:ComSit ;
+	fresnel:resourceStyle "padding: 5px; margin-bottom: 5px; border: 1px solid Gray; background-color: #FFC77F;"^^fresnel:stylingInstructions ;
+	fresnel:resourceFormat [ fresnel:contentBefore "Agent: "^^xsd:string ] ;	
+	fresnel:group :fileGroup .
+	
+	###################   
+	# Message Formats #
+	###################
+	
+:messageType rdf:type fresnel:ResourceFormat ;
+	fresnel:instanceFormatDomain "
+		SELECT ?message 
+		WHERE { 	?message		edns:plays	?messageRole .
+							?messageRole	rdf:type	?messageRoleType .
+		Filter (?messageRoleType = com:InstantMessage || ?messageRoleType=com:EmailBody || ?messageRoleType=com:Attachment)}"^^fresnel:sparqlSelector ;
+	fresnel:resourceStyle "padding: 5px; margin-bottom: 10px; border: 1px solid #222; background-color: #555; color: #ddd;"^^fresnel:stylingInstructions ;
+	fresnel:resourceFormat [ fresnel:contentBefore "Message: "^^xsd:string ] ;
+	fresnel:group :messageGroup .
+
+:messageSender rdf:type fresnel:Format ;
+	fresnel:propertyFormatDomain ex:sender ;
+	fresnel:propertyStyle "padding: 3px;"^^fresnel:stylingInstructions ;
+	fresnel:label "Sender: "^^xsd:string ;
+	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
+	fresnel:value fresnel:uri ;
+	fresnel:group :messageGroup, :fileGroup .
+	
+:messageRecipient rdf:type fresnel:Format ;
+	fresnel:propertyFormatDomain ex:recipient ;
+	fresnel:propertyStyle "padding: 3px;"^^fresnel:stylingInstructions ;
+	fresnel:label "Recipient: "^^xsd:string ;
+	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
+	fresnel:value fresnel:uri ;
+	fresnel:group :messageGroup, :fileGroup .
+	
+:fileFormat rdf:type fresnel:Format ;
+	fresnel:propertyFormatDomain ex:filepath ;
+	fresnel:propertyStyle "padding: 3px;"^^fresnel:stylingInstructions ;
+	fresnel:label "Transferred File: "^^xsd:string ;
+	fresnel:value fresnel:link ;
+	fresnel:group :fileGroup, :messageGroup .
+	
+:messageText a fresnel:Format ;
+	fresnel:propertyFormatDomain ex:textdata ;
+	fresnel:propertyStyle "border-top: 1px solid #fff; color: orange; padding: 3px;"^^fresnel:stylingInstructions ;
+	fresnel:label "Text: "^^xsd:string ;
+	fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
+	fresnel:valueStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
+	fresnel:group :messageGroup, :fileGroup .
+	
+:conversation rdf:type fresnel:Format ;
+	fresnel:propertyFormatDomain ex:conv ;
+	fresnel:propertyStyle "border-top: 1px dashed white; padding: 3px;"^^fresnel:stylingInstructions ;
+	fresnel:label "Conversation: "^^xsd:string ;
+	fresnel:labelStyle ""^^fresnel:stylingInstructions ;
+	fresnel:group :fileGroup, :messageGroup .
+	
+:fileSentAtFormat rdf:type fresnel:Format ;
+	fresnel:propertyFormatDomain ex:at ;
+	fresnel:propertyStyle "padding: 3px;"^^fresnel:stylingInstructions ;
+	fresnel:label "Sent at: "^^xsd:string ;
+	fresnel:group :fileGroup, :messageGroup .
+	
+	####################
+	# File Formats ;-) #
+	####################
+
+:fileResourceFormat a fresnel:ResourceFormat ;	
+	fresnel:instanceFormatDomain "
+		SELECT ?io 
+		WHERE { 
+		{	?io			edns:plays		?commRole .
+			?commRole	rdf:type		com:Attachment }
+		UNION {
+			?io			edns:plays		?commRole .
+			?commRole	rdf:type		com:TransferredFile	}
+		}"^^fresnel:sparqlSelector ;
+	fresnel:resourceStyle "padding: 5px; margin-bottom: 10px; border: 1px dashed black; background-color: #ddd; color: black;"^^fresnel:stylingInstructions ;
+	fresnel:resourceFormat [ fresnel:contentBefore "File: "^^xsd:string ] ;
+	fresnel:propertyStyle "border-bottom: 1px dashed white; padding: 3px;"^^fresnel:stylingInstructions ;
+	fresnel:group :fileGroup.	
+
+:fileSentAsFormat rdf:type fresnel:Format ;
+	fresnel:propertyFormatDomain ex:as ;
+	fresnel:propertyStyle "padding: 3px"^^fresnel:stylingInstructions ;
+	fresnel:label "Transferred as: "^^xsd:string ;
+	#fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
+	fresnel:group :fileGroup .
+	
+	#################   
+	# Agent Formats #
+	#################
+
+:agent rdf:type fresnel:ResourceFormat ;
+	fresnel:classFormatDomain edns:agent ;
+	fresnel:resourceStyle "padding: 5px; margin-bottom: 5px; border: 0px solid Gray; background-color: LightBlue;"^^fresnel:stylingInstructions ;
+	fresnel:resourceFormat [ fresnel:contentBefore "Agent: "^^xsd:string ] ;	
+	fresnel:group :agentGroup, :fileGroup , :messageGroup .
+
+:relatedAgent rdf:type fresnel:Format ;
+	fresnel:propertyFormatDomain ex:relatedAgents ;
+	fresnel:propertyStyle "border-top: 1px dashed Gray; margin-top: 5px; padding-top: 5px;"^^fresnel:stylingInstructions ;
+	fresnel:label "Related Agents: "^^xsd:string ;
+	#fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
+	fresnel:group :agentGroup, :fileGroup, :messageGroup .	
+	
+:address rdf:type fresnel:Format ;
+	fresnel:propertyFormatDomain ex:address ;
+	fresnel:propertyStyle "border-top: 1px dashed Gray; margin-top: 5px; padding-top: 5px;"^^fresnel:stylingInstructions ;
+	fresnel:label "Address: "^^xsd:string ;
+	#fresnel:labelStyle "font-weight: bold;"^^fresnel:stylingInstructions ;
+	fresnel:group :agentGroup, :fileGroup, :messageGroup .

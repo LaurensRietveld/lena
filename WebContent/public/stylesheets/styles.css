@@ -1,0 +1,189 @@
+body {
+	padding: 10px 10px;
+	margin: 0px;
+	background-color: #fff;
+	font-family: Arial, sans-serif;
+}
+
+h3, h2 {
+	padding: 0px 0px 0px 5px;
+	margin: 0px;
+}
+
+hr {
+	padding: 0px 5px 0px 5px;
+	margin: 0px 5px 0px 5px;
+	border: 1px solid #000;
+}
+
+.infoHeading {
+	font-variant: small-caps;
+	margin: 0px;
+	padding: 2px 2px 0px 2px;
+	border-bottom: 1px solid #aaa;
+	background-color: #ddd;
+}
+
+#sidebar {
+	float: left;
+	width: 200px;
+	padding: 0px;
+	margin: 0px;
+}
+
+#sidebar_right {
+	float: right;
+	width: 200px;
+	padding: 0px;
+	margin: 0px;
+	overflow: auto;
+}
+
+.ajax-loading {
+	padding: 20px 0;
+	background: url(../images/spinner.gif) no-repeat center;
+}
+
+.ajax-loading-time {
+	height:16px;
+	margin-left:5px;
+	background:url(../images/spinnerTime.gif) no-repeat;
+}
+
+#lensesAndClasses {
+	-moz-border-radius: 8px;
+	font-size: 12px;
+	background-color: #ddd;
+	border: 2px solid #78BA91;
+	padding-bottom: 6px;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+#lensesAndClasses td{
+	padding: 0px;
+	margin: 0px;
+}
+
+#lensesAndClasses tr{
+	padding: 0px;
+	margin: 0px;
+}
+
+#lensesAndClasses table{
+	padding: 0px;
+	margin: 0px;
+}
+
+#resource {
+	-moz-border-radius: 8px;
+	font-size: 12px;
+	background-color: #eee;
+	border: 2px solid #aaa;
+	padding-bottom: 6px;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+#metaknowledge {
+	-moz-border-radius: 8px;
+	font-size: 11px;		
+	background-color: #eee;
+	border: 1px solid #aaa;
+	padding-bottom: 6px;
+	margin-bottom: 10px;
+	overflow: hidden;			
+	margin: 2px;
+	padding: 4px 4px 4px 4px;
+
+}
+#mtitle {	
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	font-size: 12px;	
+}
+
+#title {	
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	font-size: 13px;	
+}
+
+#pages {
+	-moz-border-radius: 8px;
+	font-size: 10px;
+	background-color: #ddd;
+	border: 2px solid #78BA91;
+	padding: 0px 5px;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+#errors {
+	-moz-border-radius: 8px;
+	font-size: 12px;
+	background-color: #ff0000;
+	border: 1px solid #aaa;
+	padding: 2px 5px;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+#hometext {
+	-moz-border-radius: 8px;
+	border: 2px solid #aaa;
+	padding: 5px;
+	background-color: #eee;
+}
+
+a:link, a:visited {
+	color: #000;
+  text-decoration: none;
+}
+
+a:hover, a:active {
+	color: #000;
+	text-decoration: underline;
+}
+
+#hometext a {
+	text-decoration: underline;
+}
+
+#hometext a:hover, a:active {
+	color: #aaa;
+}
+
+li {
+	padding: 0px;
+	margin: 0px;
+	overflow: visible;
+}
+
+menu {
+	border: 0px solid #aaa;
+	margin: 0px;
+	padding: 2px 0px 2px 18px;
+	background-color: #eee;
+}
+
+.tip {
+	color: #000;
+	z-index: 13000;
+	border: 2px solid #78BA91;
+}
+
+.tip-title {
+	font-weight: bold;
+	font-size: 11px;
+	margin: 0;
+	color: #000;
+	padding: 4px 8px 4px;
+	background: #eee;
+}
+
+.tip-text {
+	font-size: 11px;
+	padding: 4px 8px 4px;
+	background: #fff;
+}
