@@ -71,7 +71,7 @@ public class LenaConfig {
 	int numberOfResourcesPage = 15;
 	
 	private Repository localRepository;
-	private Repository remoteRepository;
+	private Repository remoteDataRepository;
 	protected Repository fresnelDefaultLensRepository;
 	protected Repository fresnelLensRepository;
 	
@@ -92,15 +92,11 @@ public class LenaConfig {
 		props = new Properties();
 		try {
 			if (!configurationFile.exists()) {
-				configurationFile = new File(servletContext.getRealPath("/public/resources/lena.properties"));
-				
-						//this.getClass().getResource("lena.properties").toURI());
+				configurationFile = new File(servletContext.getRealPath("/public/resources/lena.properties"));				
 			}
 			InputStream is=new FileInputStream(configurationFile);
 			props.load(is);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			//errorMessage.append(e.toString() + "<br/>");
 			e.printStackTrace();
 		}
 
@@ -235,9 +231,9 @@ public class LenaConfig {
 				remoteRepositoryDir=new File(servletContext.getRealPath("/public/resources/repositories/remote"));
 			}
 			// Native store is only maintaining one repository per session -> all data can be seen by all users.
-			remoteRepository = new SailRepository(new NativeStore(remoteRepositoryDir));
-			//remoteRepository = new SailRepository(new MemoryStore());
-			remoteRepository.initialize();
+			remoteDataRepository = new SailRepository(new NativeStore(remoteRepositoryDir));
+			//remoteDataRepository = new SailRepository(new MemoryStore());
+			remoteDataRepository.initialize();
 			
 		} catch (RepositoryException e) {
 			//errorMessage.append(e.toString() + "<br/>");
@@ -253,9 +249,9 @@ public class LenaConfig {
 	public void shutdownRepositories() {
 		try {
 			System.out.println("PATH: " + path);
-			remoteRepository.getConnection().clear();
-			remoteRepository.shutDown();
-			remoteRepository.initialize();
+			remoteDataRepository.getConnection().clear();
+			remoteDataRepository.shutDown();
+			remoteDataRepository.initialize();
 		} catch (RepositoryException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -330,7 +326,7 @@ public class LenaConfig {
 	 */
 	public void addURLDataToRepository(String paramURL) {
 		try {
-			RepositoryConnection conRemote = remoteRepository.getConnection();
+			RepositoryConnection conRemote = remoteDataRepository.getConnection();
 			
 			String baseURI = "http://example.org/example/local";
 			try {
@@ -393,7 +389,7 @@ public class LenaConfig {
 	}
 	
 	public Repository getRemoteRepository() {
-		return remoteRepository;
+		return remoteDataRepository;
 	}
 	
 	public boolean getMetaknowledge(){

@@ -48,15 +48,14 @@ window.addEvent('domready', function() {
 
 		});
 
-function requestAjaxCalls(paramURI, paramClass, paramLocation, paramMeta,
+function requestAjaxCalls(contextPath, paramURI, paramClass, paramLocation, paramMeta,
 		paramBookmark, paramRank, paramStatementLimit, paramDepthLimit,
 		paramLinkLimit, paramFactor) {
 	var ajaxUrlClasses = '?resource=' + paramURI + '&ajaxClasses=true';
 	var ajaxUrlContent = '?resource=' + paramURI + '&class=' + paramClass
 			+ '&location=' + paramLocation + '&meta=' + paramMeta
 			+ '&bookmark=' + paramBookmark + '&ajaxContent=true';
-	var ajaxUrlFacets = '?resource=' + paramURI + '&location=' + paramLocation
-			+ '&meta=' + paramMeta + '&bookmark=' + paramBookmark
+	var ajaxUrlFacets = contextPath+'/FacetsServlet?resource=' + paramURI 
 			+ '&statementLimit=' + paramStatementLimit + '&depthLimit='
 			+ paramDepthLimit + '&linkLimit=' + paramLinkLimit + '&factor='
 			+ paramFactor + '&ajaxRank=true';
