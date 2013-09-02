@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-6-sun-1.6.0.16">
-		<attributes>
-			<attribute name="owner.project.facets" value="jst.java"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/accesknow-0.3.7.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aduna-commons-collections-2.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aduna-commons-concurrent-2.1.jar"/>
@@ -51,14 +46,18 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-2.5.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xmedia-kernel-2.0.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xmedia-scratchpad-1.0.1.jar"/>
-	<classpathentry kind="lib" path="/home/franz/programme/tomcat6/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/openrdf-sesame-2.3.1-onejar.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v6.0">
-		<attributes>
-			<attribute name="owner.project.facets" value="jst.web"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web;#system#"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-7-openjdk-amd64">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
