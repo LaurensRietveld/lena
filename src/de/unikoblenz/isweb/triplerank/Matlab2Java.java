@@ -24,7 +24,7 @@ public class Matlab2Java {
 	
 	//static String virtuosoEndpoint="http://lod.openlinksw.com/sparql";
 	static String endpoint="http://dbpedia.org/sparql";
-
+	private static boolean DEBUG = true;
 	String path = "./";
 	int factor = 15;
 	Process process;
@@ -38,7 +38,8 @@ public class Matlab2Java {
 		this.path = path;
 		String command = "matlab -nodisplay -nosplash -nodesktop -nojvm";
 		System.out.println("*******---------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><");
-		System.out.println("Matlab2Java: Matlab command: "+command+" CALLED!");
+		System.out.println("Matlab2Java: Matlab command called:");
+		System.out.println(command);
 		
 		try {
 			process = Runtime.getRuntime().exec(command);
@@ -96,9 +97,8 @@ public class Matlab2Java {
 	        BufferedWriter outW = new BufferedWriter(fstream);
 	        outW.write(changePath);
 	        //out.write(commandBegin + lodURI + "','" + lodURI.substring(lodURI.lastIndexOf("/") + 1).toLowerCase() + commandEnd);
-	        outW.write(commandBegin + lodURI + "','" + "dump" + commandEnd);
+	        outW.write(commandBegin + lodURI + "','" + lodURI.substring(lodURI.lastIndexOf("/") + 1).toLowerCase() + commandEnd);
 	        outW.close();
-	        File script = new File(matlabPath + "matlab.sh");
 	        
 	        System.out.println("Matlab2Java: Matlab script READY!!!");
 	        System.out.println("Matlab2Java: Matlab path: " + matlabPath);
@@ -106,16 +106,15 @@ public class Matlab2Java {
 	        System.out.println("Matlab2Java: LOD URI: " + lodURI);
 	        
 	        // Start process
-			//String command = "matlab -nodisplay -nosplash -nodesktop -nojvm";// -r cd " + matlabPath + ";" + commandBegin + lodURI + "','" + "dump" + commandEnd;
-			//System.out.println("Matlab2Java: Matlab command: "+command);
-			//String command = "matlab -nodisplay -nosplash -nodesktop -nojvm < " + script;
-			//Process process = Runtime.getRuntime().exec(command);
-			//System.out.println("LINKEDDATA: Matlab command called!!!");
-			
-			out.write("cd " + matlabPath);
-			out.write("\n");
-			out.write(commandBegin + lodURI + "','" + "dump" + commandEnd);
-			out.write("exit;");
+//			String command = "matlab -nodisplay -nosplash -nodesktop -nojvm";// -r cd " + matlabPath + ";" + commandBegin + lodURI + "','" + "dump" + commandEnd;
+//			System.out.println("Matlab2Java: Matlab command: "+command);
+//			String command = "matlab -nodisplay -nosplash -nodesktop -nojvm < " + script;
+//			Process process = Runtime.getRuntime().exec(command);
+//			System.out.println("LINKEDDATA: Matlab command called!!!");
+	        execInMatlabProcess("cd " + matlabPath);
+	        execInMatlabProcess("\n");
+	        execInMatlabProcess(commandBegin + lodURI + "','" + lodURI.substring(lodURI.lastIndexOf("/") + 1).toLowerCase() + commandEnd);
+	        execInMatlabProcess("exit;");
 			out.close();
 			
 			LinkedList<String> weight = new LinkedList<String>();
@@ -137,7 +136,7 @@ public class Matlab2Java {
 			
 			while ((returnLine = in.readLine()) != null) {
 				
-				//System.out.println(returnLine);
+				System.out.println(returnLine);
 				
 				if (returnLine.startsWith("Weight")) {
 					weight.add(returnLine.substring(9));
@@ -182,7 +181,12 @@ public class Matlab2Java {
 			groupResultIdPredicate.add(id);
 			groupResultNamePredicate.add(name);
 			
+			boolean hasError = false;
 			while ((returnLine = error.readLine()) != null) {
+				if (!hasError) {
+					System.out.println("Matlab ERROR!");
+					hasError = true;
+				}
 				System.out.println(returnLine);
 			}
 			
@@ -202,6 +206,13 @@ public class Matlab2Java {
 		return result;
 	}
 	
+	private void execInMatlabProcess(String execString) throws IOException {
+		if (DEBUG) {
+			System.out.println("ml exec: " + execString);
+		}
+		out.write(execString);
+	}
+	
 	public void setFactor(int factor) {
 		this.factor = factor;
 	}
@@ -215,7 +226,7 @@ public class Matlab2Java {
 		
 		Matlab2Java rankStore = new Matlab2Java("./");//relative dir
 		rankStore.getURIs(lodURI);
-		LinkedList<Object> result = rankStore.getURIsFromMatlab("WebContent/matlab/","./",lodURI);
+		LinkedList<Object> result = rankStore.getURIsFromMatlab("WebContent/matlab/","../../",lodURI);
 		//LinkedList<Object> result = rankStore.getURIsFromMatlab("/home/jmkoch/workspace/svn/src/main/webapp/matlab/","/home/jmkoch/workspace/svn/src/main/webapp/public/resources/",lodURI);
 		
 		LinkedList<String> weight = (LinkedList<String>) result.get(0);
