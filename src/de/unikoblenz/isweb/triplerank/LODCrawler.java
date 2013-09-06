@@ -122,96 +122,7 @@ public class LODCrawler {
 		this.pause = pause;
 	}
 	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {		
-		try {
-			
-			/*
-			LODCrawler crawler=new LODCrawler(
-					"http://dblp.l3s.de/d2r/resource/authors/Steffen_Staab",
-					virtuosoEndpoint,
-					"data/rdf/steffen-2");
-		
-			*/
-			LODCrawler crawler=new LODCrawler();
-			crawler.setLODURI("http://dbpedia.org/resource/Berlin");
-			crawler.setEndpoint(virtuosoEndpoint);
-			crawler.setDumpFile("data/rdf/berlin");
-			
-			/*
-			LODCrawler crawler=new LODCrawler(
-					"http://dblp.l3s.de/d2r/resource/authors/Thomas_Franz",
-					virtuosoEndpoint,
-					"data/rdf/thomas");
-			
-			/*
-			LODCrawler crawler=new LODCrawler(
-					"http://dbpedia.org/resource/HITS_algorithm",
-					virtuosoEndpoint,
-					"data/rdf/hits");
-			LODCrawler crawler=new LODCrawler(
-					"",
-					virtuosoEndpoint,
-					"data/rdf/");		
-
-			LODCrawler crawler=new LODCrawler(
-					"http://dbpedia.org/resource/Semantic_Web",
-					virtuosoEndpoint,
-					"data/rdf/semantic_web");
-			LODCrawler crawler=new LODCrawler(
-					"http://tw.rpi.edu/wiki/index.php/Special:URIResolver/The_Semantic_Web-2C_6th_International_Semantic_Web_Conference-2C_2nd_Asian_Semantic_Web_Conference-2C_ISWC_2007_-2B_ASWC_2007-2C_Busan-2C_Korea-2C_November_11-2D15-2C_2007",
-					virtuosoEndpoint,
-					"data/rdf/iswc");															
-								
-			LODCrawler crawler=new LODCrawler(
-					"http://www4.wiwiss.fu-berlin.de/dblp/resource/person/100007",
-					virtuosoEndpoint,
-					"data/rdf/timbl");
-			LODCrawler crawler=new LODCrawler(
-					//"http://dblp.l3s.de/Authors/Steffen+Staab",
-					//"http://dblp.l3s.de/d2r/page/authors/Steffen_Staab",
-					"http://dblp.l3s.de/d2r/resource/authors/Steffen_Staab",
-					dblpEndpoint,
-					"data/rdf/steffen");
-			
-			LODCrawler crawler=new LODCrawler(
-					"http://data.linkedmdb.org/resource/film/2014",
-					imdbEndpoint,
-					"data/rdf/shining");
-			
-			LODCrawler crawler=new LODCrawler(
-					"http://dbpedia.org/resource/The_Beatles",
-					virtuosoEndpoint,
-					"data/rdf/beatles2");
-																				
-			LODCrawler crawler=new LODCrawler(
-					"http://dblp.uni-trier.de/rec/bibtex/conf/semweb/2007",
-					swetodblp,
-					"data/rdf/semweb07");	
-			
-			LODCrawler crawler=new LODCrawler(
-					"http://dbpedia.org/resource/The_Lord_of_the_Rings",
-					dbpedia,
-					"data/rdf/lotr2");
-			
-			LODCrawler crawler=new LODCrawler(
-					"http://data.semanticweb.org/conference/eswc/2008",
-					"http://data.semanticweb.org/conference/eswc/2008",
-					"data/rdf/eswc08");*/
-			
-			/*
-			LODCrawler crawler=new LODCrawler(
-					"http://dbpedia.org/resource/The_Beatles",
-					dbpedia,
-					"data/rdf/test");*/
-			
-			crawler.crawl();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 		
-	}
+	
 	
 	void countPredicate(String predicate){
 		if (predicateCount.containsKey(predicate)){
@@ -372,4 +283,97 @@ public class LODCrawler {
 		}
 		System.out.println("TODO: "+!todo.isEmpty()+" SC<SL: "+(statementCount<statementLimit)+" depthcount<depthlimit: "+(depthCount<depthLimit));
 	}
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {		
+		try {
+			
+			/*
+			LODCrawler crawler=new LODCrawler(
+					"http://dblp.l3s.de/d2r/resource/authors/Steffen_Staab",
+					virtuosoEndpoint,
+					"data/rdf/steffen-2");
+		
+			*/
+			LODCrawler crawler=new LODCrawler();
+			crawler.setLODURI("http://dbpedia.org/resource/Berlin");
+			crawler.setEndpoint(virtuosoEndpoint);
+			crawler.setDumpFile("data/rdf/berlin");
+			
+			/*
+			LODCrawler crawler=new LODCrawler(
+					"http://dblp.l3s.de/d2r/resource/authors/Thomas_Franz",
+					virtuosoEndpoint,
+					"data/rdf/thomas");
+			
+			/*
+			LODCrawler crawler=new LODCrawler(
+					"http://dbpedia.org/resource/HITS_algorithm",
+					virtuosoEndpoint,
+					"data/rdf/hits");
+			LODCrawler crawler=new LODCrawler(
+					"",
+					virtuosoEndpoint,
+					"data/rdf/");		
+
+			LODCrawler crawler=new LODCrawler(
+					"http://dbpedia.org/resource/Semantic_Web",
+					virtuosoEndpoint,
+					"data/rdf/semantic_web");
+			LODCrawler crawler=new LODCrawler(
+					"http://tw.rpi.edu/wiki/index.php/Special:URIResolver/The_Semantic_Web-2C_6th_International_Semantic_Web_Conference-2C_2nd_Asian_Semantic_Web_Conference-2C_ISWC_2007_-2B_ASWC_2007-2C_Busan-2C_Korea-2C_November_11-2D15-2C_2007",
+					virtuosoEndpoint,
+					"data/rdf/iswc");															
+								
+			LODCrawler crawler=new LODCrawler(
+					"http://www4.wiwiss.fu-berlin.de/dblp/resource/person/100007",
+					virtuosoEndpoint,
+					"data/rdf/timbl");
+			LODCrawler crawler=new LODCrawler(
+					//"http://dblp.l3s.de/Authors/Steffen+Staab",
+					//"http://dblp.l3s.de/d2r/page/authors/Steffen_Staab",
+					"http://dblp.l3s.de/d2r/resource/authors/Steffen_Staab",
+					dblpEndpoint,
+					"data/rdf/steffen");
+			
+			LODCrawler crawler=new LODCrawler(
+					"http://data.linkedmdb.org/resource/film/2014",
+					imdbEndpoint,
+					"data/rdf/shining");
+			
+			LODCrawler crawler=new LODCrawler(
+					"http://dbpedia.org/resource/The_Beatles",
+					virtuosoEndpoint,
+					"data/rdf/beatles2");
+																				
+			LODCrawler crawler=new LODCrawler(
+					"http://dblp.uni-trier.de/rec/bibtex/conf/semweb/2007",
+					swetodblp,
+					"data/rdf/semweb07");	
+			
+			LODCrawler crawler=new LODCrawler(
+					"http://dbpedia.org/resource/The_Lord_of_the_Rings",
+					dbpedia,
+					"data/rdf/lotr2");
+			
+			LODCrawler crawler=new LODCrawler(
+					"http://data.semanticweb.org/conference/eswc/2008",
+					"http://data.semanticweb.org/conference/eswc/2008",
+					"data/rdf/eswc08");*/
+			
+			/*
+			LODCrawler crawler=new LODCrawler(
+					"http://dbpedia.org/resource/The_Beatles",
+					dbpedia,
+					"data/rdf/test");*/
+			
+			crawler.crawl();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 		
+	}
+	
+	
 }

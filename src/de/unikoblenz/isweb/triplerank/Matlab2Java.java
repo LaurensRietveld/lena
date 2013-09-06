@@ -25,7 +25,7 @@ public class Matlab2Java {
 	//static String virtuosoEndpoint="http://lod.openlinksw.com/sparql";
 	static String endpoint="http://dbpedia.org/sparql";
 
-	String path = "";
+	String path = "./";
 	int factor = 15;
 	Process process;
 	
@@ -213,9 +213,9 @@ public class Matlab2Java {
 		String lodURI = "http://dbpedia.org/resource/Berlin";
 		//String lodURI = "http://dbpedia.org/resource/The_Beatles";
 		
-		Matlab2Java rankStore = new Matlab2Java("/home/jmkoch/workspace/lenaTripleRank/");
+		Matlab2Java rankStore = new Matlab2Java("./");//relative dir
 		rankStore.getURIs(lodURI);
-		LinkedList<Object> result = rankStore.getURIsFromMatlab("/home/jmkoch/workspace/lenaTripleRank/src/main/matlab/","/home/jmkoch/workspace/lenaTripleRank/",lodURI);
+		LinkedList<Object> result = rankStore.getURIsFromMatlab("WebContent/matlab/","./",lodURI);
 		//LinkedList<Object> result = rankStore.getURIsFromMatlab("/home/jmkoch/workspace/svn/src/main/webapp/matlab/","/home/jmkoch/workspace/svn/src/main/webapp/public/resources/",lodURI);
 		
 		LinkedList<String> weight = (LinkedList<String>) result.get(0);

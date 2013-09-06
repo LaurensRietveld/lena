@@ -82,7 +82,7 @@ public class RDF2Matlab {
 		//new RDF2Matlab("hits","http://dbpedia.org/resource/HITS_algorithm");
 		//new RDF2Matlab("test");
 		RDF2Matlab transform = new RDF2Matlab();
-		transform.init("berlin","http://dbpedia.org/resource/Berlin", "");
+		transform.init("berlin","http://dbpedia.org/resource/Berlin", "./");
 		//new RDF2Matlab("iswc");
 		//new RDF2Matlab("lord","http://dbpedia.org/resource/The_Lord_of_the_Rings");
 		//new RDF2Matlab("semweb07","http://dblp.uni-trier.de/rec/bibtex/conf/semweb/2007");
