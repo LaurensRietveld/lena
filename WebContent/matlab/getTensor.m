@@ -1,6 +1,6 @@
 function [spt pstat rstat]=getTensor(prefix,dir)   
     dataDir=[dir constants.dataDir prefix '/'];
-    fprintf(1,dataDir);
+    fprintf(1,strcat(dataDir, '\n'));
     pstat=getPstat(prefix,dataDir);
     [numPredicates cols]=size(pstat); 
     rstat=getResourceStat(prefix,dataDir);    
@@ -31,6 +31,7 @@ function pstat=getPstat(prefix,dataDir)
     fileList=[dataDir  prefix '_matrices.csv'];
     fid=fopen(fileList);
     % matrices = filename | p-uri | numlinks
+    
     matrices=textscan(fid,'%s%s%f','Delimiter',',');
     fclose(fid);
     [rows cols]=size(matrices{2});

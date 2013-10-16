@@ -22,8 +22,10 @@ function [ktensor newspt newpstat newrstat resultmix evaldata spt] ...
     labels=newrstat(:,4);
     
     [resultmix evaldata]=topFacetInstances(startrindex,newspt,ktensor,labels,predicates);
-    if exist('store','var')
-        if store==true               
+%     if exist('store','var')
+%         if store==true
+            fprintf(1, 'storing!!');
+            fprintf(1,  constants.resultsDir);
             cell2csv([constants.resultsDir prefix '_tripleRank_' int2str(f) '.csv'],resultmix,',',98);
             evalmap=[];
             results=getResults(ktensor,10,labels,predicates);
@@ -33,8 +35,8 @@ function [ktensor newspt newpstat newrstat resultmix evaldata spt] ...
                 cell2csv([constants.resultsDir prefix '_tripleRank_' int2str(f) '_eval' int2str(i) '.csv'],evaldata{i,2},',',98);
             end
             cell2csv([constants.resultsDir prefix '_tripleRank_' int2str(f) '_evalmap.csv'],evalmap,',',98);
-        end
-    end    
+%         end
+%     end    
     
     if exist('display','var')
         if display==true    

@@ -73,23 +73,7 @@ public class RDF2Matlab {
 	String rdfDir="data/rdf/";
 	String matrixDir="data/matrices/";
 	String resultsDir="data/results/";
-	/**
-	 * @param args
-	 * @throws Exception 
-	 */
-	public static void main(String[] args) throws Exception {
-		//new RDF2Matlab("beatles1","http://dbpedia.org/resource/The_Beatles");
-		//new RDF2Matlab("hits","http://dbpedia.org/resource/HITS_algorithm");
-		//new RDF2Matlab("test");
-		RDF2Matlab transform = new RDF2Matlab();
-		transform.init("berlin","http://dbpedia.org/resource/Berlin", "./");
-		//new RDF2Matlab("iswc");
-		//new RDF2Matlab("lord","http://dbpedia.org/resource/The_Lord_of_the_Rings");
-		//new RDF2Matlab("semweb07","http://dblp.uni-trier.de/rec/bibtex/conf/semweb/2007");
-		//new RDF2Matlab("eswc08","http://data.semanticweb.org/conference/eswc/2008");
-		//new RDF2Matlab("james","http://dbpedia.org/resource/James_Bond");
-		//new RDF2Matlab("sparql","http://dbpedia.org/resource/SPARQL");
-	}
+
 	
 	public RDF2Matlab(){}
 	
@@ -269,7 +253,7 @@ public class RDF2Matlab {
 			for (int i=1;i<=uri2index.size();i++){	
 				URI uri=(URI) uri2index.getKey(i);
 				ResourceStatistics s=stat.getStatistics(uri.stringValue());
-				fw.write(String.format("%d;%s;%d;%d\n",i,uri,s.getInDegree(),s.getOutDegree()));
+				fw.write(String.format("%d;%s;%d;%d\n",i,uri.toString().replace(";", "_"),s.getInDegree(),s.getOutDegree()));
 			}
 			fw.flush();
 			fw.close();
@@ -333,5 +317,24 @@ public class RDF2Matlab {
 			return filename;
 		}
 		return prop2file.get(link);
+	}
+	
+	/**
+	 * @param args
+	 * @throws Exception 
+	 */
+	public static void main(String[] args) throws Exception {
+		//new RDF2Matlab("beatles1","http://dbpedia.org/resource/The_Beatles");
+		//new RDF2Matlab("hits","http://dbpedia.org/resource/HITS_algorithm");
+		//new RDF2Matlab("test");
+		RDF2Matlab transform = new RDF2Matlab();
+//		transform.init("berlin","http://dbpedia.org/resource/Berlin", "./");
+		transform.init("beatles1","http://dbpedia.org/resource/The_Beatles", "./");
+		//new RDF2Matlab("iswc");
+		//new RDF2Matlab("lord","http://dbpedia.org/resource/The_Lord_of_the_Rings");
+		//new RDF2Matlab("semweb07","http://dblp.uni-trier.de/rec/bibtex/conf/semweb/2007");
+		//new RDF2Matlab("eswc08","http://data.semanticweb.org/conference/eswc/2008");
+		//new RDF2Matlab("james","http://dbpedia.org/resource/James_Bond");
+		//new RDF2Matlab("sparql","http://dbpedia.org/resource/SPARQL");
 	}
 }

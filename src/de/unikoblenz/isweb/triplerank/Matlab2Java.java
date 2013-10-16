@@ -221,8 +221,8 @@ public class Matlab2Java {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String lodURI = "http://dbpedia.org/resource/Berlin";
-		//String lodURI = "http://dbpedia.org/resource/The_Beatles";
+		//String lodURI = "http://dbpedia.org/resource/Berlin";
+		String lodURI = "http://dbpedia.org/resource/The_Beatles";
 		
 		Matlab2Java rankStore = new Matlab2Java("./");//relative dir
 		rankStore.getURIs(lodURI);
